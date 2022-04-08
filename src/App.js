@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import Logo from './redlogo.png';
+import Rlogo from './r3dlogo.png';
 import './App.css';
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
@@ -40,7 +41,8 @@ function App() {
 											<img
 												className="h-8 w-8"
 												//src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-												src={Logo}
+												//src={Logo}
+												src={Rlogo}
 												alt="Workflow"
 											/>
 										</div>
