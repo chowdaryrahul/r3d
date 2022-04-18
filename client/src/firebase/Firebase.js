@@ -6,30 +6,21 @@ import {
   browserSessionPersistence,
 } from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-// const firebaseConfig = {
-//   apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
-//   authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-//   projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
-//   storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
-//   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
-//   appId: process.env.REACT_APP_FIREBASE_APPID,
-//   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID,
-// };
-
+//Your web app's Firebase configuration
+//For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAdXHSWS52cfydrN-UyEcO36In6zqdqnaM",
-  authDomain: "r3d-arc.firebaseapp.com",
-  projectId: "r3d-arc",
-  storageBucket: "r3d-arc.appspot.com",
-  messagingSenderId: "942037626261",
-  appId: "1:942037626261:web:d762e06636e14603421a9c",
-  measurementId: "G-3K0XM7DGWM",
+  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_FIREBASE_APPID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENTID,
 };
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
+ß;
 const firebaseAuth = getAuth(firebaseApp);
 
 setPersistence(firebaseAuth, browserSessionPersistence)
