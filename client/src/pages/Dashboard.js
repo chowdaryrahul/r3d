@@ -1,12 +1,5 @@
 import React from "react";
 
-const response = [
-  { name: "Explore", href: "/", current: true },
-  { name: "Projects", href: "/projects", current: false },
-  { name: "Create", href: "/create", current: false },
-  { name: "SignIn", href: "/signin", current: false },
-];
-
 const Dashboard = () => {
   return (
     <div className="flex-auto flex-col md:flex-row h-screen w-screen">
