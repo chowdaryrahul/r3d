@@ -5,8 +5,6 @@ import { firebaseAuth } from "../firebase/Firebase";
 
 const PrivateOutlet = () => {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
-
   // If authorized, return an outlet that will render child elements
   // If not, return element that will navigate to login page
   // return currentUser ? <Outlet /> : <Navigate to="/signin" />;

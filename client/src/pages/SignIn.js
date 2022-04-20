@@ -1,18 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../firebase/Auth";
 import * as firebaseui from "firebaseui";
-import firebaseApp, { firebaseAuth } from "../firebase/Firebase";
+import { firebaseAuth } from "../firebase/Firebase";
 import { EmailAuthProvider, GoogleAuthProvider } from "firebase/auth";
 
 const SignIn = () => {
-  // Initialize the FirebaseUI Widget using Firebase.
-  //   const firebaseAuth = getAuth(firebaseApp);
-  console.log(firebaseApp);
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
 
   // Initialize the FirebaseUI Widget using Firebase.
-  //   var ui = new firebaseui.auth.AuthUI(firebaseAuth);
   const ui =
     firebaseui.auth.AuthUI.getInstance() ||
     new firebaseui.auth.AuthUI(firebaseAuth);

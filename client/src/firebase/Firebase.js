@@ -20,7 +20,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-ß;
 const firebaseAuth = getAuth(firebaseApp);
 
 setPersistence(firebaseAuth, browserSessionPersistence)
@@ -34,8 +33,8 @@ setPersistence(firebaseAuth, browserSessionPersistence)
   })
   .catch((error) => {
     // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
+    console.error(error.code);
+    console.error(error.message);
   });
 
 export default firebaseApp;
