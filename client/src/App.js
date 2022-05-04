@@ -11,6 +11,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NoMatch from "./pages/NoMatch";
 import PrivateOutlet from "./components/PrivateOutlet";
+import UploadFile from "./components/UploadFile";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <Route exact path="/" element={<Home />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/create" element={<PrivateOutlet />}>
+            <Route path="/create" element={<Create />}>
               <Route path="" element={<Create />} />
             </Route>
             <Route path="/signin" element={<SignIn />} />
@@ -31,6 +32,10 @@ function App() {
         </Routes>
       </Router>
     </AuthProvider>
+  //   <>
+  //  {/* <UploadFile/>
+  //   <Files/> */}
+  //   </>
   );
 }
 

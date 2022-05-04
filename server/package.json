@@ -4,10 +4,10 @@
   "description": "R3D server",
   "main": "index.js",
   "type": "module",
-
   "scripts": {
     "dev": " nodemon --experimental-modules --es-module-specifier-resolution=node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "author": "chowdaryrahul",
   "license": "MIT",
@@ -15,12 +15,14 @@
     "apollo-server-core": "^3.6.7",
     "apollo-server-express": "^3.6.7",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3",
+    "express": "^4.18.0",
+    "gm": "^1.23.1",
+    "graphql-upload": "^13.0.0",
     "lodash": "^4.17.21",
-    "mongoose": "^6.3.0"
+    "mongoose": "^6.3.1"
   },
   "devDependencies": {
-    "graphql": "^16.3.0",
+    "graphql": "^16.4.0",
     "nodemon": "^2.0.15"
   }
 }

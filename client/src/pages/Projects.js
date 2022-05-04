@@ -1,25 +1,63 @@
-import React from "react";
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
+import { useQuery } from '@apollo/client';
+import gql from 'graphql-tag';
+
+ const GET_PHOTOS_QUERY = gql`
+  query Query {
+  getDetails {
+    url
+    name
+    description
+    category
+  }
+}
+`;
 
 const Projects = () => {
+
+  const { data, loading, error,  refetch } = useQuery(GET_PHOTOS_QUERY);
+
+
+ React.useEffect(()=>{
+refetch()
+
+ },[1])
+ if (loading) return <h1>loading files....</h1>;
+ if (error) return <p>{error.message}</p>;
   return (
-    <div className="flex-auto flex-col md:flex-row h-screen w-screen">
-      <div className="min-h-full">
-        <header className="bg-white shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
-          </div>
-        </header>
-        <main>
-          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            {/* Replace with your content */}
-            <div className="px-4 py-6 sm:px-0">
-              <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-            </div>
-            {/* /End replace */}
-          </div>
-        </main>
-      </div>
-    </div>
+   <>
+    {data.getDetails.length > 0 ? data.getDetails.map((f, i) => {
+        console.log(f)
+        return (      
+      <Card sx={{ maxWidth: 300, margin:'2em' }}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="140"
+          image={f.url}
+          alt="green iguana"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {f.name}
+          </Typography>
+          <Typography variant="body2" >
+           {f.description}
+          </Typography>
+          <Typography variant="p" color="text.secondary">
+           Category: {f.category}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+    )}
+  ): <p style={{color:"red", textAlignLast:"center", marginTop:"1em"}}>No Posts found</p>};
+   </>
   );
 };
 

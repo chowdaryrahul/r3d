@@ -3,13 +3,23 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { createUploadLink } from 'apollo-upload-client';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
-console.log(process.env);
+const uploadLink = createUploadLink({
+  uri: 'http://localhost:5000/graphql',
+});
+
+const client = new ApolloClient({
+  link: uploadLink,
+  cache: new InMemoryCache(),
+});
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <ApolloProvider client={client}>
+  <App />
+</ApolloProvider>,
   document.getElementById("root")
 );
 

@@ -1,0 +1,20 @@
+.upload-form{
+    margin-inline: 0 auto;
+    text-align: -webkit-center;
+    padding-top: 2em;
+}
+.upload-form input, .upload-form select{
+    border: 1px solid;
+    width: 250px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+.upload-form button{
+    display: block;
+    margin-top: 1em;
+    /* border: 1px solid black; */
+    width: 200px;
+    border-radius: 15px;
+    background: cadetblue;
+    color: white;
+}
