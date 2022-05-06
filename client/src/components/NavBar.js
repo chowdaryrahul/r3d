@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { AuthContext } from "../firebase/Auth";
 import { doSignOut } from "../firebase/FirebaseFunctions";
+import { useNavigate } from "react-router-dom";
 
-const user = {
-  name: "Rahul",
-  email: "rchowdar@stevens.edu",
+let userInfo = {
+  name: "Guest",
+  email: "guest@stevens.edu",
   imageUrl:
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
@@ -16,20 +17,54 @@ const navigation = [
   { name: "Explore", href: "/", current: true },
   { name: "Projects", href: "/projects", current: false },
   { name: "Create", href: "/create", current: false },
-  { name: "SignIn", href: "/signin", current: false },
 ];
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
+let userNavigation;
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
-  const { currentUser } = useContext(AuthContext);
+  const { user, userUpdate, isValidUser } = useContext(AuthContext);
+  console.log(isValidUser);
+  const { displayName, email } = user || "";
+  const navigate = useNavigate();
+
+  const signOut = async (e) => {
+    e.preventDefault();
+    await doSignOut();
+    //Clear AuthContext
+    userUpdate(null);
+  };
+
+  const signIn = async (e) => {
+    e.preventDefault();
+    navigate("/signin");
+  };
+
+  userNavigation = [
+    { name: "Your Profile", href: "/profile" },
+    { name: "Settings", href: "/settings" },
+  ];
+
+  if (isValidUser) {
+    userNavigation.push({
+      name: "Sign out",
+      href: "#",
+      clickHandle: signOut,
+    });
+    userInfo.name = displayName;
+    userInfo.email = email;
+  } else {
+    userNavigation.push({
+      name: "Sign in",
+      href: "/signin",
+      clickHandle: signIn,
+    });
+    userInfo.name = "Guest";
+    userInfo.email = "guest@stevens.edu";
+  }
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -46,7 +81,6 @@ export default function NavBar() {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    {/* <NavLink exact to="/"></NavLink> */}
                     {navigation.map((item) => (
                       <NavLink
                         key={item.name}
@@ -67,13 +101,17 @@ export default function NavBar() {
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
-                  <button
-                    type="button"
-                    className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  {!isValidUser ? (
+                    <button
+                      onClick={signIn}
+                      type="button"
+                      className="inline-flex items-center px-3 py-1 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Login
+                    </button>
+                  ) : (
+                    ""
+                  )}
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="ml-3 relative">
@@ -82,7 +120,7 @@ export default function NavBar() {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src={user.imageUrl}
+                          src={userInfo.imageUrl}
                           alt=""
                         />
                       </Menu.Button>
@@ -123,23 +161,37 @@ export default function NavBar() {
                             </a>
                           )}
                         </Menu.Item>
-                        <Menu.Item key="Sign Out">
-                          {({ active }) => (
-                            <Link to="/" onClick={doSignOut}>
-                              Sign Out
-                            </Link>
-                            // <a
-                            //   href="/"
-                            //   onClick={doSignOut}
-                            //   className={classNames(
-                            //     active ? "bg-gray-100" : "",
-                            //     "block px-4 py-2 text-sm text-gray-700"
-                            //   )}
-                            // >
-                            //   Sign Out
-                            // </a>
-                          )}
-                        </Menu.Item>
+                        {isValidUser ? (
+                          <Menu.Item key="Sign Out">
+                            {({ active }) => (
+                              <a
+                                href="/"
+                                onClick={signOut}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Sign Out
+                              </a>
+                            )}
+                          </Menu.Item>
+                        ) : (
+                          <Menu.Item key="Sign In">
+                            {({ active }) => (
+                              <a
+                                href="/"
+                                onClick={signIn}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                Sign In
+                              </a>
+                            )}
+                          </Menu.Item>
+                        )}
                       </Menu.Items>
                     </Transition>
                   </Menu>
@@ -183,16 +235,16 @@ export default function NavBar() {
                 <div className="flex-shrink-0">
                   <img
                     className="h-10 w-10 rounded-full"
-                    src={user.imageUrl}
+                    src={userInfo.imageUrl}
                     alt=""
                   />
                 </div>
                 <div className="ml-3">
                   <div className="text-base font-medium leading-none text-white">
-                    {user.name}
+                    {userInfo.name}
                   </div>
                   <div className="text-sm font-medium leading-none text-gray-400">
-                    {user.email}
+                    {userInfo.email}
                   </div>
                 </div>
                 <button
@@ -207,11 +259,10 @@ export default function NavBar() {
                 {userNavigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
-                    as="a"
-                    href={item.href}
+                    as="div"
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
                   >
-                    {item.name}
+                    <button onClick={item.clickHandle}>{item.name}</button>
                   </Disclosure.Button>
                 ))}
               </div>

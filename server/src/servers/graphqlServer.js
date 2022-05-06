@@ -16,20 +16,10 @@ const ApolloServerInit = async function (typeDefs, resolvers) {
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
-  await mongoose.connect("mongodb://localhost:27017/r3d", {
-    useNewUrlParser: true,
-  });
-
-  var db = mongoose.connection;
-  // db.on("connection",console.info.bind("MongoDB connection established"));
-  db.on("connection", (stream) => (console.log("MongoDB connection established")));
-  db.on("error", console.error.bind(console, "MongoDB connection error:"));
-
   // More required logic for integrating with Express
   await server.start();
   server.applyMiddleware({
     app,
-
     // By default, apollo-server hosts its GraphQL endpoint at the
     // server root. However, *other* Apollo Server packages host it at
     // /graphql. Optionally provide this to match apollo-server.
@@ -38,7 +28,9 @@ const ApolloServerInit = async function (typeDefs, resolvers) {
 
   // Modified server startup
   await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  console.log(
+    `🚀 Apollo GraphQL Server ready at http://localhost:4000${server.graphqlPath}`
+  );
 };
 
 export default ApolloServerInit;
