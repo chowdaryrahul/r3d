@@ -2,6 +2,7 @@ import { ApolloServer } from "apollo-server-express";
 import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import express from "express";
 import http from "http";
+import mongoose from "mongoose";
 
 const ApolloServerInit = async function (typeDefs, resolvers) {
   // Required logic for integrating with Express
@@ -14,6 +15,15 @@ const ApolloServerInit = async function (typeDefs, resolvers) {
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
+
+  await mongoose.connect("mongodb://localhost:27017/r3d", {
+    useNewUrlParser: true,
+  });
+
+  var db = mongoose.connection;
+  // db.on("connection",console.info.bind("MongoDB connection established"));
+  db.on("connection", (stream) => (console.log("MongoDB connection established")));
+  db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
   // More required logic for integrating with Express
   await server.start();

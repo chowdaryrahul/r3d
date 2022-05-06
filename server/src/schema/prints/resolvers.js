@@ -1,17 +1,23 @@
-const items = [
-  {
-    _id: 1,
-    title: "Wood Screw Cap",
-  },
-  {
-    _id: 2,
-    title: "Wood Screw Cap",
-  },
-];
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
+
+const Item = mongoose.model(
+  "Item",
+
+  new Schema({
+    title: {
+      type: String,
+      required: true,
+    },
+  })
+);
 
 const resolvers = {
   Query: {
-    fetchItems: (parent, args, context, info) => items,
+    fetchItems: async (_, args) => {
+      const items = await Item.find({});
+      return items;
+    },
   },
 };
 
