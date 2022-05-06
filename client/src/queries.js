@@ -30,7 +30,12 @@ const FETCH_ITEMS = gql`
         filament_color
         filament_material
       }
-      comments
+      comments { 
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
     }
   }
 `;
@@ -561,12 +566,10 @@ const UNLIKE_ITEM = gql`
 let exported = {
   FETCH_ITEMS,
   CREATE_ITEM,
-
   GET_ORDER,
   GET_ORDERS,
   CREATE_USER,
   CREATE_ORDER,
-
   FETCH_ITEM,
   ADD_COMMENT,
   REMOVE_COMMENT,
