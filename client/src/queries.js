@@ -5,7 +5,12 @@ const FETCH_ITEMS = gql`
     fetchItems {
       _id
       title
-      likes
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
       user_id
       user_name
       category
@@ -25,7 +30,12 @@ const FETCH_ITEMS = gql`
         filament_color
         filament_material
       }
-      comments
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
     }
   }
 `;
@@ -33,9 +43,8 @@ const FETCH_ITEMS = gql`
 const CREATE_ITEM = gql`
   mutation (
     $title: String
-    $likes: Int
-    $userId: String
-    $userName: String
+    $user_id: String
+    $user_name: String
     $category: String
     $tags: String
     $description: String
@@ -51,12 +60,12 @@ const CREATE_ITEM = gql`
     $filamentBrand: String
     $filamentColor: String
     $filamentMaterial: String
+    $multiple_images_of_obj: [String]
   ) {
     createItem(
       title: $title
-      likes: $likes
-      user_id: $userId
-      user_name: $userName
+      user_id: $user_id
+      user_name: $user_name
       category: $category
       tags: $tags
       description: $description
@@ -72,10 +81,16 @@ const CREATE_ITEM = gql`
       filament_brand: $filamentBrand
       filament_color: $filamentColor
       filament_material: $filamentMaterial
+      multiple_images_of_obj: $multiple_images_of_obj
     ) {
       _id
       title
-      likes
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
       user_id
       user_name
       category
@@ -95,6 +110,232 @@ const CREATE_ITEM = gql`
         filament_color
         filament_material
       }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
+
+const FETCH_ITEM = gql`
+  query ($_id: ID) {
+    fetchItem(_id: $_id) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
+
+const ADD_COMMENT = gql`
+  mutation ($_id: ID, $user_id: String, $user_name: String, $comt_text: String) {
+    commentItem(
+      _id: $_id
+      user_id: $user_id
+      user_name: $user_name
+      comt_text: $comt_text
+    ) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
+
+const REMOVE_COMMENT = gql`
+  mutation ($_id: ID, $user_id: String, $user_name: String, $comt_text: String) {
+    uncommentItem(
+      _id: $_id
+      user_id: $user_id
+      user_name: $user_name
+      comt_text: $comt_text
+    ) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
+
+const LIKE_ITEM = gql`
+  mutation ($_id: ID, $user_id: String, $user_name: String, $totalLikes: Int) {
+    likeItem(
+      _id: $_id
+      user_id: $user_id
+      user_name: $user_name
+      totalLikes: $totalLikes
+    ) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
+
+const UNLIKE_ITEM = gql`
+  mutation ($_id: ID, $user_id: String, $user_name: String, $totalLikes: Int) {
+    unlikeItem(
+      _id: $_id
+      user_id: $user_id
+      user_name: $user_name
+      totalLikes: $totalLikes
+    ) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
     }
   }
 `;
@@ -102,6 +343,11 @@ const CREATE_ITEM = gql`
 let exported = {
   FETCH_ITEMS,
   CREATE_ITEM,
+  FETCH_ITEM,
+  ADD_COMMENT,
+  REMOVE_COMMENT,
+  LIKE_ITEM,
+  UNLIKE_ITEM,
 };
 
 export default exported;

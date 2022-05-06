@@ -6,35 +6,40 @@ export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [loadingUser, setLoadingUser] = useState(true);
-  // const firebaseAuth = getAuth(firebaseApp);
+  const [isValid, setIsValid] = useState(false);
+
+  const updateCurrentUser = (user) => {
+    console.log("updating user in child");
+    setCurrentUser(user);
+    setIsValid(false);
+  };
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
+        console.log(user);
         const uid = user.uid;
         console.log("User is signed in");
         setCurrentUser(user);
-        setLoadingUser(false);
+        setIsValid(true);
       } else {
         // User is signed out
         console.log("User is signed out");
+        setIsValid(false);
       }
     });
   }, []);
 
-  // if (loadingUser) {
-  //   return (
-  //     <div>
-  //       <h1>Loading....Loading....Loading....Loading....Loading....</h1>
-  //     </div>
-  //   );
-  // }
-
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider
+      value={{
+        user: currentUser,
+        userUpdate: updateCurrentUser,
+        isValidUser: isValid,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -6,6 +6,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { AuthProvider } from "./firebase/Auth";
 import Projects from "./pages/Projects";
+import ItemView from "./pages/ItemView";
 import Create from "./pages/Create";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -33,6 +34,7 @@ function App() {
             <Route exact path="/" element={<Home />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/projects" element={<Projects />} />
+              <Route path="/itemview/:_id" element={<ItemView />} />
               <Route path="/create" element={<PrivateOutlet />}>
                 <Route path="" element={<Create />} />
               </Route>
