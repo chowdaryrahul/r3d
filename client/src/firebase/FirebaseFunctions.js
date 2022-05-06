@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { firebaseAuth } from "./Firebase";
+import { AuthContext } from "./Auth";
 import {
   createUserWithEmailAndPassword,
   EmailAuthProvider,
@@ -15,6 +16,7 @@ import {
 } from "firebase/auth";
 
 async function doCreateUserWithEmailAndPassword(email, password, displayName) {
+  console.log("Creating User");
   let { user } = await createUserWithEmailAndPassword(
     firebaseAuth,
     email,
