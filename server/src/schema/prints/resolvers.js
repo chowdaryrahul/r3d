@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+import mongoosastic from "mongoosastic";
 // import { createReadStream } from 'fs';
 // import { createModel } from 'mongoose-gridfs';
 
@@ -12,93 +13,136 @@ const Item = mongoose.model(
   new Schema({
     title: {
       type: String,
-      required: true
+      required: true,
+      es_indexed: true
     },
-    likes: {
+    likeDetails: [
+      {
+        user_id: {
+          type: String,
+          required: false,
+        },
+        user_name: {
+          type: String,
+          required: false,
+        },
+        liked: {
+          type: Boolean,
+          required: false,
+        },
+      },
+    ],
+    totalLikes: {
       type: Number,
-      required: false
+      required: false,
     },
     user_id: {
       type: String,
       required: false,
-      unique: true
+      unique: true,
     },
     user_name: {
       type: String,
       required: false,
-      unique: true
+      unique: true,
     },
     category: {
       type: String,
-      required: false
+      required: false,
+      es_indexed: true
     },
     tags: {
       type: String,
-      required: false
+      required: false,
+      es_indexed: true
     },
     description: {
       type: String,
-      required: false
+      required: false,
+      es_indexed: true
     },
     upload_date: {
       type: String,
-      required: false
+      required: false,
     },
     license: {
       type: String,
-      required: false
+      required: false,
     },
     price: {
       type: Number,
-      required: false
+      required: false,
     },
     print_settings: {
       printer: {
         type: String,
-        required: false
+        required: false,
+        es_indexed: true
       },
       printer_brand: {
         type: String,
-        required: false
+        required: false,
+        es_indexed: true
       },
       rafts: {
         type: String,
-        required: false
+        required: false,
+        es_indexed: true
       },
       supports: {
         type: String,
-        required: false
+        required: false,
+        es_indexed: true
       },
       resolution: {
         type: String,
-        required: false
+        required: false,
+        es_indexed: true
       },
       infill: {
         type: String,
-        required: false
+        required: false,
+        es_indexed: true
       },
       filament_brand: {
         type: String,
-        required: false
+        required: false,
+        es_indexed: true
       },
       filament_color: {
         type: String,
-        required: false
+        required: false,
+        es_indexed: true
       },
       filament_material: {
         type: String,
-        required: false
-      }
+        required: false,
+        es_indexed: true
+      },
     },
-    comments: [{
-      type: String,
-      required: false
-    }],
-    // multiple_images_of_obj: [{
-    //   data: Buffer,
-    //   contentType: String
-    // }]
-  })
+    comments: [
+      {
+        user_id: {
+          type: String,
+          required: false,
+        },
+        user_name: {
+          type: String,
+          required: false,
+        },
+        comt_text: {
+          type: String,
+          required: false,
+        },
+      },
+    ],
+    multiple_images_of_obj: [
+      {
+        type: String,
+        required: false,
+      },
+    ],
+  }).plugin(mongoosastic)
 );
 
 const resolvers = {
@@ -106,20 +150,15 @@ const resolvers = {
     fetchItems: async (_, args) => {
       const items = await Item.find({});
       return items;
-    }
+    },
+    fetchItem: async (_, args) => {
+      const item = await Item.findById({ _id: args._id });
+      return item;
+    },
   },
 
   Mutation: {
-    createItem: async(_, args) => {
-
-      // const readStream = createReadStream(ss);
-      // const readStream = createReadStream('D:/ss.png');
-      // const options = ({ filename: 'ss.png', contentType: 'image/png' });
-      // Attachment.write(options, readStream, (error, file) => {
-      //   filename: 'ss.png'
-      // });
-
-
+    createItem: async (_, args) => {
       let printerSettings = {
         printer: args.printer,
         printer_brand: args.printer_brand,
@@ -129,31 +168,89 @@ const resolvers = {
         infill: args.infill,
         filament_brand: args.filament_brand,
         filament_color: args.filament_color,
-        filament_material: args.filament_material
-      }
+        filament_material: args.filament_material,
+      };
 
       let saveItem = {
-          title: args.title,
-          likes: args.likes,
-          user_id: args.user_id,
-          user_name: args.user_name,
-          category: args.category,
-          tags: args.tags,
-          description: args.description,
-          upload_date: args.upload_date,
-          license: args.license,
-          price: args.price,
-          print_settings: printerSettings,
-          // multiple_images_of_obj: args.multiple_images_of_obj
-        }
+        title: args.title,
+        totalLikes: 0,
+        user_id: args.user_id,
+        user_name: args.user_name,
+        category: args.category,
+        tags: args.tags,
+        description: args.description,
+        upload_date: args.upload_date,
+        license: args.license,
+        price: args.price,
+        print_settings: printerSettings,
+        multiple_images_of_obj: args.multiple_images_of_obj,
+      };
       const newItem = new Item(saveItem);
       const createdItem = await newItem.save();
 
       return createdItem;
-    }
-  }
+    },
 
-  
+    likeItem: async (_, args) => {
+      let likeDetailsVal = {
+        user_id: args.user_id,
+        user_name: args.user_name,
+        liked: true,
+      };
+      const updateLikeCount = await Item.findOneAndUpdate(
+        { _id: args._id },
+        { totalLikes: args.totalLikes + 1 }
+      );
+      const updateItem = await Item.findOneAndUpdate(
+        { _id: args._id },
+        { $push: { likeDetails: likeDetailsVal } }
+      );
+      return await Item.findById({ _id: args._id });
+    },
+
+    unlikeItem: async (_, args) => {
+      let likeDetailsVal = {
+        user_id: args.user_id,
+        user_name: args.user_name,
+        liked: true
+      };
+      const updateunLikeCount = await Item.findOneAndUpdate(
+        { _id: args._id },
+        { totalLikes: args.totalLikes - 1 }
+      );
+      const updateItemUnlike = await Item.findOneAndUpdate(
+        { _id: args._id },
+        { $pull: { likeDetails: likeDetailsVal } }
+      );
+      return await Item.findById({ _id: args._id });
+    },
+
+    commentItem: async (_, args) => {
+      let commentsVal = {
+        user_id: args.user_id,
+        user_name: args.user_name,
+        comt_text: args.comt_text,
+      };
+      const updateComment = await Item.findOneAndUpdate(
+        { _id: args._id },
+        { $push: { comments: commentsVal } }
+      );
+      return await Item.findById({ _id: args._id });
+    },
+
+    uncommentItem: async (_, args) => {
+      let commentsVal = {
+        user_id: args.user_id,
+        user_name: args.user_name,
+        comt_text: args.comt_text
+      };
+      const updateComment = await Item.findOneAndUpdate(
+        { _id: args._id },
+        { $pull: { comments: commentsVal } }
+      );
+      return await Item.findById({ _id: args._id });
+    },
+  },
 };
 
 export default resolvers;
