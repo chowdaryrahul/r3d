@@ -1,0 +1,27 @@
+.pagination button{
+    margin-right: 10px;
+    background-color: black;
+    color: white;
+    width: 50px;
+    border-radius: 10px;
+}
+input+br+button{
+    background: black;
+    width: -webkit-fill-available;
+    color: white;
+}
+input{
+    display: block;
+    margin-top: 1em;
+    border: 1px solid #1817172e;
+    width: -webkit-fill-available;
+    height: 40px;
+}
+select{
+    width: -webkit-fill-available;
+    margin-top: 4em;
+    border: 1px solid;
+    border-color: burlywood;
+    height: 40px;
+    border-radius: 15px;
+}

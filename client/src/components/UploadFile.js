@@ -31,6 +31,8 @@ function UploadFile() {
     name: "",
     description: "",
     category: "",
+    username:"Harshit",
+    userId: "1622"
   });
   const [msg, setMsg] = useState("");
   const [uploadRequest, { loading, error }] = useMutation(

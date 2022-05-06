@@ -1,8 +1,15 @@
 import mongoose from 'mongoose'
 
 var userInfoModels = mongoose.Schema({
- 
+ userId:{
+   type:String,
+   required:true
+ },
   name:{
+    type:String,
+    required:true
+  },
+  username:{
     type:String,
     required:true
   },
@@ -16,8 +23,16 @@ var userInfoModels = mongoose.Schema({
   },
   image:[{
     type:String,
+    required:true
+  }],
+  comments:[{
+    type:String,
     required:false
-  }]
+  }],
+  time:{
+    type:Number,
+    required:true
+  }
 })
 
 
