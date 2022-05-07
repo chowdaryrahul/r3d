@@ -4,7 +4,7 @@ import process from "process";
 
 const MongoDBServerInit = async () => {
   mongoose
-    .connect(mongoConfig.serverUrl, {
+    .connect(mongoConfig.serverUrl(), {
       useNewUrlParser: true,
     })
     .then(

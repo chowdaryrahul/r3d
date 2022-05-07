@@ -2,23 +2,36 @@ version: "3.8"
 services:
   mongodb:
     image: mongo:5.0.5
+    container_name: mongodb
     restart: unless-stopped
+    expose: 
+      - 27017
     env_file: ./.env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
     ports:
       - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
-    volumes:
-      - db:/data/db
-  app:
-    depends_on:
-      - mongodb
-    build: ./client/src
+    volumes: 
+    - mongodb:/data/db
+  client:
+    build: ./client
+    container_name: client
     restart: unless-stopped
     env_file: ./.env
     ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+      - $NODE_CLIENT_LOCAL_PORT:$NODE_CLIENT_DOCKER_PORT
+    stdin_open: true
+    tty: true
+  server:
+    depends_on:
+      - mongodb
+    container_name: server
+    build: ./server
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $NODE_SERVER_LOCAL_PORT:$NODE_SERVER_DOCKER_PORT
     environment:
       - DB_HOST=mongodb
       - DB_USER=$MONGODB_USER
@@ -28,4 +41,4 @@ services:
     stdin_open: true
     tty: true
 volumes:
-  db:
+  mongodb:

@@ -4,7 +4,7 @@ FROM node:16
 
 # A directory within the virtualized Docker environment
 # Becomes more relevant when using Docker Compose later
-WORKDIR /server
+WORKDIR /app_server
 
 # Copies package.json and package-lock.json to Docker environment
 COPY package*.json ./
@@ -16,7 +16,7 @@ RUN npm install
 COPY . .
 
 # Uses port which is used by the actual application
-EXPOSE 3000
+EXPOSE 4000
 
 # Finally runs the application
 CMD [ "npm", "start" ]
