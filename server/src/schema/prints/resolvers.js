@@ -1,11 +1,7 @@
 import mongoose from "mongoose";
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema,
+ObjectId = Schema.ObjectId;;
 import mongoosastic from "mongoosastic";
-// import { createReadStream } from 'fs';
-// import { createModel } from 'mongoose-gridfs';
-
-// use default bucket
-// const Attachment = createModel();
 
 const Item = mongoose.model(
   "Item",
@@ -31,6 +27,7 @@ const Item = mongoose.model(
           required: false,
         },
       },
+      { _id: false }
     ],
     totalLikes: {
       type: Number,
@@ -135,6 +132,7 @@ const Item = mongoose.model(
           required: false,
         },
       },
+      { _id: false }
     ],
     multiple_images_of_obj: [
       {
