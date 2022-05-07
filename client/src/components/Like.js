@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import queries from "../queries.js";
 import { AuthContext } from "../firebase/Auth";
 // import ObjectId from "mongoose";
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 import { HeartIcon } from "@heroicons/react/outline";
 
 const Like = (props) => {
