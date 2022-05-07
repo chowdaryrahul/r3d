@@ -28,7 +28,7 @@ async function startServer() {
 
   server.applyMiddleware({ app });
 
- mongoose.connect('mongodb://localhost:27017/?readPreference=primary&directConnection=true&ssl=false', {
+ mongoose.connect('mongodb://localhost:27017/red?directConnection=true&serverSelectionTimeoutMS=2000', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }).then(async()=> await new Promise((r) => {
