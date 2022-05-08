@@ -2,9 +2,8 @@ import { useMutation } from "@apollo/client";
 import React, { useContext } from "react";
 import queries from "../queries.js";
 import { AuthContext } from "../firebase/Auth";
-// import ObjectId from "mongoose";
-// import mongoose from "mongoose";
 import { HeartIcon } from "@heroicons/react/outline";
+import { Link } from "react-router-dom";
 
 const Like = (props) => {
   const { isValidUser, user } = useContext(AuthContext);
@@ -22,16 +21,15 @@ const Like = (props) => {
             likeImage({
               variables: {
                 _id: itemToLike._id,
-                // user_id: mongoose.Types.ObjectId(user.uid),
                 user_id: user.uid,
-                user_name: itemToLike.user_name,
+                user_name: user.displayName,
                 totalLikes: itemToLike.totalLikes,
               },
             });
           }}
         >
           <button type="submit">
-            <HeartIcon class="fill-red-500 hover:fill-red-300"></HeartIcon>
+            <HeartIcon className="strokeWidth={2} h-8 hover:fill-red-300"></HeartIcon>
             {itemToLike.totalLikes}
           </button>
         </form>
@@ -44,24 +42,31 @@ const Like = (props) => {
             unlikeImage({
               variables: {
                 _id: itemToLike._id,
-                // user_id: mongoose.Types.ObjectId(user.uid),
                 user_id: user.uid,
-                user_name: itemToLike.user_name,
+                user_name: user.displayName,
                 totalLikes: itemToLike.totalLikes,
               },
             });
           }}
         >
           <button type="submit">
-            <HeartIcon class="fill-red-500 hover:fill-red-300"></HeartIcon>
+            <HeartIcon className="strokeWidth={2} border-none h-8 fill-red-500 hover:fill-red-300"></HeartIcon>
             {itemToLike.totalLikes}
           </button>
         </form>
       );
     }
   } else {
-    // Redirect to sign in page
-    console.log("Not logged in");
+    likeBody = (
+      <div>
+        <Link to={`/signin`}>
+          <button type="submit">
+            <HeartIcon className="strokeWidth={2} h-7 hover:fill-red-300"></HeartIcon>
+            {itemToLike.totalLikes}
+          </button>
+        </Link>
+      </div>
+    );
   }
 
   return <div>{likeBody}</div>;
