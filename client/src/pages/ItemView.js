@@ -61,7 +61,7 @@ const ItemView = (props) => {
   }
 
   return (
-    <div className=" overflow-scroll w-1/2 h-1/2 grid place-items-center">
+    <div className=" overflow-scroll grid place-items-center">
       <div>{itemData}</div>
     </div>
   );
