@@ -30,7 +30,7 @@ const FETCH_ITEMS = gql`
         filament_color
         filament_material
       }
-      comments { 
+      comments {
         user_id
         user_name
         comt_text
@@ -132,16 +132,7 @@ const GET_ORDERS = gql`
 `;
 const CREATE_USER = gql`
   mutation (
-    $apartment: String!
-    $street: String!
-    $city: String!
-    $country: String!
-    $zipcode: Int!
-    $cardNo: String!
-    $cvv: Int!
-    $month: Int!
-    $year: Int!
-    $itemId: ID!
+    $_id: String
     $userName: String
     $password: String
     $email: String
@@ -150,16 +141,7 @@ const CREATE_USER = gql`
     $aboutMe: String
   ) {
     createUser(
-      apartment: $apartment
-      street: $street
-      city: $city
-      country: $country
-      zipcode: $zipcode
-      card_no: $cardNo
-      cvv: $cvv
-      month: $month
-      year: $year
-      item_id: $itemId
+      _id: $_id
       user_name: $userName
       password: $password
       email: $email
@@ -174,30 +156,7 @@ const CREATE_USER = gql`
       firstname
       lastname
       about_me
-      address {
-        apartment
-        street
-        city
-        country
-        zipcode
-      }
-      item_ids {
-        item_id
-      }
-      payment_info {
-        card_no
-        cvv
-        exp_date {
-          month
-          year
-        }
-      }
-      active_order_ids {
-        item_id
-      }
-      cart_items {
-        item_id
-      }
+      cart_items
     }
   }
 `;
@@ -563,6 +522,76 @@ const UNLIKE_ITEM = gql`
   }
 `;
 
+const ADD_TO_CART = gql`
+  mutation ($_id: String, $user_name: String, $item_id: String) {
+    addToCart(_id: $_id, user_name: $user_name, item_id: $item_id) {
+      _id
+      user_name
+      password
+      email
+      firstname
+      lastname
+      about_me
+      cart_items
+    }
+  }
+`;
+
+const REMOVE_FROM_CART = gql`
+  mutation ($_id: String, $user_name: String, $item_id: String) {
+    removeFromCart(_id: $_id, user_name: $user_name, item_id: $item_id) {
+      _id
+      user_name
+      password
+      email
+      firstname
+      lastname
+      about_me
+      cart_items
+    }
+  }
+`;
+
+const FETCH_MULTIPLE_ITEM_BY_ID = gql`
+  query ($ids: [ID]) {
+    fetchMultipleItemById(_ids: $ids) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
+
 let exported = {
   FETCH_ITEMS,
   CREATE_ITEM,
@@ -575,6 +604,7 @@ let exported = {
   REMOVE_COMMENT,
   LIKE_ITEM,
   UNLIKE_ITEM,
+  FETCH_MULTIPLE_ITEM_BY_ID,
 };
 
 export default exported;
