@@ -4,34 +4,34 @@ import queries from "../queries.js";
 import React, { useContext } from "react";
 import { AuthContext } from "../firebase/Auth";
 import Card from "../components/Card.js";
+import Page404 from "./Page404.js";
 
 const Dashboard = () => {
-  const { isValidUser , user } = useContext(AuthContext);
+  const { isValidUser, user } = useContext(AuthContext);
   const dispatch = useDispatch();
 
-  // let loggedInFlag = false;
-  // if(isValidUser) {
-  //   console.log("user uid: ",user.uid);
-  //   loggedInFlag = true;
-  // }
-    
-  // loggedInFlag===true && 
   let { loading, error, data } = useQuery(queries.FETCH_ITEMS, {
     fetchPolicy: "cache-and-network",
   });
 
   let cardData = null;
-  
+
   cardData = data && data.fetchItems && (
     <Card itemsDataInCard={data.fetchItems} />
   );
 
+  if (error) {
+    return <Page404 />;
+  }
+
   return (
-    <div className="flex-auto flex-col md:flex-row h-screen w-screen  bg-gradient-to-r from-cyan-200 to-indigo-300 font-sans">
+    <div className="flex-auto flex-col md:flex-row h-screen w-screen  font-sans overflow-scroll">
       <div className="min-h-full">
         <header className="bg-gradient-to-r from-white-500 to-indigo-200">
           <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold text-indigo-600 text-center ">Dashboard</h1>
+            <h1 className="mt-1 text-4xl text-black-900 font-bold text-center ">
+              Dashboard
+            </h1>
           </div>
         </header>
         <main>
