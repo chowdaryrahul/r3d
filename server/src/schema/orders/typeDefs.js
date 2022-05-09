@@ -3,39 +3,42 @@ import { gql } from "apollo-server-core";
 const typeDefs = gql`
   # Your schema will go here
   type Order {
-    _id: ID!
-    item_ids: [ItemIds]
-    address: [address]
-    price_details: [priceDetails]
+    _id: ID
+    item_ids: [String]
+    address: address
+    price_details: priceDetails
     estimated_delivery: String
-    user_id: ID!
-    payment_info: [OrderPaymentInfo]
-  }
-
-  type OrderPaymentInfo {
-    card_no: String!
-    cvv: Int!
-    exp_date: CardDate
+    user_id: String
+    payment_info: OrderPaymentInfo
   }
 
   type CardDate {
-    month: Int!
-    year: Int!
+    month: Int
+    year: Int
   }
+  
+  type OrderPaymentInfo {
+    card_no: String
+    cvv: Int
+    exp_date: CardDate
+  }
+
+  
   type ItemIds {
-    item_id: ID!
+    item_ids: ID
   }
   type priceDetails {
-    total_price: String!
-    tax: String!
-    shipping_cost: String!
+    total_price: Float
+    tax: Float
+    shipping_cost: Float
   }
   type address {
-    apartment: String!
-    street: String!
-    city: String!
-    country: String!
-    zipcode: Int!
+    apartment: String
+    street: String
+    city: String
+    state: String
+    country: String
+    zipcode: String
   }
   type Query {
     getOrders: [Order]
@@ -44,20 +47,21 @@ const typeDefs = gql`
 
   type Mutation {
     createOrder(
-      image_id: ID!
+      item_ids: [String]
       estimated_delivery: String
-      user_id: ID!
-      cvv: Int!
-      month: Int!
-      year: Int!
-      street: String!
-      apartment: String!
-      city: String!
-      country: String!
-      zipcode: Int!
-      total_price: String!
-      tax: String!
-      shipping_cost: String!
+      user_id: String
+      cvv: Int
+      month: Int
+      year: Int
+      street: String
+      apartment: String
+      city: String
+      state: String
+      country: String
+      zipcode: String
+      total_price: Float
+      tax: Float
+      shipping_cost: Float
     ): Order
   }
 `;

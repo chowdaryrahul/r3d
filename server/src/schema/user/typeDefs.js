@@ -3,18 +3,15 @@ import { gql } from "apollo-server-core";
 const typeDefs = gql`
   # Your schema will go here
   type User {
-    _id: ID!
+    _id: String
     user_name: String!
     password: String!
     email: String!
     firstname: String!
     lastname: String!
     about_me: String
-    address: [AddressOfUser]
-    item_ids: [ItemIds]
-    payment_info: [UserPaymentInfo]
-    active_order_ids: [ItemIds]
     cart_items: [ItemIds]
+    active_order_ids: [String]
   }
 
   type AddressOfUser {
@@ -22,6 +19,7 @@ const typeDefs = gql`
     street: String!
     city: String!
     country: String!
+    state: String!
     zipcode: Int!
   }
 
@@ -38,30 +36,42 @@ const typeDefs = gql`
 
   type ItemIds {
     item_id: ID!
+    quantity: Int
   }
 
   type Query {
     getUsers: [User]
+    fetchUser(_id: String): User
   }
 
   type Mutation {
     createUser(
+      _id: String
       user_name: String
       password: String
       email: String
       firstname: String
       lastname: String
       about_me: String
-      apartment: String!
-      street: String!
-      city: String!
-      country: String!
-      zipcode: Int!
-      card_no: String!
-      cvv: Int!
-      month: Int!
-      year: Int!
-      item_id: ID!
+    ): User
+
+    addToCart(
+      _id: String
+      user_name: String
+      item_id: String
+      quantity: Int
+    ): User
+
+    removeFromCart(
+      _id: String
+      user_name: String
+      item_id: String
+      quantity: Int
+    ): User
+
+    afterPlaceOrder(
+      _id: String
+      orderId: String
     ): User
   }
 `;
