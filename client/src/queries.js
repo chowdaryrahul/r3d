@@ -597,7 +597,7 @@ const ADD_TO_CART = gql`
         item_id
         quantity
       }
-      active_order_ids 
+      active_order_ids
     }
   }
 `;
@@ -626,7 +626,7 @@ const REMOVE_FROM_CART = gql`
         item_id
         quantity
       }
-      active_order_ids 
+      active_order_ids
     }
   }
 `;

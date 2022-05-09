@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <div className="mx-auto bg-white shadow-md overflow-hidden ">
       <NavBar />
-      <div className="md:flex">
+      <div>
         <Outlet>{/** Content outlet */}</Outlet>
       </div>
     </div>
