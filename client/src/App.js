@@ -12,6 +12,9 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NoMatch from "./pages/NoMatch";
 import PrivateOutlet from "./components/PrivateOutlet";
+import Cart from "./pages/Cart";
+import Orders from "./pages/Orders";
+import LastPage from "./pages/Lastpage";
 import {
   ApolloClient,
   HttpLink,
@@ -34,7 +37,12 @@ function App() {
             <Route exact path="/" element={<Home />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/projects" element={<Projects />} />
+               <Route path="/cart" element={<Cart />} />
               <Route path="/itemview/:_id" element={<ItemView />} />
+               <Route path="/orders" element={<PrivateOutlet />}>
+                <Route path="" element={<Orders />} />
+              </Route>
+              <Route path="/lastpage" element={<LastPage />} />
               <Route path="/create" element={<PrivateOutlet />}>
                 <Route path="" element={<Create />} />
               </Route>
