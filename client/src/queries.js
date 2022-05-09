@@ -156,46 +156,66 @@ const CREATE_USER = gql`
       firstname
       lastname
       about_me
-      cart_items
+      cart_items {
+        item_id
+        quantity
+      }
     }
   }
 `;
 
 const CREATE_ORDER = gql`
-  mutation Mutation(
-    $imageId: ID!
-    $userId: ID!
-    $cvv: Int!
-    $month: Int!
-    $year: Int!
-    $estimatedDelivery: String
+  mutation (
+    $item_ids: [String]
+    $cvv: Int
+    $month: Int
+    $year: Int
+    $street: String
+    $apartment: String
+    $city: String
+    $state: String
+    $country: String
+    $zipcode: String
+    $estimated_delivery: String
+    $user_id: String
+    $total_price: Float
+    $tax: Float
+    $shipping_cost: Float
   ) {
     createOrder(
-      image_id: $imageId
-      user_id: $userId
+      item_ids: $item_ids
       cvv: $cvv
       month: $month
       year: $year
-      estimated_delivery: $estimatedDelivery
-      apartment: $apartment
       street: $street
+      apartment: $apartment
       city: $city
+      state: $state
       country: $country
       zipcode: $zipcode
+      estimated_delivery: $estimated_delivery
+      user_id: $user_id
+      total_price: $total_price
+      tax: $tax
+      shipping_cost: $shipping_cost
     ) {
       _id
-      item_ids {
-        item_id
-      }
-      estimated_delivery
-      user_id
+      item_ids
       address {
         apartment
         street
         city
+        state
         country
         zipcode
       }
+      price_details {
+        total_price
+        tax
+        shipping_cost
+      }
+      estimated_delivery
+      user_id
       payment_info {
         card_no
         cvv
@@ -203,11 +223,6 @@ const CREATE_ORDER = gql`
           month
           year
         }
-      }
-      price_details {
-        total_price
-        tax
-        shipping_cost
       }
     }
   }
@@ -328,6 +343,42 @@ const FETCH_ITEM = gql`
         comt_text
       }
       multiple_images_of_obj
+    }
+  }
+`;
+
+const FETCH_USER = gql`
+  query ($_id: String) {
+    fetchUser(_id: $_id) {
+      _id
+      user_name
+      password
+      email
+      firstname
+      lastname
+      about_me
+      cart_items {
+        item_id
+        quantity
+      }
+    }
+  }
+`;
+
+const GET_USERS = gql`
+  query {
+    getUsers {
+      _id
+      user_name
+      password
+      email
+      firstname
+      lastname
+      about_me
+      cart_items {
+        item_id
+        quantity
+      }
     }
   }
 `;
@@ -522,6 +573,63 @@ const UNLIKE_ITEM = gql`
   }
 `;
 
+const ADD_TO_CART = gql`
+  mutation (
+    $_id: String
+    $user_name: String
+    $item_id: String
+    $quantity: Int
+  ) {
+    addToCart(
+      _id: $_id
+      user_name: $user_name
+      item_id: $item_id
+      quantity: $quantity
+    ) {
+      _id
+      user_name
+      password
+      email
+      firstname
+      lastname
+      about_me
+      cart_items {
+        item_id
+        quantity
+      }
+      active_order_ids
+    }
+  }
+`;
+
+const REMOVE_FROM_CART = gql`
+  mutation (
+    $_id: String
+    $item_id: String
+    $quantity: Int
+    $user_name: String
+  ) {
+    removeFromCart(
+      _id: $_id
+      item_id: $item_id
+      quantity: $quantity
+      user_name: $user_name
+    ) {
+      _id
+      user_name
+      password
+      email
+      firstname
+      lastname
+      about_me
+      cart_items {
+        item_id
+        quantity
+      }
+      active_order_ids
+    }
+  }
+`;
 
 const FETCH_MULTIPLE_ITEM_BY_ID = gql`
   query ($ids: [ID]) {
@@ -562,6 +670,26 @@ const FETCH_MULTIPLE_ITEM_BY_ID = gql`
     }
   }
 `;
+
+const UPDATE_ORDER_ID_IN_USER = gql`
+  mutation ($_id: String, $orderId: String) {
+    afterPlaceOrder(_id: $_id, orderId: $orderId) {
+      _id
+      user_name
+      password
+      email
+      firstname
+      lastname
+      about_me
+      cart_items {
+        item_id
+        quantity
+      }
+      active_order_ids
+    }
+  }
+`;
+
 let exported = {
   FETCH_ITEMS,
   CREATE_ITEM,
@@ -574,7 +702,12 @@ let exported = {
   REMOVE_COMMENT,
   LIKE_ITEM,
   UNLIKE_ITEM,
+  REMOVE_FROM_CART,
+  ADD_TO_CART,
+  FETCH_USER,
+  GET_USERS,
   FETCH_MULTIPLE_ITEM_BY_ID,
+  UPDATE_ORDER_ID_IN_USER,
 };
 
 export default exported;
