@@ -522,36 +522,6 @@ const UNLIKE_ITEM = gql`
   }
 `;
 
-const ADD_TO_CART = gql`
-  mutation ($_id: String, $user_name: String, $item_id: String) {
-    addToCart(_id: $_id, user_name: $user_name, item_id: $item_id) {
-      _id
-      user_name
-      password
-      email
-      firstname
-      lastname
-      about_me
-      cart_items
-    }
-  }
-`;
-
-const REMOVE_FROM_CART = gql`
-  mutation ($_id: String, $user_name: String, $item_id: String) {
-    removeFromCart(_id: $_id, user_name: $user_name, item_id: $item_id) {
-      _id
-      user_name
-      password
-      email
-      firstname
-      lastname
-      about_me
-      cart_items
-    }
-  }
-`;
-
 const FETCH_MULTIPLE_ITEM_BY_ID = gql`
   query ($ids: [ID]) {
     fetchMultipleItemById(_ids: $ids) {
