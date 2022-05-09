@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [isValid, setIsValid] = useState(false);
 
   const updateCurrentUser = (user) => {
-    console.log("updating user in child");
+    console.log(`User state updated in child- State ${user}`);
     setCurrentUser(user);
     setIsValid(false);
   };
