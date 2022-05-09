@@ -132,16 +132,7 @@ const GET_ORDERS = gql`
 `;
 const CREATE_USER = gql`
   mutation (
-    $apartment: String!
-    $street: String!
-    $city: String!
-    $country: String!
-    $zipcode: Int!
-    $cardNo: String!
-    $cvv: Int!
-    $month: Int!
-    $year: Int!
-    $itemId: ID!
+    $_id: String
     $userName: String
     $password: String
     $email: String
@@ -150,16 +141,7 @@ const CREATE_USER = gql`
     $aboutMe: String
   ) {
     createUser(
-      apartment: $apartment
-      street: $street
-      city: $city
-      country: $country
-      zipcode: $zipcode
-      card_no: $cardNo
-      cvv: $cvv
-      month: $month
-      year: $year
-      item_id: $itemId
+      _id: $_id
       user_name: $userName
       password: $password
       email: $email
@@ -174,30 +156,7 @@ const CREATE_USER = gql`
       firstname
       lastname
       about_me
-      address {
-        apartment
-        street
-        city
-        country
-        zipcode
-      }
-      item_ids {
-        item_id
-      }
-      payment_info {
-        card_no
-        cvv
-        exp_date {
-          month
-          year
-        }
-      }
-      active_order_ids {
-        item_id
-      }
-      cart_items {
-        item_id
-      }
+      cart_items
     }
   }
 `;

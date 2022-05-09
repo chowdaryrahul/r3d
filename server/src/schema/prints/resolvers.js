@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema,
-ObjectId = Schema.ObjectId;;
+  ObjectId = Schema.ObjectId;
 import mongoosastic from "mongoosastic";
 
 const Item = mongoose.model(
@@ -10,7 +10,7 @@ const Item = mongoose.model(
     title: {
       type: String,
       required: true,
-      es_indexed: true
+      es_indexed: true,
     },
     likeDetails: [
       {
@@ -27,7 +27,7 @@ const Item = mongoose.model(
           required: false,
         },
       },
-      { _id: false }
+      { _id: false },
     ],
     totalLikes: {
       type: Number,
@@ -46,17 +46,17 @@ const Item = mongoose.model(
     category: {
       type: String,
       required: false,
-      es_indexed: true
+      es_indexed: true,
     },
     tags: {
       type: String,
       required: false,
-      es_indexed: true
+      es_indexed: true,
     },
     description: {
       type: String,
       required: false,
-      es_indexed: true
+      es_indexed: true,
     },
     upload_date: {
       type: String,
@@ -74,47 +74,47 @@ const Item = mongoose.model(
       printer: {
         type: String,
         required: false,
-        es_indexed: true
+        es_indexed: true,
       },
       printer_brand: {
         type: String,
         required: false,
-        es_indexed: true
+        es_indexed: true,
       },
       rafts: {
         type: String,
         required: false,
-        es_indexed: true
+        es_indexed: true,
       },
       supports: {
         type: String,
         required: false,
-        es_indexed: true
+        es_indexed: true,
       },
       resolution: {
         type: String,
         required: false,
-        es_indexed: true
+        es_indexed: true,
       },
       infill: {
         type: String,
         required: false,
-        es_indexed: true
+        es_indexed: true,
       },
       filament_brand: {
         type: String,
         required: false,
-        es_indexed: true
+        es_indexed: true,
       },
       filament_color: {
         type: String,
         required: false,
-        es_indexed: true
+        es_indexed: true,
       },
       filament_material: {
         type: String,
         required: false,
-        es_indexed: true
+        es_indexed: true,
       },
     },
     comments: [
@@ -132,7 +132,7 @@ const Item = mongoose.model(
           required: false,
         },
       },
-      { _id: false }
+      { _id: false },
     ],
     multiple_images_of_obj: [
       {
@@ -152,6 +152,16 @@ const resolvers = {
     fetchItem: async (_, args) => {
       const item = await Item.findById({ _id: args._id });
       return item;
+    },
+    fetchMultipleItemById: async (_, args) => {
+      let itemArr = [];
+      let itemArrData = await Promise.all(
+        args._ids.map(async (itemIds) => {
+          const item = await Item.findById({ _id: itemIds });
+          itemArr.push(item);
+        })
+      );
+      return itemArr;
     },
   },
 
@@ -210,7 +220,7 @@ const resolvers = {
       let likeDetailsVal = {
         user_id: args.user_id,
         user_name: args.user_name,
-        liked: true
+        liked: true,
       };
       const updateunLikeCount = await Item.findOneAndUpdate(
         { _id: args._id },
@@ -240,7 +250,7 @@ const resolvers = {
       let commentsVal = {
         user_id: args.user_id,
         user_name: args.user_name,
-        comt_text: args.comt_text
+        comt_text: args.comt_text,
       };
       const updateComment = await Item.findOneAndUpdate(
         { _id: args._id },
