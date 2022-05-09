@@ -9,6 +9,7 @@ import Comments from "../components/Comments.js";
 import Like from "../components/Like.js";
 import { AuthContext } from "../firebase/Auth";
 import Page404 from "./Page404.js";
+import AddToCart from "../components/AddToCart.js";
 
 const ItemView = (props) => {
   const { isValidUser, user } = useContext(AuthContext);
@@ -96,6 +97,9 @@ const ItemView = (props) => {
             ) : (
               <Like likeFlag="toUnlike" itemDataToLike={data.fetchItem} />
             )}
+            <br />
+            <AddToCart itemToAddInCart={data.fetchItem._id} />
+            <br />
             <Comments itemDataForComm={data.fetchItem} />
           </div>
         </div>
