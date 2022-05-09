@@ -14,7 +14,7 @@ const Comments = (props) => {
 
   if (isValidUser) {
     commentBody = (
-      <div className="max-w-sm rounded  shadow-lg border p-2">
+      <div className="max-w-sm rounded   border ">
         {itemData.comments.map((cmt, idx) => (
           <div key={idx}>
             {cmt.user_name}: {cmt.comt_text}
@@ -45,7 +45,6 @@ const Comments = (props) => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Delete Comment
                 </button>
               ) : null}
             </form>
@@ -88,7 +87,6 @@ const Comments = (props) => {
                 d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            Add Comment
           </button>
         </form>
       </div>
@@ -129,7 +127,6 @@ const Comments = (props) => {
                   d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              Add Comment
             </button>
           </Link>
         </form>
