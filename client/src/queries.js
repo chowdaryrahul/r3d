@@ -30,7 +30,7 @@ const FETCH_ITEMS = gql`
         filament_color
         filament_material
       }
-      comments { 
+      comments {
         user_id
         user_name
         comt_text
@@ -563,6 +563,46 @@ const UNLIKE_ITEM = gql`
   }
 `;
 
+
+const FETCH_MULTIPLE_ITEM_BY_ID = gql`
+  query ($ids: [ID]) {
+    fetchMultipleItemById(_ids: $ids) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
 let exported = {
   FETCH_ITEMS,
   CREATE_ITEM,
@@ -575,6 +615,7 @@ let exported = {
   REMOVE_COMMENT,
   LIKE_ITEM,
   UNLIKE_ITEM,
+  FETCH_MULTIPLE_ITEM_BY_ID,
 };
 
 export default exported;
