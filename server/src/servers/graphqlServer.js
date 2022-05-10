@@ -16,15 +16,6 @@ const ApolloServerInit = async function (typeDefs, resolvers) {
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
-  await mongoose.connect("mongodb://localhost:27017/r3d", {
-    useNewUrlParser: true,
-  });
-
-  var db = mongoose.connection;
-  // db.on("connection",console.info.bind("MongoDB connection established"));
-  db.on("connection", (stream) => (console.log("MongoDB connection established")));
-  db.on("error", console.error.bind(console, "MongoDB connection error:"));
-
   // More required logic for integrating with Express
   await server.start();
   server.applyMiddleware({

@@ -16,6 +16,7 @@ const Dashboard = () => {
 
   let cardData = null;
 
+  console.log("data: ",data);
   cardData = data && data.fetchItems && (
     <Card itemsDataInCard={data.fetchItems} />
   );

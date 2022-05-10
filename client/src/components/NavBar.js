@@ -26,7 +26,6 @@ function classNames(...classes) {
 
 export default function NavBar() {
   const { user, userUpdate, isValidUser } = useContext(AuthContext);
-  console.log(isValidUser);
   const { displayName, email } = user || "";
   const navigate = useNavigate();
 
@@ -85,9 +84,9 @@ export default function NavBar() {
                       <NavLink
                         key={item.name}
                         to={item.href}
-                        className={(isActive) =>
+                        className={({ isActive }) =>
                           "px-3 py-2 rounded-md text-sm font-medium" +
-                          (!isActive
+                          (isActive
                             ? " bg-gray-900 text-white"
                             : " text-gray-300 hover:bg-gray-700 hover:text-white")
                         }
@@ -161,28 +160,28 @@ export default function NavBar() {
                       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item key="Your Profile">
                           {({ active }) => (
-                            <a
-                              href="/profile"
+                            <NavLink
+                              to="/profile"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Your Profile
-                            </a>
+                            </NavLink>
                           )}
                         </Menu.Item>
                         <Menu.Item key="Settings">
                           {({ active }) => (
-                            <a
-                              href="/settings"
+                            <NavLink
+                              to="/settings"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Settings
-                            </a>
+                            </NavLink>
                           )}
                         </Menu.Item>
                         {isValidUser ? (
@@ -240,17 +239,24 @@ export default function NavBar() {
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
-                  as="a"
-                  href={item.href}
+                  as="div"
                   className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
-                  aria-current={item.current ? "page" : undefined}
                 >
-                  {item.name}
+                  <NavLink
+                    key={item.name}
+                    to={item.href}
+                    className={({ isActive }) =>
+                      "px-3 py-2 rounded-md text-sm font-medium" +
+                      (isActive
+                        ? " bg-gray-900 text-white"
+                        : " text-gray-300 hover:bg-gray-700 hover:text-white")
+                    }
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.name}
+                  </NavLink>
                 </Disclosure.Button>
               ))}
             </div>
@@ -284,7 +290,8 @@ export default function NavBar() {
                   <Disclosure.Button
                     key={item.name}
                     as="div"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                    onClick={item.clickHandle}
+                    className="block w-full px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
                   >
                     <button onClick={item.clickHandle}>{item.name}</button>
                   </Disclosure.Button>

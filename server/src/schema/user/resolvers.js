@@ -65,26 +65,6 @@ const resolvers = {
 
   Mutation: {
     createUser: async (_, args) => {
-      // User.init()
-      // let userAddress = {
-      //   apartment: args.apartment,
-      //   street: args.street,
-      //   city: args.city,
-      //   country: args.country,
-      //   zipcode: args.zipcode,
-      // };
-      // let itemId = [
-      //   {
-      //     item_id: args.item_id,
-      //   },
-      // ];
-      // let userPaymentinfo = [
-      //   { card_no: args.card_no, cvv: args.cvv, exp_date: cardDate },
-      // ];
-      // let cardDate = {
-      //   month: args.month,
-      //   year: args.year,
-      // };
       let saveUser = {
         _id: args._id,
         user_name: args.user_name,

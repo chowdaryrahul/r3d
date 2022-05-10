@@ -4,7 +4,7 @@ FROM node:16
 
 # A directory within the virtualized Docker environment
 # Becomes more relevant when using Docker Compose later
-WORKDIR /client/src
+WORKDIR /client
 
 # Copies package.json and package-lock.json to Docker environment
 COPY package*.json ./

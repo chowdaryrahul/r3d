@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 import {
   getAuth,
   setPersistence,
@@ -22,15 +23,11 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
 
+// Get a reference to the storage service, which is used to create references in your storage bucket
+const firebaseStorage = getStorage(firebaseApp);
+
 setPersistence(firebaseAuth, browserSessionPersistence)
-  .then(() => {
-    // Existing and future Auth states are now persisted in the current
-    // session only. Closing the window would clear any existing state even
-    // if a user forgets to sign out.
-    // ...
-    // New sign-in will be persisted with session persistence.
-    // return signInWithEmailAndPassword(auth, email, password);
-  })
+  .then(() => {})
   .catch((error) => {
     // Handle Errors here.
     console.error(error.code);
@@ -39,4 +36,4 @@ setPersistence(firebaseAuth, browserSessionPersistence)
 
 export default firebaseApp;
 
-export { firebaseAuth };
+export { firebaseAuth, firebaseStorage };
