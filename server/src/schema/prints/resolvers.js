@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
-const Schema = mongoose.Schema,
-  ObjectId = Schema.ObjectId;
-import mongoosastic from "mongoosastic";
+const Schema = mongoose.Schema;
 
 const Item = mongoose.model(
   "Item",
@@ -10,7 +8,7 @@ const Item = mongoose.model(
     title: {
       type: String,
       required: true,
-      es_indexed: true,
+      
     },
     likeDetails: [
       {
@@ -46,17 +44,17 @@ const Item = mongoose.model(
     category: {
       type: String,
       required: false,
-      es_indexed: true,
+      
     },
     tags: {
       type: String,
       required: false,
-      es_indexed: true,
+      
     },
     description: {
       type: String,
       required: false,
-      es_indexed: true,
+      
     },
     upload_date: {
       type: String,
@@ -74,47 +72,47 @@ const Item = mongoose.model(
       printer: {
         type: String,
         required: false,
-        es_indexed: true,
+        
       },
       printer_brand: {
         type: String,
         required: false,
-        es_indexed: true,
+        
       },
       rafts: {
         type: String,
         required: false,
-        es_indexed: true,
+        
       },
       supports: {
         type: String,
         required: false,
-        es_indexed: true,
+        
       },
       resolution: {
         type: String,
         required: false,
-        es_indexed: true,
+        
       },
       infill: {
         type: String,
         required: false,
-        es_indexed: true,
+        
       },
       filament_brand: {
         type: String,
         required: false,
-        es_indexed: true,
+        
       },
       filament_color: {
         type: String,
         required: false,
-        es_indexed: true,
+        
       },
       filament_material: {
         type: String,
         required: false,
-        es_indexed: true,
+        
       },
     },
     comments: [
@@ -140,7 +138,7 @@ const Item = mongoose.model(
         required: false,
       },
     ],
-  }).plugin(mongoosastic)
+  })
 );
 
 const resolvers = {
