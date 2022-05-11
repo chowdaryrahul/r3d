@@ -5,6 +5,7 @@ import queries from "../queries.js";
 import { Link } from "react-router-dom";
 
 const AddToCart = (props) => {
+  console.log("add to cart reached");
   const { isValidUser, user } = useContext(AuthContext);
   const [addItemToCart] = useMutation(queries.ADD_TO_CART);
   const [removeItemFromCart] = useMutation(queries.REMOVE_FROM_CART);

@@ -18,6 +18,7 @@ const Orders = (props) => {
   const orderIdForUser = useSelector((state) => state.orderId);
   const [createOrder] = useMutation(queries.CREATE_ORDER, {
     onCompleted: (data) => {
+      console.log("completed placing order");
       dispatch(actions.storeOrderIds(data.createOrder._id));
       dispatch(actions.emptyCart());
 
@@ -27,6 +28,7 @@ const Orders = (props) => {
           orderId: data.createOrder._id,
         },
       });
+      alert("order Placed");
     },
   });
 
@@ -69,19 +71,19 @@ const Orders = (props) => {
             <div className="px-4 py-6 sm:px-0">
               <div className=" overflow-scroll rounded-lg h-96 border-black-800 border-4 rounded h-max">
                 <body>
-                  {/* <div class="mt-20">
-          <h1 class="flex items-center justify-center font-bold text-blue-600 text-md lg:text-3xl">
+                  {/* <div className="mt-20">
+          <h1 className="flex items-center justify-center font-bold text-blue-600 text-md lg:text-3xl">
             Checkout
           </h1>
         </div> */}
-                  <div class="container p-12 mx-auto">
-                    <div class="flex flex-col w-full px-0 mx-auto md:flex-row">
-                      <div class="flex flex-col md:w-full">
-                        <h2 class="mb-4 font-bold md:text-xl text-heading ">
+                  <div className="container p-12 mx-auto">
+                    <div className="flex flex-col w-full px-0 mx-auto md:flex-row">
+                      <div className="flex flex-col md:w-full">
+                        <h2 className="mb-4 font-bold md:text-xl text-heading ">
                           Shipping Address
                         </h2>
                         <form
-                          class="justify-center w-full mx-auto"
+                          className="justify-center w-full mx-auto"
                           // method="post"
                           // action
                           onSubmit={(e) => {
@@ -120,12 +122,12 @@ const Orders = (props) => {
                             // user db modification
                           }}
                         >
-                          <div class="">
-                            <div class="space-x-0 lg:flex lg:space-x-4">
-                              <div class="w-full lg:w-1/2">
+                          <div className="">
+                            <div className="space-x-0 lg:flex lg:space-x-4">
+                              <div className="w-full lg:w-1/2">
                                 <label
-                                  for="firstName"
-                                  class="block mb-3 text-sm font-semibold text-gray-500 required"
+                                  htmlFor="firstName"
+                                  className="block mb-3 text-sm font-semibold text-gray-500 required"
                                 >
                                   First Name
                                 </label>
@@ -133,13 +135,13 @@ const Orders = (props) => {
                                   name="firstName"
                                   type="text"
                                   placeholder="First Name"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
-                              <div class="w-full lg:w-1/2 ">
+                              <div className="w-full lg:w-1/2 ">
                                 <label
-                                  for="lastName"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="lastName"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   Last Name
                                 </label>
@@ -147,15 +149,15 @@ const Orders = (props) => {
                                   name="Last Name"
                                   type="text"
                                   placeholder="Last Name"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
                             </div>
-                            <div class="mt-4">
-                              <div class="w-80  ">
+                            <div className="mt-4">
+                              <div className="w-80  ">
                                 <label
-                                  for="Email"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="Email"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   Email
                                 </label>
@@ -163,16 +165,16 @@ const Orders = (props) => {
                                   name="Last Name"
                                   type="text"
                                   placeholder="Email"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
                             </div>
                             <br />
-                            <div class="space-x-0 lg:flex lg:space-x-4">
-                              <div class="w-30">
+                            <div className="space-x-0 lg:flex lg:space-x-4">
+                              <div className="w-30">
                                 <label
-                                  for="Apartment"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="Apartment"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   Apartment
                                 </label>
@@ -181,13 +183,13 @@ const Orders = (props) => {
                                   name="Apartment"
                                   type="text"
                                   placeholder="Apartment"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
-                              <div class="w-80">
+                              <div className="w-80">
                                 <label
-                                  for="Street"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="Street"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   Street
                                 </label>
@@ -196,16 +198,16 @@ const Orders = (props) => {
                                   name="Street"
                                   type="text"
                                   placeholder="Street"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
                             </div>
                             <br />
-                            <div class="space-x-0 lg:flex lg:space-x-4">
-                              <div class="w-full lg:w-1/2">
+                            <div className="space-x-0 lg:flex lg:space-x-4">
+                              <div className="w-full lg:w-1/2">
                                 <label
-                                  for="city"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="city"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   City
                                 </label>
@@ -214,13 +216,13 @@ const Orders = (props) => {
                                   name="city"
                                   type="text"
                                   placeholder="City"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
-                              <div class="w-full lg:w-1/2">
+                              <div className="w-full lg:w-1/2">
                                 <label
-                                  for="State"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="State"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   State
                                 </label>
@@ -229,13 +231,13 @@ const Orders = (props) => {
                                   name="State"
                                   type="text"
                                   placeholder="State"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
-                              <div class="w-full lg:w-1/2">
+                              <div className="w-full lg:w-1/2">
                                 <label
-                                  for="Country"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="Country"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   Country
                                 </label>
@@ -244,10 +246,10 @@ const Orders = (props) => {
                                   name="Country"
                                   type="text"
                                   placeholder="Country"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 >
                                   {" "}
-                                  <option value="select" class="grey_color">
+                                  <option value="select" className="grey_color">
                                     Select Country
                                   </option>
                                   <option value="Afganistan">
@@ -628,10 +630,10 @@ const Orders = (props) => {
                                   <option value="Zimbabwe">Zimbabwe</option>
                                 </select>
                               </div>
-                              <div class="w-full lg:w-1/2 ">
+                              <div className="w-full lg:w-1/2 ">
                                 <label
-                                  for="postcode"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="postcode"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   Zipcode
                                 </label>
@@ -640,35 +642,35 @@ const Orders = (props) => {
                                   name="postcode"
                                   type="number"
                                   placeholder="Post Code"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
                             </div>
 
                             <br />
 
-                            <h2 class="mb-4 font-bold md:text-xl text-heading ">
+                            <h2 className="mb-4 font-bold md:text-xl text-heading ">
                               Payment Details
                             </h2>
-                            <div class="space-x-0 lg:flex lg:space-x-4">
-                              <div class="w-full lg:w-1/2">
+                            <div className="space-x-0 lg:flex lg:space-x-4">
+                              <div className="w-full lg:w-1/2">
                                 <label
-                                  for="firstName"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="firstName"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   Cardholder's Name
                                 </label>
                                 <input
                                   name="firstName"
                                   type="text"
-                                  placeholder="Card Number"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  placeholder="Cardholder's Name"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
-                              <div class="w-full lg:w-1/2">
+                              <div className="w-full lg:w-1/2">
                                 <label
-                                  for="cardnumber"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="cardnumber"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   Card Number
                                 </label>
@@ -677,14 +679,14 @@ const Orders = (props) => {
                                   name="cardnumber"
                                   type="text"
                                   placeholder="0000 0000 0000 0000"
-                                  autocomplete="on"
-                                  class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  autoComplete="on"
+                                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
-                              <div class="w-full lg:w-1/2">
+                              <div className="w-full lg:w-1/2">
                                 <label
-                                  for="expdate"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="expdate"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   Valid Through
                                 </label>
@@ -696,7 +698,7 @@ const Orders = (props) => {
                                   max="12"
                                   step="1"
                                   placeholder="MM"
-                                  class="w-1/2 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-1/2 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                                 <input
                                   id="expyear"
@@ -706,13 +708,13 @@ const Orders = (props) => {
                                   max="2099"
                                   step="1"
                                   placeholder="YYYY"
-                                  class="w-1/2 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-1/2 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
-                              <div class="w-full lg:w-1/2">
+                              <div className="w-full lg:w-1/2">
                                 <label
-                                  for="CVV"
-                                  class="block mb-3 text-sm font-semibold text-gray-500"
+                                  htmlFor="CVV"
+                                  className="block mb-3 text-sm font-semibold text-gray-500"
                                 >
                                   CVV
                                 </label>
@@ -721,41 +723,41 @@ const Orders = (props) => {
                                   name="cvv"
                                   type="text"
                                   pattern="\d*"
-                                  maxlength="3"
+                                  maxLength="3"
                                   placeholder="123"
-                                  class="w-1/2 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                  className="w-1/2 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 />
                               </div>
                             </div>
-                            <div class="flex items-center mt-4">
-                              <label class="flex items-center text-sm group text-heading">
+                            <div className="flex items-center mt-4">
+                              <label className="flex items-center text-sm group text-heading">
                                 <input
                                   type="checkbox"
-                                  class="w-5 h-5 border border-gray-300 rounded focus:outline-none focus:ring-1"
+                                  className="w-5 h-5 border border-gray-300 rounded focus:outline-none focus:ring-1"
                                 />
-                                <span class="ml-2">
+                                <span className="ml-2">
                                   Use existing information
                                 </span>
                               </label>
                             </div>
 
-                            <div class="relative pt-3 xl:pt-6">
+                            <div className="relative pt-3 xl:pt-6">
                               <label
-                                for="note"
-                                class="block mb-3 text-sm font-semibold text-gray-500"
+                                htmlFor="note"
+                                className="block mb-3 text-sm font-semibold text-gray-500"
                               >
                                 {" "}
                                 Notes (Optional)
                               </label>
                               <textarea
                                 name="note"
-                                class="flex items-center w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
+                                className="flex items-center w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600"
                                 rows="4"
                                 placeholder="Notes for delivery"
                               ></textarea>
                             </div>
                             <br />
-                            <Link to={`/lastpage`}>
+                            {/* <Link to={`/lastpage`}> */}
                               <button
                                 type="submit"
                                 className="bg-gray-300  text-black text-white font-bold py-2 px-4 rounded"
@@ -766,30 +768,30 @@ const Orders = (props) => {
                                   aria-hidden="true"
                                 />
                               </button>
-                            </Link>
+                            {/* </Link> */}
                           </div>
                         </form>
                       </div>
-                      <div class="flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5">
-                        <div class="pt-12 md:pt-0 2xl:ps-4">
-                          <h2 class="text-xl font-bold">Order Summary</h2>
+                      <div className="flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5">
+                        <div className="pt-12 md:pt-0 2xl:ps-4">
+                          <h2 className="text-xl font-bold">Order Summary</h2>
 
-                          <div class="flex p-4 mt-4">
-                            <h2 class="text-xl font-bold">{}</h2>
+                          <div className="flex p-4 mt-4">
+                            <h2 className="text-xl font-bold">{}</h2>
                           </div>
-                          <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                          <div className="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
                             Subtotal:{" "}
-                            <span class="ml-2">{productTotalprice}</span>
+                            <span className="ml-2">{productTotalprice}</span>
                           </div>
-                          <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                            Taxes: <span class="ml-2">{taxPrice}</span>
+                          <div className="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                            Taxes: <span className="ml-2">{taxPrice}</span>
                           </div>
-                          <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                          <div className="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
                             Shipping Price:
-                            <span class="ml-2">{shippingPrice}</span>
+                            <span className="ml-2">{shippingPrice}</span>
                           </div>
-                          <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                            Total: <span class="ml-2">{totalPrice} </span>
+                          <div className="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                            Total: <span className="ml-2">{totalPrice} </span>
                           </div>
                         </div>
                       </div>

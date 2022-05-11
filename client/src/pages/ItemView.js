@@ -29,7 +29,7 @@ const ItemView = (props) => {
 
       <br />
       <div className="  overflow-scroll">
-        <div class="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <Carousel className="border p-3  ">
             {data.fetchItem.multiple_images_of_obj.map((imgs, idx) => (
               <div
@@ -84,7 +84,9 @@ const ItemView = (props) => {
             </p>
           </div>
 
-          <div>
+          
+        </div>
+        <div>
             <p className="font-bold text-xl mb-2 text-gray-700 text-base ">
               {data.fetchItem.likeDetails.map((likes, idx) => {
                 if (isValidUser && likes.user_id === user.uid) {
@@ -102,7 +104,6 @@ const ItemView = (props) => {
             <br />
             <Comments itemDataForComm={data.fetchItem} />
           </div>
-        </div>
       </div>
     </div>
   );

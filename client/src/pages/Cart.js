@@ -35,7 +35,7 @@ const Cart = () => {
   if (dataFU && dataFU.fetchUser) {
     dataFU.fetchUser.cart_items.map((itemsInCart) => {
       cartItemsOfUSer.push(itemsInCart.item_id);
-    })
+    });
   }
   let {
     loading: loadingMI,
@@ -55,15 +55,19 @@ const Cart = () => {
     cartBody = dataMI && dataMI.fetchMultipleItemById && (
       <div>
         <CardOrder itemsDataInCard={dataMI.fetchMultipleItemById} />
-        <Link to={`/orders`}>
-          <button
-            type="button"
-            className="bg-gray-300  text-black font-bold py-2 px-4 rounded  item-center"
-          >
-            Proceed to Checkout
-            <LogoutIcon className="h-6 w-6" aria-hidden="true" />
-          </button>
-        </Link>
+        {dataMI.fetchMultipleItemById.length > 0 ? (
+          <Link to={`/orders`}>
+            <button
+              type="button"
+              className="bg-gray-300  text-black font-bold py-2 px-4 rounded  item-center"
+            >
+              Proceed to Checkout
+              <LogoutIcon className="h-6 w-6" aria-hidden="true" />
+            </button>
+          </Link>
+        ) : (
+          "Cart Empty"
+        )}
       </div>
     );
   } else {
@@ -79,11 +83,11 @@ const Cart = () => {
   }
 
   return (
-    <div className=" bg-gradient-to-r from-white-200 to-gray-300 grid place-items-center">
+    <div className=" bg-gradient-to-r from-white-200 to-gray-300 grid place-items-center overflow-scroll">
       <h1 className="text-3xl font-bold text-black-600 text-center">
         Your Cart
       </h1>
-      <div className=" font-sans grid place-items-center h-screen">
+      <div className=" font-sans grid place-items-center h-screen ">
         {cartBody}
       </div>
     </div>
