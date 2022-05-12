@@ -16,14 +16,13 @@ const typeDefs = gql`
     month: Int
     year: Int
   }
-  
+
   type OrderPaymentInfo {
     card_no: String
     cvv: Int
     exp_date: CardDate
   }
 
-  
   type ItemIds {
     item_ids: ID
   }
@@ -43,6 +42,7 @@ const typeDefs = gql`
   type Query {
     getOrders: [Order]
     getOrder(_id: ID): Order
+    getuserOrder(user_id: String): [Order]
   }
 
   type Mutation {
