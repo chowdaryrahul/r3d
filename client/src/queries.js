@@ -383,6 +383,38 @@ const GET_USERS = gql`
   }
 `;
 
+const GET_USER_ORDER = gql`
+  query ($userId: String) {
+    getuserOrder(user_id: $userId) {
+      _id
+      item_ids
+      address {
+        apartment
+        street
+        city
+        state
+        country
+        zipcode
+      }
+      price_details {
+        total_price
+        tax
+        shipping_cost
+      }
+      estimated_delivery
+      user_id
+      payment_info {
+        card_no
+        cvv
+        exp_date {
+          month
+          year
+        }
+      }
+    }
+  }
+`;
+
 const ADD_COMMENT = gql`
   mutation (
     $_id: ID
@@ -706,6 +738,7 @@ let exported = {
   ADD_TO_CART,
   FETCH_USER,
   GET_USERS,
+  GET_USER_ORDER,
   FETCH_MULTIPLE_ITEM_BY_ID,
   UPDATE_ORDER_ID_IN_USER,
 };

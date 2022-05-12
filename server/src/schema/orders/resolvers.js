@@ -92,6 +92,10 @@ const resolvers = {
       const Order = await Order.findById({ _id: args._id });
       return Order;
     },
+    getuserOrder: async (_, args) => {
+      let ordersByUser = await Order.find({ user_id: args.user_id });
+      return ordersByUser;
+    },
   },
 
   Mutation: {
