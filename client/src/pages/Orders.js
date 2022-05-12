@@ -29,6 +29,7 @@ const Orders = (props) => {
         },
       });
       alert("order Placed");
+      window.location = "/lastpage";
     },
   });
 
@@ -48,15 +49,6 @@ const Orders = (props) => {
   let myCurrentDate = new Date();
   let myFutureDate = new Date(myCurrentDate);
   myFutureDate.setDate(myFutureDate.getDate() + 8);
-
-  function validateForm() {
-    let x = document.forms["myForm"]["firstName"].value;
-
-    if (x == "") {
-      alert("Name must be filled out");
-      return false;
-    }
-  }
 
   return (
     <div className="flex-auto flex-col overflow-scroll md:flex-row h-screen w-screen font-sans">
@@ -758,16 +750,16 @@ const Orders = (props) => {
                             </div>
                             <br />
                             {/* <Link to={`/lastpage`}> */}
-                              <button
-                                type="submit"
-                                className="bg-gray-300  text-black text-white font-bold py-2 px-4 rounded"
-                              >
-                                Place Order
-                                <LogoutIcon
-                                  className="h-6 w-6"
-                                  aria-hidden="true"
-                                />
-                              </button>
+                            <button
+                              type="submit"
+                              className="bg-gray-300  text-black text-white font-bold py-2 px-4 rounded"
+                            >
+                              Place Order
+                              <LogoutIcon
+                                className="h-6 w-6"
+                                aria-hidden="true"
+                              />
+                            </button>
                             {/* </Link> */}
                           </div>
                         </form>

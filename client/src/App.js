@@ -15,6 +15,8 @@ import PrivateOutlet from "./components/PrivateOutlet";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import LastPage from "./pages/Lastpage";
+import MyOrders from "./pages/myOrders";
+
 import {
   ApolloClient,
   HttpLink,
@@ -37,9 +39,10 @@ function App() {
             <Route exact path="/" element={<Home />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/projects" element={<Projects />} />
-               <Route path="/cart" element={<Cart />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/myorders" element={<MyOrders />} />
               <Route path="/itemview/:_id" element={<ItemView />} />
-               <Route path="/orders" element={<PrivateOutlet />}>
+              <Route path="/orders" element={<PrivateOutlet />}>
                 <Route path="" element={<Orders />} />
               </Route>
               <Route path="/lastpage" element={<LastPage />} />

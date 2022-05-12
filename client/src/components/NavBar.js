@@ -43,6 +43,7 @@ export default function NavBar() {
 
   userNavigation = [
     { name: "Your Profile", href: "/profile" },
+    { name: "Your Orders", href: "/myorders" },
     { name: "Settings", href: "/settings" },
   ];
 
@@ -169,6 +170,19 @@ export default function NavBar() {
                             >
                               Your Profile
                             </NavLink>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item key="Your Orders">
+                          {({ active }) => (
+                            <a
+                              href="/myorders"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Your Orders
+                            </a>
                           )}
                         </Menu.Item>
                         <Menu.Item key="Settings">
