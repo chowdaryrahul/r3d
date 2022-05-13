@@ -11,6 +11,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NoMatch from "./pages/NoMatch";
 import PrivateOutlet from "./components/PrivateOutlet";
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/create" element={<PrivateOutlet />}>
               <Route path="" element={<Create />} />
+            </Route>
+            <Route path="/profile" element={<PrivateOutlet />}>
+              <Route path="" element={<Profile />} />
             </Route>
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
