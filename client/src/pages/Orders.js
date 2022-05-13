@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import queries from "../queries.js";
 import { AuthContext } from "../firebase/Auth";
-
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../actions.js";
 import { Link } from "react-router-dom";
@@ -14,13 +13,14 @@ const Orders = (props) => {
   const dispatch = useDispatch();
   const { isValidUser, user } = useContext(AuthContext);
   const allCartItems = useSelector((state) => state.cartItems);
+  const itemQuantity = useSelector((state) => state.itemQuantity);
   const [orderIdInUser] = useMutation(queries.UPDATE_ORDER_ID_IN_USER);
   const orderIdForUser = useSelector((state) => state.orderId);
   const [createOrder] = useMutation(queries.CREATE_ORDER, {
     onCompleted: (data) => {
-      console.log("completed placing order");
       dispatch(actions.storeOrderIds(data.createOrder._id));
       dispatch(actions.emptyCart());
+      dispatch(actions.itemQtyEmpty());      
 
       orderIdInUser({
         variables: {
@@ -28,19 +28,25 @@ const Orders = (props) => {
           orderId: data.createOrder._id,
         },
       });
-      alert("order Placed");
-      window.location = "/lastpage";
+      window.alert("Order Placed!");
+      window.location = '/lastpage';
     },
   });
 
   let orderItemIds = [];
   let totalPrice = 0;
-  if (allCartItems) {
+  let prices = [];
+  if (allCartItems && itemQuantity) {
     allCartItems.cartItemData.map((itemsInCart) => {
       orderItemIds.push(itemsInCart._id);
-      totalPrice = totalPrice + itemsInCart.price;
+      itemQuantity.map((itmqty, idx) => {
+        if (itemsInCart._id === itmqty.idItem) {
+          totalPrice = totalPrice + itemsInCart.price * itmqty.quantity;
+        }
+      });
     });
   }
+
   let productTotalprice = totalPrice;
   const taxPrice = totalPrice * 0.14;
   const shippingPrice = totalPrice > 500 ? 0 : 10;
@@ -76,8 +82,7 @@ const Orders = (props) => {
                         </h2>
                         <form
                           className="justify-center w-full mx-auto"
-                          // method="post"
-                          // action
+                         
                           onSubmit={(e) => {
                             e.preventDefault();
                             createOrder({
@@ -111,7 +116,6 @@ const Orders = (props) => {
                                 shipping_cost: shippingPrice,
                               },
                             });
-                            // user db modification
                           }}
                         >
                           <div className="">

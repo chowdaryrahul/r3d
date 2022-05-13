@@ -19,8 +19,24 @@ const storeOrderIds = (id) => ({
     }
 })
 
+const mapItemQty = (itmQty) => ({
+    type: 'MAP_ITEM_QTY',
+    payload: {
+        itmQty: itmQty
+    }
+})
+
+const itemQtyEmpty = () => ({
+    type: 'ITEM_QTY_EMPTY',
+    payload: {
+        itmQty: []
+    }
+})
+
 module.exports= {
     addCartItem,
     emptyCart,
-    storeOrderIds
+    storeOrderIds,
+    mapItemQty,
+    itemQtyEmpty
 }

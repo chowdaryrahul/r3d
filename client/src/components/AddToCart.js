@@ -3,12 +3,15 @@ import { AuthContext } from "../firebase/Auth";
 import { useMutation, useQuery } from "@apollo/client";
 import queries from "../queries.js";
 import { Link } from "react-router-dom";
+import actions from "../actions.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddToCart = (props) => {
-  console.log("add to cart reached");
+  const dispatch = useDispatch();
   const { isValidUser, user } = useContext(AuthContext);
   const [addItemToCart] = useMutation(queries.ADD_TO_CART);
   const [removeItemFromCart] = useMutation(queries.REMOVE_FROM_CART);
+  const itemQuantity = useSelector((state) => state.itemQuantity);
 
   let userUid = "";
   if (isValidUser) {
@@ -38,6 +41,7 @@ const AddToCart = (props) => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
+
                 addItemToCart({
                   variables: {
                     _id: userUid,

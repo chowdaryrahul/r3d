@@ -37,7 +37,6 @@ const Card = (props) => {
               <div>
                 {items.likeDetails.map((likes, idx) => {
                   if (isValidUser && likes.user_id === user.uid) {
-                    // PENDING: use session user_id to check condition
                     likedIdx = true;
                   }
                 })}

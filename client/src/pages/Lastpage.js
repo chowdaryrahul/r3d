@@ -16,8 +16,6 @@ const Lastpage = () => {
   const [orderIdInUser] = useMutation(queries.UPDATE_ORDER_ID_IN_USER);
 
   if (orderIdForUser) {
-    console.log("order id last page: ", orderIdForUser);
-    console.log("order id last page and one moreeee: ", orderIdForUser.orderId);
     orderIdInUser({
       variables: {
         _id: user.uid,

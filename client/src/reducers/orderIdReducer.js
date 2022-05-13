@@ -5,7 +5,6 @@ const orderIdReducer = (state = initialState, action) => {
 
   switch (type) {
     case "STORE_ORDER_IDS":
-        console.log("store id in reducer: ",payload);
         return payload
 
     default:

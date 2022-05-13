@@ -16,6 +16,7 @@ import {
 const Cart = () => {
   const dispatch = useDispatch();
   const { isValidUser, user } = useContext(AuthContext);
+  const itemQuantity = useSelector((state) => state.itemQuantity);
 
   let userUid = "";
   if (isValidUser) {
@@ -46,7 +47,6 @@ const Cart = () => {
     variables: { ids: cartItemsOfUSer },
   });
 
-  console.log("data from multiple items: ", dataMI);
   let cartBody = null;
   if (isValidUser) {
     if (dataMI && dataMI.fetchMultipleItemById)
