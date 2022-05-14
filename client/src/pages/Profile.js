@@ -19,7 +19,6 @@ export default function Profile() {
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <form action="#" method="POST">
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
@@ -69,7 +68,6 @@ export default function Profile() {
                 </div>
                 
               </div>
-            </form>
           </div>
         </div>
       </div>
