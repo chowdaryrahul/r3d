@@ -129,14 +129,6 @@ export default function NavBar() {
                       Cart
                     </button>
                   </Link>
-                  <button
-                    type="button"
-                    className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-
                   {/* Profile dropdown */}
                   <Menu as="div" className="ml-3 relative">
                     <div>
@@ -174,15 +166,15 @@ export default function NavBar() {
                         </Menu.Item>
                         <Menu.Item key="Your Orders">
                           {({ active }) => (
-                            <a
-                              href="/myorders"
+                            <NavLink
+                              to="/myorders"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Your Orders
-                            </a>
+                            </NavLink>
                           )}
                         </Menu.Item>
                         <Menu.Item key="Settings">
@@ -307,7 +299,8 @@ export default function NavBar() {
                     onClick={item.clickHandle}
                     className="block w-full px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
                   >
-                    <button onClick={item.clickHandle}>{item.name}</button>
+                    {/* <button onClick={item.clickHandle}>{item.name}</button> */}
+                    {item.name}
                   </Disclosure.Button>
                 ))}
               </div>

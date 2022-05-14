@@ -53,7 +53,7 @@ const Card = (props) => {
 
   return (
     <div className="flex items-stretch ">
-      <ul className="grid sm:block md:grid md:block grid-cols-1 grid-rows-1 gap-1 items-center  flex items-stretch ">
+      <ul className="grid sm:block md:grid grid-cols-1 grid-rows-1 gap-1 items-center">
         {cardsItemsData.map((items, idx) => (
           <div
             key={items._id}
@@ -72,7 +72,8 @@ const Card = (props) => {
                 <Link to={`/itemview/${items._id}`}>
                   <img
                     src={items.multiple_images_of_obj[0]}
-                    className="w-30 h-64 bg-slate-100  h-64"
+                    alt="3d representation"
+                    className="w-30 h-64 bg-slate-100"
                   />
                 </Link>
               </p>
@@ -95,7 +96,9 @@ const Card = (props) => {
                     onClick={(e) => {
                       e.preventDefault();
                       let newqtyArr = [...qty];
-                      qty[idx] - 1 <= 0 ? (newqtyArr[idx] = 0) : (newqtyArr[idx] = qty[idx] - 1);
+                      qty[idx] - 1 <= 0
+                        ? (newqtyArr[idx] = 0)
+                        : (newqtyArr[idx] = qty[idx] - 1);
                       setQty(newqtyArr);
 
                       itmQty[idx].idItem = items._id;
