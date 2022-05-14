@@ -49,6 +49,10 @@ const GET_ORDER = gql`
       }
       estimated_delivery
       user_id
+      firstname
+      lastname
+      notes
+      phone
       price_details {
         total_price
         tax
@@ -77,6 +81,10 @@ const GET_ORDER = gql`
       }
       estimated_delivery
       user_id
+      firstname
+      lastname
+      notes
+      phone
       address {
         apartment
         street
@@ -107,6 +115,10 @@ const GET_ORDERS = gql`
       item_id
       estimated_delivery
       user_id
+      firstname
+      lastname
+      notes
+      phone
       price_details {
         total_price
         tax
@@ -181,6 +193,10 @@ const CREATE_ORDER = gql`
     $total_price: Float
     $tax: Float
     $shipping_cost: Float
+    $firstname: String
+    $lastname: String
+    $notes: String
+    $phone: String
   ) {
     createOrder(
       item_ids: $item_ids
@@ -198,9 +214,17 @@ const CREATE_ORDER = gql`
       total_price: $total_price
       tax: $tax
       shipping_cost: $shipping_cost
+      firstname: $firstname
+      lastname: $lastname
+      notes: $notes
+      phone: $phone
     ) {
       _id
       item_ids
+      firstname
+      lastname
+      notes
+      phone
       address {
         apartment
         street
@@ -388,6 +412,10 @@ const GET_USER_ORDER = gql`
     getuserOrder(user_id: $userId) {
       _id
       item_ids
+      firstname
+      lastname
+      notes
+      phone
       address {
         apartment
         street
