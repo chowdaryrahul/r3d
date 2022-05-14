@@ -10,6 +10,10 @@ const typeDefs = gql`
     estimated_delivery: String
     user_id: String
     payment_info: OrderPaymentInfo
+    phone: String
+    notes: String
+    firstname: String
+    lastname: String
   }
 
   type CardDate {
@@ -62,6 +66,10 @@ const typeDefs = gql`
       total_price: Float
       tax: Float
       shipping_cost: Float
+      phone: String
+      notes: String
+      firstname: String
+      lastname: String
     ): Order
   }
 `;

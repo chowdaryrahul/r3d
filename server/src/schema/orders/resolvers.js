@@ -79,6 +79,22 @@ const Order = mongoose.model(
         required: false,
       },
     },
+    firstname: {
+      type: String,
+      required: false,
+    },
+    lastname: {
+      type: String,
+      required: false,
+    },
+    phone: {
+      type: String,
+      reqired: false,
+    },
+    notes: {
+      type: String,
+      reqired: false,
+    },
   })
 );
 
@@ -132,6 +148,10 @@ const resolvers = {
         user_id: args.user_id,
         price_details: priceDetails,
         payment_info: userPaymentinfo,
+        phone: args.phone,
+        notes: args.notes,
+        firstname: args.firstname,
+        lastname: args.lastname,
       };
       const newOrder = new Order(saveOrder);
       const createOrder = await newOrder.save();
