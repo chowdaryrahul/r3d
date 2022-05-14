@@ -6,14 +6,11 @@ import React, { useContext } from "react";
 import { AuthContext } from "../firebase/Auth";
 
 const MyOrders = (props) => {
-  console.log("here");
   const { isValidUser, user } = useContext(AuthContext);
-  // let { items_ids } = useParams();
 
   let userUid = "";
   if (isValidUser) {
     userUid = user.uid;
-    console.log(userUid);
   }
 
   let {
@@ -26,23 +23,14 @@ const MyOrders = (props) => {
   });
   let order_id_arr = [];
   if (dataOrder && dataOrder.getuserOrder) {
+    console.log("FETCHING ORDER");
     console.log(dataOrder);
     dataOrder.getuserOrder.map(
-      (orders) =>
-        // console.log(orders.item_ids);
-        (order_id_arr = [...order_id_arr, orders.item_ids])
-
-      // orders.items_ids.map((itemIds) => {
-      //   console.log("inside: ", itemIds);
-      //   // order_id_arr.push(orders.items_ids);
-
-      //   // order_id_arr.push(itemIds);
-
-      // });
+      (orders) => (order_id_arr = [...order_id_arr, orders.item_ids])
     );
     order_id_arr = order_id_arr.flat();
-    // console.log("order id arr: ", order_id_arr);
-    // order_id_arr = dataOrder.getuserOrder.items_ids;
+    order_id_arr = [...new Set(order_id_arr)];
+
     console.log("all item ids: ", order_id_arr);
   }
 
@@ -50,12 +38,52 @@ const MyOrders = (props) => {
     fetchPolicy: "cache-and-network",
     variables: { ids: order_id_arr },
   });
-  // if (dataItems && dataItems.fetchMultipleItemById)
-  //   console.log("here", dataItems);
-  // let cardData = null;
-  // cardData = dataItems && dataItems.fetchMultipleItemById && (
-  //   <Card itemsDataInCard={dataItems.fetchMultipleItemById} />
-  // );
+
+  function generateItems(itemid) {
+    let b = [];
+    if (dataItems !== undefined) {
+      for (let idx = 0; idx < dataItems.fetchMultipleItemById.length; idx++) {
+        if (dataItems.fetchMultipleItemById[idx]._id == itemid) {
+          b.push(
+            <div>
+              <div className=" bg-white border-black-600 border-2 p-2 bg-transparent flex ">
+                <Link
+                  to={`/itemview/${dataItems.fetchMultipleItemById[idx]._id}`}
+                >
+                  <p className="flex flex-nowrap overflow-auto whitespace-wrap justify-content-center">
+                    {dataItems.fetchMultipleItemById[idx].title}
+                  </p>
+                  <span
+                    className="
+      rounded-lg
+      shadow-lg
+      bg-white
+      max-w-sm
+      border-indigo-600
+      border-1
+      "
+                  >
+                    <section className="">
+                      <img
+                        src={
+                          dataItems.fetchMultipleItemById[idx]
+                            .multiple_images_of_obj[0]
+                        }
+                        className="object-scale-down h-20"
+                      />
+                    </section>
+                  </span>
+                </Link>
+              </div>
+            </div>
+          );
+        }
+      }
+    }
+
+    return b;
+  }
+
   let orderData = null;
   orderData = dataOrder && dataOrder.getuserOrder && (
     <div className="flex flex-nowrap lg:48 overflow-x-auto whitespace-wrap justify-content-center scroll-auto">
@@ -79,40 +107,9 @@ const MyOrders = (props) => {
                   <p>Purchased items:</p>
 
                   <div className="flex flex-nowrap  overflow-x-auto ">
-                    {/* {cardData} */}
-                    {dataItems && dataItems.fetchMultipleItemById && (
-                      <div>
-                        <div className=" bg-white border-black-600 border-2 p-2 bg-transparent flex ">
-                          <Link
-                            to={`/itemview/${dataItems.fetchMultipleItemById[idx]._id}`}
-                          >
-                            <p className="flex flex-nowrap overflow-auto whitespace-wrap justify-content-center">
-                              {dataItems.fetchMultipleItemById[idx].title}
-                            </p>
-                            <span
-                              className="
-                  rounded-lg
-                  shadow-lg
-                  bg-white
-                  max-w-sm
-                  border-indigo-600
-                  border-1
-                  "
-                            >
-                              <section className="">
-                                <img
-                                  src={
-                                    dataItems.fetchMultipleItemById[idx]
-                                      .multiple_images_of_obj[0]
-                                  }
-                                  className="object-scale-down h-20"
-                                />
-                              </section>
-                            </span>
-                          </Link>
-                        </div>
-                      </div>
-                    )}
+                    {orders.item_ids.map((itemid, jdx) => {
+                      return generateItems(itemid);
+                    })}
                   </div>
                   <div>
                     <p>Price details:</p>
