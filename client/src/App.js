@@ -6,31 +6,58 @@ import logo from "./logo.svg";
 import "./App.css";
 import { AuthProvider } from "./firebase/Auth";
 import Projects from "./pages/Projects";
+import ItemView from "./pages/ItemView";
 import Create from "./pages/Create";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NoMatch from "./pages/NoMatch";
 import PrivateOutlet from "./components/PrivateOutlet";
+import Cart from "./pages/Cart";
+import Orders from "./pages/Orders";
+import LastPage from "./pages/Lastpage";
+import MyOrders from "./pages/myOrders";
+
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new HttpLink({
+    uri: "http://localhost:4000",
+  }),
+});
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<Home />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/create" element={<PrivateOutlet />}>
-              <Route path="" element={<Create />} />
+    <ApolloProvider client={client}>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<Home />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/myorders" element={<MyOrders />} />
+              <Route path="/itemview/:_id" element={<ItemView />} />
+              <Route path="/orders" element={<PrivateOutlet />}>
+                <Route path="" element={<Orders />} />
+              </Route>
+              <Route path="/lastpage" element={<LastPage />} />
+              <Route path="/create" element={<PrivateOutlet />}>
+                <Route path="" element={<Create />} />
+              </Route>
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/404" element={<Page404 />} />
+              <Route path="*" element={<NoMatch />} />
             </Route>
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/404" element={<Page404 />} />
-            <Route path="*" element={<NoMatch />} />
-          </Route>
-        </Routes>
-      </Router>
-    </AuthProvider>
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </ApolloProvider>
   );
 }
 
