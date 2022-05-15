@@ -2,7 +2,6 @@ import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Page404 from "./pages/Page404";
-import logo from "./logo.svg";
 import "./App.css";
 import { AuthProvider } from "./firebase/Auth";
 import Projects from "./pages/Projects";
@@ -16,7 +15,9 @@ import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import LastPage from "./pages/Lastpage";
 import MyOrders from "./pages/myOrders";
-
+import ProfilePage from "./pages/ProfilePage";
+import Settings from "./pages/Settings";
+import ContactUs from "./pages/ContactUs";
 import {
   ApolloClient,
   HttpLink,
@@ -41,10 +42,15 @@ function App() {
               <Route path="/" element={<Dashboard client={client} />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/contactus" element={<ContactUs />} />
               <Route path="/myorders" element={<MyOrders />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/itemview/:_id" element={<ItemView />} />
               <Route path="/orders" element={<PrivateOutlet />}>
                 <Route path="" element={<Orders />} />
+              </Route>
+              <Route path="/profile" element={<PrivateOutlet />}>
+                <Route path="" element={<ProfilePage />} />
               </Route>
               <Route path="/lastpage" element={<LastPage />} />
               <Route path="/create" element={<PrivateOutlet />}>

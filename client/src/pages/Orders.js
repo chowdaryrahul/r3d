@@ -82,23 +82,18 @@ const Orders = (props) => {
   };
 
   const validateForm = (e) => {
-    console.log(e);
     let valid = true;
     Object.keys(e).forEach((key) => {
-      console.log(typeof key);
       if (document.getElementById(key).value.length === 0) valid = false;
       if (e[key] !== "" || e[key] === "select") valid = false;
     });
-    console.log("valid val : ", valid);
+
     return valid;
   };
 
   const [errors, setErrors] = useState(errorMap);
   const handleChange = (event) => {
     const { name, value } = event.target;
-
-    console.log("event name is: ", name);
-    console.log("event value is: ", value);
 
     switch (name) {
       case "firstName":
@@ -109,7 +104,6 @@ const Orders = (props) => {
               ? "Full Name must be at least 2 characters long!"
               : "",
         });
-        console.log("changed name", errors.fn);
 
         break;
       case "lastName":
@@ -238,7 +232,7 @@ const Orders = (props) => {
       default:
         break;
     }
-    console.log("errors is ", errors);
+
     return;
   };
 
