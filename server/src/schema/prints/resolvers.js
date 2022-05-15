@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-import { PubSub } from "graphql-subscriptions";
-const pubsub = new PubSub();
 
 const Item = mongoose.model(
   "Item",
@@ -130,24 +128,8 @@ const Item = mongoose.model(
   })
 );
 
-const Notification = mongoose.model(
-  "Notification",
-
-  new Schema({
-    user_name: {
-      type: String,
-      required: true,
-    },
-  })
-);
-
 const resolvers = {
   Query: {
-    notifications: async (_, args) => {
-      const allNotifications = await Notification.find({}).limit(5);
-
-      return [...allNotifications];
-    },
     fetchItems: async (_, args) => {
       const items = await Item.find({});
       return items;
@@ -164,6 +146,36 @@ const resolvers = {
           itemArr.push(item);
         })
       );
+      return itemArr;
+    },
+    fetchItemByUserId: async (_, args) => {
+      const item = await Item.find({ user_id: args.user_id });
+      return item;
+    },
+    fetchLikesByUserId: async (_, args) => {
+      const item = await Item.find({});
+      let itemArr = [];
+      item.map((i) => {
+        i.likeDetails.length > 0 &&
+          i.likeDetails.map((likeDeets) => {
+            if (likeDeets.user_id === args.user_id) {
+              itemArr.push(i);
+            }
+          });
+      });
+      return itemArr;
+    },
+    fetchCmtByUserId: async (_, args) => {
+      const item = await Item.find({});
+      let itemArr = [];
+      item.map((i) => {
+        i.comments.length > 0 &&
+          i.comments.map((cmtDeets) => {
+            if (cmtDeets.user_id === args.user_id) {
+              itemArr.push(i);
+            }
+          });
+      });
       return itemArr;
     },
   },
@@ -198,16 +210,8 @@ const resolvers = {
       };
       const newItem = new Item(saveItem);
       const createdItem = await newItem.save();
-      if (createdItem) {
-        const { user_name } = createdItem;
-        console.log(user_name);
-        const addNotification = new Notification({ user_name });
-        addNotification.save();
-        pubsub.publish("TRIGGER_NEW_POST", {
-          newPostNotify: addNotification.user_name,
-        });
-        return createdItem;
-      }
+
+      return createdItem;
     },
 
     likeItem: async (_, args) => {
@@ -268,11 +272,6 @@ const resolvers = {
         { $pull: { comments: commentsVal } }
       );
       return await Item.findById({ _id: args._id });
-    },
-  },
-  Subscription: {
-    newPostNotify: {
-      subscribe: () => pubsub.asyncIterator(["TRIGGER_NEW_POST"]),
     },
   },
 };
