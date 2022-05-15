@@ -17,7 +17,7 @@ import LastPage from "./pages/Lastpage";
 import MyOrders from "./pages/myOrders";
 import ProfilePage from "./pages/ProfilePage";
 import Settings from "./pages/Settings";
-
+import ContactUs from "./pages/ContactUs";
 import {
   ApolloClient,
   HttpLink,
@@ -26,6 +26,7 @@ import {
 } from "@apollo/client";
 const client = new ApolloClient({
   cache: new InMemoryCache(),
+  fetchPolicy: "cache-and-network",
   link: new HttpLink({
     uri: "http://localhost:4000",
   }),
@@ -38,9 +39,10 @@ function App() {
         <Router>
           <Routes>
             <Route exact path="/" element={<Home />}>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Dashboard client={client} />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/contactus" element={<ContactUs />} />
               <Route path="/myorders" element={<MyOrders />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/itemview/:_id" element={<ItemView />} />

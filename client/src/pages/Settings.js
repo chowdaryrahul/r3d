@@ -100,7 +100,11 @@ const Settings = (props) => {
                   about_me: about,
                 },
               });
+              document.getElementById("firstName").value = "";
+              document.getElementById("lastName").value = "";
+              document.getElementById("aboutme").value = "";
               alert("Profile updated!");
+              window.location = "/";
             } else {
               alert("Form Invalid!");
             }
