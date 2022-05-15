@@ -751,8 +751,22 @@ const UPDATE_ORDER_ID_IN_USER = gql`
     }
   }
 `;
+const NOTIFICATION = gql`
+  subscription Subscription {
+    newPostNotify
+  }
+`;
+const ALL_NOTIFICATIONS = gql`
+  query Notifications {
+    notifications {
+      user_name
+    }
+  }
+`;
 
 let exported = {
+  ALL_NOTIFICATIONS,
+  NOTIFICATION,
   FETCH_ITEMS,
   CREATE_ITEM,
   GET_ORDER,
