@@ -2,7 +2,6 @@ import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Page404 from "./pages/Page404";
-import logo from "./logo.svg";
 import "./App.css";
 import { AuthProvider } from "./firebase/Auth";
 import Projects from "./pages/Projects";
@@ -16,6 +15,7 @@ import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import LastPage from "./pages/Lastpage";
 import MyOrders from "./pages/myOrders";
+import ProfilePage from "./pages/ProfilePage";
 
 import {
   ApolloClient,
@@ -44,6 +44,9 @@ function App() {
               <Route path="/itemview/:_id" element={<ItemView />} />
               <Route path="/orders" element={<PrivateOutlet />}>
                 <Route path="" element={<Orders />} />
+              </Route>
+              <Route path="/profile" element={<PrivateOutlet />}>
+                <Route path="" element={<ProfilePage />} />
               </Route>
               <Route path="/lastpage" element={<LastPage />} />
               <Route path="/create" element={<PrivateOutlet />}>
