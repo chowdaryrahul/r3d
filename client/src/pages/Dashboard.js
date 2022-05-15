@@ -21,6 +21,10 @@ const Dashboard = (props) => {
   const itemperpage = 20;
   const pagecount = Math.ceil(itemData.length / itemperpage);
 
+  let { loading, error, data } = useQuery(queries.FETCH_ITEMS, {
+    fetchPolicy: "cache-and-network",
+  });
+
   props.client
     .query({
       query: queries.FETCH_ITEMS,
