@@ -161,6 +161,16 @@ const resolvers = {
       );
       return itemArr;
     },
+    fetchMultipleItemByUserId: async (_, args) => {
+      let itemArr = [];
+      let itemArrData = await Promise.all(
+        args._ids.map(async (itemIds) => {
+          const item = await Item.findById({ user_id: userId });
+          itemArr.push(item);
+        })
+      );
+      return itemArr;
+    },
   },
 
   Mutation: {

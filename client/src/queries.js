@@ -731,6 +731,46 @@ const FETCH_MULTIPLE_ITEM_BY_ID = gql`
   }
 `;
 
+const FETCH_MULTIPLE_ITEM_BY_USERID = gql`
+  query ($ids: [ID]) {
+    fetchMultipleItemByUserId(user_id: $ids) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
+
 const UPDATE_ORDER_ID_IN_USER = gql`
   mutation ($_id: String, $orderId: String) {
     afterPlaceOrder(_id: $_id, orderId: $orderId) {
@@ -769,6 +809,7 @@ let exported = {
   GET_USER_ORDER,
   FETCH_MULTIPLE_ITEM_BY_ID,
   UPDATE_ORDER_ID_IN_USER,
+  FETCH_MULTIPLE_ITEM_BY_USERID
 };
 
 export default exported;

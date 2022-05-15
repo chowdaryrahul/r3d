@@ -47,6 +47,7 @@ const typeDefs = gql`
     fetchItems: [Item]
     fetchItem(_id: ID): Item
     fetchMultipleItemById(_ids: [ID]): [Item]
+    fetchMultipleItemByUserId(user_id: [ID]): [Item]
   }
   
   type Mutation {
