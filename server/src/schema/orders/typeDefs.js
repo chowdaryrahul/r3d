@@ -52,6 +52,7 @@ const typeDefs = gql`
   type Mutation {
     createOrder(
       item_ids: [String]
+      card_no: String
       estimated_delivery: String
       user_id: String
       cvv: Int
