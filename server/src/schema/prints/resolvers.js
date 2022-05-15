@@ -14,6 +14,7 @@ const Item = mongoose.model(
     title: {
       type: String,
       required: true,
+      
     },
     likeDetails: [
       {
@@ -47,7 +48,6 @@ const Item = mongoose.model(
     category: {
       type: String,
       required: false,
-
     },
     tags: {
       type: String,
@@ -73,38 +73,47 @@ const Item = mongoose.model(
       printer: {
         type: String,
         required: false,
+        
       },
       printer_brand: {
         type: String,
         required: false,
+        
       },
       rafts: {
         type: String,
         required: false,
+        
       },
       supports: {
         type: String,
         required: false,
+        
       },
       resolution: {
         type: String,
         required: false,
+        
       },
       infill: {
         type: String,
         required: false,
+        
       },
       filament_brand: {
         type: String,
         required: false,
+        
       },
       filament_color: {
         type: String,
         required: false,
+        
       },
       filament_material: {
         type: String,
         required: false,
+        
       },
     },
     comments: [
@@ -172,7 +181,6 @@ const resolvers = {
 
   Mutation: {
     createItem: async (_, args) => {
-      console.log(args);
       let printerSettings = {
         printer: args.printer,
         printer_brand: args.printer_brand,
