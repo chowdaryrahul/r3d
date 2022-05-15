@@ -52,6 +52,10 @@ export default function UploadDialog() {
   };
   console.log(uploadedFiles);
 
+ 
+
+
+  localStorage.setItem("images",JSON.stringify(uploadedFiles))
   const clearFilesHandler = () => {
     setImages([]);
   };
