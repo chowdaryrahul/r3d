@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema,
+  ObjectId = Schema.ObjectId;
+import mongoosastic from "mongoosastic";
+import { PubSub } from "graphql-subscriptions";
+
+const pubsub = new PubSub();
+
 
 const Item = mongoose.model(
   "Item",
@@ -8,7 +14,6 @@ const Item = mongoose.model(
     title: {
       type: String,
       required: true,
-      
     },
     likeDetails: [
       {
@@ -34,27 +39,23 @@ const Item = mongoose.model(
     user_id: {
       type: String,
       required: false,
-      unique: true,
     },
     user_name: {
       type: String,
       required: false,
-      unique: true,
     },
     category: {
       type: String,
       required: false,
-      
+
     },
     tags: {
       type: String,
       required: false,
-      
     },
     description: {
       type: String,
       required: false,
-      
     },
     upload_date: {
       type: String,
@@ -72,47 +73,38 @@ const Item = mongoose.model(
       printer: {
         type: String,
         required: false,
-        
       },
       printer_brand: {
         type: String,
         required: false,
-        
       },
       rafts: {
         type: String,
         required: false,
-        
       },
       supports: {
         type: String,
         required: false,
-        
       },
       resolution: {
         type: String,
         required: false,
-        
       },
       infill: {
         type: String,
         required: false,
-        
       },
       filament_brand: {
         type: String,
         required: false,
-        
       },
       filament_color: {
         type: String,
         required: false,
-        
       },
       filament_material: {
         type: String,
         required: false,
-        
       },
     },
     comments: [
@@ -138,11 +130,26 @@ const Item = mongoose.model(
         required: false,
       },
     ],
-  })
+  }).plugin(mongoosastic)
+);
+const Notification = mongoose.model(
+  "Notification",
+
+  new Schema({
+    user_name: {
+      type: String,
+      required: true,
+    },
+  }).plugin(mongoosastic)
 );
 
 const resolvers = {
   Query: {
+    notifications:async(_, args)=>{
+      const allNotifications = await Notification.find({}).limit(5);
+      
+      return [...allNotifications]
+    },
     fetchItems: async (_, args) => {
       const items = await Item.find({});
       return items;
@@ -165,6 +172,7 @@ const resolvers = {
 
   Mutation: {
     createItem: async (_, args) => {
+      console.log(args);
       let printerSettings = {
         printer: args.printer,
         printer_brand: args.printer_brand,
@@ -193,8 +201,14 @@ const resolvers = {
       };
       const newItem = new Item(saveItem);
       const createdItem = await newItem.save();
-
+         if(createdItem){
+          const {user_name} = createdItem
+          console.log(user_name)
+          const addNotification = new Notification({user_name});
+            addNotification.save() 
+          pubsub.publish('TRIGGER_NEW_POST', {newPostNotify:addNotification.user_name})
       return createdItem;
+         }
     },
 
     likeItem: async (_, args) => {
@@ -257,6 +271,11 @@ const resolvers = {
       return await Item.findById({ _id: args._id });
     },
   },
+  Subscription: {
+    newPostNotify:{
+      subscribe:()=>pubsub.asyncIterator(['TRIGGER_NEW_POST'])
+    }
+  }
 };
 
 export default resolvers;

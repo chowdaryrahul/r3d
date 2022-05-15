@@ -6,6 +6,7 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { AuthContext } from "../firebase/Auth";
 import { doSignOut } from "../firebase/FirebaseFunctions";
 import { useNavigate } from "react-router-dom";
+import Notifications from '../pages/Notifications'
 
 let userInfo = {
   name: "Guest",
@@ -96,8 +97,11 @@ export default function NavBar() {
                         {item.name}
                       </NavLink>
                     ))}
+                    <Notifications/>
+
                   </div>
                 </div>
+
               </div>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6">
@@ -265,6 +269,8 @@ export default function NavBar() {
                   </NavLink>
                 </Disclosure.Button>
               ))}
+                                                    <Notifications/>
+
             </div>
             <div className="pt-4 pb-3 border-t border-gray-700">
               <div className="flex items-center px-5">

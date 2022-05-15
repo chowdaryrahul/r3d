@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "graphql-subscriptions": "^2.0.0",
+    "graphql-ws": "^5.8.2",
+    "mongoosastic": "^5.0.0",
+    "subscriptions-transport-ws": "^0.11.0",
+    "tslib": "^2.4.0"
+  }
+}
