@@ -1,7 +1,66 @@
 import MongoDBServerInit from "./src/servers/mongoServer";
 import mongoose from "mongoose";
+import {
+  randUser,
+  randImg,
+  randLine,
+  randNumber,
+  randBetweenDate,
+  randAccessory,
+  randProductCategory,
+  randProductDescription,
+} from "@ngneat/falso";
+import { ObjectId } from "mongodb";
 
-MongoDBServerInit();
+await MongoDBServerInit();
+
+const users = [
+  {
+    username: "test",
+    email: "test@gmail.com",
+    uid: "qiD0TSDCfSScDKpu2PjHjxq5fw12",
+  },
+  {
+    username: "Mark",
+    email: "mark@stevens.com",
+    uid: "Ociy644s9mYf2dv7y5VWLO2kHeU2",
+  },
+  {
+    username: "test",
+    email: "test@stevens.edu",
+    uid: "Vjxfc6t73PX8TGCaivEieYDE1Kd2",
+  },
+  {
+    username: "harshit",
+    email: "test@gmail.com",
+    uid: "5bSpVLO7NwYP82vSgjZiPl9m9pV2",
+  },
+  {
+    username: "rahul",
+    email: "hkaregti@gmail.com",
+    uid: "wxZhhK6hLsZXYHA4ePzspjPvL2I2",
+  },
+  {
+    username: "shivani",
+    email: "shivani@gmail.com",
+    uid: "nPanEW0TiATqiBFx22H7iQL9HCk2",
+  },
+  {
+    username: "aishwarya",
+    email: "aish@gmail.com",
+    uid: "FTob1le9D4U2bpDHfCyaYNykjS52",
+  },
+  {
+    username: "shivani",
+    email: "shivani@stevens.edu",
+    uid: "nJEZRbajutcgg0T0gOO9tiSInA72",
+  },
+  {
+    username: "tanaya",
+    email: "bholetanaya2715@gmail.com",
+    uid: "OXe8OvF1Sngd69iETD2G0ad0jdf1",
+  },
+];
 
 const Schema = mongoose.Schema;
 
@@ -17,10 +76,12 @@ const Item = mongoose.model(
       {
         user_id: {
           type: String,
+          unique: false,
           required: false,
         },
         user_name: {
           type: String,
+          unique: false,
           required: false,
         },
         liked: {
@@ -130,165 +191,134 @@ const Item = mongoose.model(
   })
 );
 
-let item = {
-  title: "Lamp",
-  user_id: "nPanEW0TiATqiBFx22H7iQL9HCk2",
-  user_name: "Shivani m",
-  category: "Decor",
-  tags: "object, decorative",
-  description: "Patterned lamp",
-  upload_date: "05-14-2022",
-  license: "ISO",
-  price: 29.99,
-  print_settings: {
-    printer: "Wireless 3D Printer",
-    printer_brand: "MakerBot Replicator",
-    rafts: "needed",
-    supports: "needed",
-    resolution: "10X10",
-    infill: "Honeycomb",
-    filament_brand: "Hatchbox PLA ",
-    filament_color: "White",
-    filament_material: "PLA Carbon Fiber",
-  },
-  comments: [],
-  multiple_images_of_obj: ["/lamp1.jpeg", "/lamp2.jpeg"],
-  totalLikes: 0,
-  likeDetails: [],
-};
+const User = mongoose.model(
+  "User",
 
-let item2 = {
-  title: "3d printed bowl",
-  user_id: "nPanEW0TiATqiBFx22H7iQL9HCk2",
-  user_name: "Shivani m",
-  category: "Decor",
-  tags: "object, decorative",
-  description: "Patterned bowl",
-  upload_date: "05-14-2022",
-  license: "ISO",
-  price: 40,
-  print_settings: {
-    printer: "Wireless 3D Printer",
-    printer_brand: "MakerBot Replicator",
-    rafts: "needed",
-    supports: "needed",
-    resolution: "10X10",
-    infill: "Honeycomb",
-    filament_brand: "Hatchbox PLA ",
-    filament_color: "White",
-    filament_material: "PLA Carbon Fiber",
-  },
-  comments: [],
-  multiple_images_of_obj: ["/bowl1.png", "/bowl2.jpeg", "/bowl3.jpeg"],
-  totalLikes: 0,
-  likeDetails: [],
-};
+  new Schema({
+    _id: String,
+    user_name: {
+      type: String,
+      required: false,
+    },
 
-let item3 = {
-  title: "Patterned basket/bowl",
-  user_id: "nPanEW0TiAT99BFx22H7iQL9HCk2",
-  user_name: "aish m",
-  category: "Decor",
-  tags: "object, decorative",
-  description: "home decor bowl to keep things",
-  upload_date: "05-14-2022",
-  license: "ISO",
-  price: 45,
-  print_settings: {
-    printer: "Wireless 3D Printer",
-    printer_brand: "MakerBot Replicator",
-    rafts: "needed",
-    supports: "needed",
-    resolution: "10X10",
-    infill: "Honeycomb",
-    filament_brand: "Hatchbox PLA ",
-    filament_color: "White",
-    filament_material: "PLA Carbon Fiber",
-  },
-  comments: [],
-  multiple_images_of_obj: ["/bowl1.jpeg"],
-  totalLikes: 0,
-  likeDetails: [],
-};
+    password: {
+      type: String,
+      required: false,
+    },
 
-let item4 = {
-  title: "3d printed turtle toy",
-  user_id: "nPanEW0TiAT99BFx22H7iQL9HCk2",
-  user_name: "aish m",
-  category: "Decor",
-  tags: "object, decorative",
-  description: "Quirky little squishy turtles toys",
-  upload_date: "05-14-2022",
-  license: "ISO",
-  price: 50,
-  print_settings: {
-    printer: "Wireless 3D Printer",
-    printer_brand: "MakerBot Replicator",
-    rafts: "needed",
-    supports: "needed",
-    resolution: "10X10",
-    infill: "Honeycomb",
-    filament_brand: "Hatchbox PLA ",
-    filament_color: "White",
-    filament_material: "PLA Carbon Fiber",
-  },
-  comments: [],
-  multiple_images_of_obj: ["/turtle1.jpeg", "/turtle2.jpeg"],
-  totalLikes: 0,
-  likeDetails: [],
-};
+    email: {
+      type: String,
+      required: true,
+    },
 
-let item5 = {
-  title: "Customised keychain",
-  user_id: "nPanEW0TiAT99BFx22H7iQL9HCk2",
-  user_name: "aish m",
-  category: "Decor",
-  tags: "object, decorative",
-  description:
-    "Customised keychains. Enter your choice of name in notes while place order",
-  upload_date: "05-14-2022",
-  license: "ISO",
-  price: 50,
-  print_settings: {
-    printer: "Wireless 3D Printer",
-    printer_brand: "MakerBot Replicator",
-    rafts: "needed",
-    supports: "needed",
-    resolution: "10X10",
-    infill: "Honeycomb",
-    filament_brand: "Hatchbox PLA ",
-    filament_color: "White",
-    filament_material: "PLA Carbon Fiber",
-  },
-  comments: [],
-  multiple_images_of_obj: [
-    "/keychain1.jpeg",
-    "/keychain2.jpeg",
-    "/keychain3.jpeg",
-    "/keychain4.png",
-  ],
-  totalLikes: 0,
-  likeDetails: [],
-};
+    firstname: {
+      type: String,
+      required: false,
+    },
 
-try {
-  const newItem = new Item(item);
-  const createdItem = await newItem.save();
-  console.log(createdItem);
+    lastname: {
+      type: String,
+      required: false,
+    },
+    about_me: {
+      type: String,
+      required: false,
+    },
+    cart_items: [
+      {
+        item_id: {
+          type: String,
+          required: false,
+        },
+        quantity: {
+          type: Number,
+          required: false,
+        },
+      },
+    ],
+    active_order_ids: [{ type: String, required: false }],
+  })
+);
 
-  const newItem2 = new Item(item2);
-  const createdItem2 = await newItem2.save();
+async function seedDB() {
+  try {
+    console.log("Seeding..");
 
-  const newItem3 = new Item(item3);
-  const createdItem3 = await newItem3.save();
+    // make a bunch of users
+    let userData = [];
+    users.forEach((user) => {
+      const randomUser = randUser();
 
-  const newItem4 = new Item(item4);
-  const createdItem4 = await newItem4.save();
+      let newUser = {
+        _id: user.uid,
+        user_name: randomUser.username,
+        email: user.email,
+        firstname: randomUser.firstName,
+        lastname: randomUser.lastName,
+        about_me: randLine({ lineCount: 6 }),
+        cart_items: [],
+        active_order_ids: [],
+        __v: 0,
+      };
 
-  const newItem5 = new Item(item5);
-  const createdItem5 = await newItem5.save();
-} catch (e) {
-  console.log("Seed failed due to duplicate entries in Items");
+      userData.push(newUser);
+    });
+
+    User.collection.insertMany(userData, function (err, docs) {
+      if (err) {
+        return console.error(err);
+      } else {
+        console.log("Multiple users inserted to Collection");
+      }
+    });
+
+    // make a bunch of items for each user
+    userData.forEach((user) => {
+      let itemData = [];
+      for (let i = 0; i < 20; i++) {
+        let newItem = {
+          title: randAccessory(),
+          user_id: user._id,
+          user_name: user.user_name,
+          category: "machine",
+          tags: `${randProductCategory()},${randProductCategory()},${randProductCategory()},${randProductCategory()}`,
+          description: randProductDescription(),
+          upload_date: randBetweenDate({
+            from: new Date("10/07/2020"),
+            to: new Date(),
+          }),
+          license: "MIT",
+          price: randNumber(),
+          print_settings: {
+            printer: "Wireless 3D Printer",
+            printer_brand: "MakerBot Replicator",
+            rafts: "needed",
+            supports: "needed",
+            resolution: "10X10",
+            infill: "Honeycomb",
+            filament_brand: "Hatchbox PLA ",
+            filament_color: "White",
+            filament_material: "PLA Carbon Fiber",
+          },
+          comments: [],
+          multiple_images_of_obj: [randImg(), randImg(), randImg(), randImg()],
+          totalLikes: 0,
+          likeDetails: [],
+        };
+        itemData.push(newItem);
+      }
+      // save multiple documents to the collection referenced by Book Model
+      Item.collection.insertMany(itemData, function (err, docs) {
+        if (err) {
+          return console.error(err);
+        } else {
+          console.log("Multiple items inserted to Collection");
+        }
+      });
+    });
+  } catch (err) {
+    console.log(err.stack);
+  }
 }
 
-mongoose.connection.close();
+await seedDB();
