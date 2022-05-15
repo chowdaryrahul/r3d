@@ -8,16 +8,17 @@ const Item = mongoose.model(
     title: {
       type: String,
       required: true,
-      
     },
     likeDetails: [
       {
         user_id: {
           type: String,
+          unique: false,
           required: false,
         },
         user_name: {
           type: String,
+          unique: false,
           required: false,
         },
         liked: {
@@ -34,27 +35,22 @@ const Item = mongoose.model(
     user_id: {
       type: String,
       required: false,
-      unique: true,
     },
     user_name: {
       type: String,
       required: false,
-      unique: true,
     },
     category: {
       type: String,
       required: false,
-      
     },
     tags: {
       type: String,
       required: false,
-      
     },
     description: {
       type: String,
       required: false,
-      
     },
     upload_date: {
       type: String,
@@ -72,47 +68,38 @@ const Item = mongoose.model(
       printer: {
         type: String,
         required: false,
-        
       },
       printer_brand: {
         type: String,
         required: false,
-        
       },
       rafts: {
         type: String,
         required: false,
-        
       },
       supports: {
         type: String,
         required: false,
-        
       },
       resolution: {
         type: String,
         required: false,
-        
       },
       infill: {
         type: String,
         required: false,
-        
       },
       filament_brand: {
         type: String,
         required: false,
-        
       },
       filament_color: {
         type: String,
         required: false,
-        
       },
       filament_material: {
         type: String,
         required: false,
-        
       },
     },
     comments: [

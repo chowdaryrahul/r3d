@@ -179,6 +179,7 @@ const CREATE_USER = gql`
 const CREATE_ORDER = gql`
   mutation (
     $item_ids: [String]
+    $card_no: String
     $cvv: Int
     $month: Int
     $year: Int
@@ -200,6 +201,7 @@ const CREATE_ORDER = gql`
   ) {
     createOrder(
       item_ids: $item_ids
+      card_no: $card_no
       cvv: $cvv
       month: $month
       year: $year
