@@ -158,15 +158,15 @@ let item = {
 };
 
 let item2 = {
-  title: "Lamp",
+  title: "3d printed bowl",
   user_id: "nPanEW0TiATqiBFx22H7iQL9HCk2",
   user_name: "Shivani m",
   category: "Decor",
   tags: "object, decorative",
-  description: "Patterned lamp",
+  description: "Patterned bowl",
   upload_date: "05-14-2022",
   license: "ISO",
-  price: 29.99,
+  price: 40,
   print_settings: {
     printer: "Wireless 3D Printer",
     printer_brand: "MakerBot Replicator",
@@ -179,21 +179,21 @@ let item2 = {
     filament_material: "PLA Carbon Fiber",
   },
   comments: [],
-  multiple_images_of_obj: ["/lamp1.jpeg", "/lamp2.jpeg"],
+  multiple_images_of_obj: ["/bowl1.png", "/bowl2.jpeg", "/bowl3.jpeg"],
   totalLikes: 0,
   likeDetails: [],
 };
 
 let item3 = {
-  title: "Lamp",
+  title: "Patterned basket/bowl",
   user_id: "nPanEW0TiAT99BFx22H7iQL9HCk2",
-  user_name: "Shivani m",
+  user_name: "aish m",
   category: "Decor",
   tags: "object, decorative",
-  description: "Patterned lamp",
+  description: "home decor bowl to keep things",
   upload_date: "05-14-2022",
   license: "ISO",
-  price: 29.99,
+  price: 45,
   print_settings: {
     printer: "Wireless 3D Printer",
     printer_brand: "MakerBot Replicator",
@@ -206,7 +206,7 @@ let item3 = {
     filament_material: "PLA Carbon Fiber",
   },
   comments: [],
-  multiple_images_of_obj: ["/lamp1.jpeg", "/lamp2.jpeg"],
+  multiple_images_of_obj: ["/bowl1.jpeg"],
   totalLikes: 0,
   likeDetails: [],
 };
@@ -221,7 +221,6 @@ try {
 
   const newItem3 = new Item(item3);
   const createdItem3 = await newItem3.save();
-
 } catch (e) {
   console.log("Seed failed due to duplicate entries in Items");
 }
