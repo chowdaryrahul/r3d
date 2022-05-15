@@ -211,6 +211,66 @@ let item3 = {
   likeDetails: [],
 };
 
+let item4 = {
+  title: "3d printed turtle toy",
+  user_id: "nPanEW0TiAT99BFx22H7iQL9HCk2",
+  user_name: "aish m",
+  category: "Decor",
+  tags: "object, decorative",
+  description: "Quirky little squishy turtles toys",
+  upload_date: "05-14-2022",
+  license: "ISO",
+  price: 50,
+  print_settings: {
+    printer: "Wireless 3D Printer",
+    printer_brand: "MakerBot Replicator",
+    rafts: "needed",
+    supports: "needed",
+    resolution: "10X10",
+    infill: "Honeycomb",
+    filament_brand: "Hatchbox PLA ",
+    filament_color: "White",
+    filament_material: "PLA Carbon Fiber",
+  },
+  comments: [],
+  multiple_images_of_obj: ["/turtle1.jpeg", "/turtle2.jpeg"],
+  totalLikes: 0,
+  likeDetails: [],
+};
+
+let item5 = {
+  title: "Customised keychain",
+  user_id: "nPanEW0TiAT99BFx22H7iQL9HCk2",
+  user_name: "aish m",
+  category: "Decor",
+  tags: "object, decorative",
+  description:
+    "Customised keychains. Enter your choice of name in notes while place order",
+  upload_date: "05-14-2022",
+  license: "ISO",
+  price: 50,
+  print_settings: {
+    printer: "Wireless 3D Printer",
+    printer_brand: "MakerBot Replicator",
+    rafts: "needed",
+    supports: "needed",
+    resolution: "10X10",
+    infill: "Honeycomb",
+    filament_brand: "Hatchbox PLA ",
+    filament_color: "White",
+    filament_material: "PLA Carbon Fiber",
+  },
+  comments: [],
+  multiple_images_of_obj: [
+    "/keychain1.jpeg",
+    "/keychain2.jpeg",
+    "/keychain3.jpeg",
+    "/keychain4.png",
+  ],
+  totalLikes: 0,
+  likeDetails: [],
+};
+
 try {
   const newItem = new Item(item);
   const createdItem = await newItem.save();
@@ -221,6 +281,12 @@ try {
 
   const newItem3 = new Item(item3);
   const createdItem3 = await newItem3.save();
+
+  const newItem4 = new Item(item4);
+  const createdItem4 = await newItem4.save();
+
+  const newItem5 = new Item(item5);
+  const createdItem5 = await newItem5.save();
 } catch (e) {
   console.log("Seed failed due to duplicate entries in Items");
 }
