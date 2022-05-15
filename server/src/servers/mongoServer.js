@@ -3,7 +3,7 @@ import mongoConfig from "../configs/mongoConfig";
 import process from "process";
 
 const MongoDBServerInit = async () => {
-  mongoose
+  await mongoose
     .connect(mongoConfig.serverUrl(), {
       useNewUrlParser: true,
     })

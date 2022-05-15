@@ -6,12 +6,14 @@
   "type": "module",
   "scripts": {
     "dev": " nodemon --experimental-modules --es-module-specifier-resolution=node index.js",
+    "seed": "node --experimental-modules --es-module-specifier-resolution=node seed.js",
     "start": "nodemon --experimental-modules --es-module-specifier-resolution=node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "chowdaryrahul",
   "license": "MIT",
   "dependencies": {
+    "@ngneat/falso": "^5.3.0",
     "apollo-server-core": "^3.6.7",
     "apollo-server-express": "^3.6.7",
     "bcrypt": "^5.0.1",
