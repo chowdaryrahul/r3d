@@ -27,7 +27,7 @@ const Card = (props) => {
 								>
 									<img
 										src={items.multiple_images_of_obj[0]}
-										className="h-80 rounded block-shadow-3xl	shadow-lg shadow-indigo-500/40 hover:shadow-indigo-500/40 bg-slate-100  "
+										className="h-80 rounded drop-shadow-3xl	shadow-indigo-500/40 shadow-lg hover:shadow-pink-500/40 bg-slate-100  "
 									/>
 								</span>
 								<br />
