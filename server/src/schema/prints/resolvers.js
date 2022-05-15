@@ -166,10 +166,17 @@ const resolvers = {
       );
       return itemArr;
     },
+    fetchMultipleItemByUserId: async (_, args) => {
+      console.log(args)
+          const item = await Item.find({ user_id: args.userId });
+          console.log(item)
+      return item;
+    },
   },
 
   Mutation: {
     createItem: async (_, args) => {
+      console.log(args, "arguements")
       let printerSettings = {
         printer: args.printer,
         printer_brand: args.printer_brand,
@@ -197,7 +204,10 @@ const resolvers = {
         multiple_images_of_obj: args.multiple_images_of_obj,
       };
       const newItem = new Item(saveItem);
+      console.log(newItem, "new item")
       const createdItem = await newItem.save();
+      console.log(createdItem, "fgwegwe")
+
       if (createdItem) {
         const { user_name } = createdItem;
         console.log(user_name);

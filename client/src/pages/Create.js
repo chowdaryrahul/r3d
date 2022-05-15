@@ -7,7 +7,6 @@ import queries from '../queries';
 
 const Create = () => {
 	const { user, userUpdate, isValidUser } = useContext(AuthContext);
-	console.log(user);
 	const [createItem, { data, loading, error }] = useMutation(queries.CREATE_ITEM);
 	const navigate = useNavigate();
 	const [create, setCreate] = useState({
@@ -29,13 +28,14 @@ const Create = () => {
 		filament_brand: '',
 		filament_color: '',
 		filament_material: '',
-		images: [],
+		multiple_images_of_obj: [],
 	});
 	const handleSubmit = async (e) => {
 		const images = JSON.parse(localStorage.getItem('images'));
 		console.log(images);
-		setCreate({ ...create, images: images });
+		setCreate({ ...create, multiple_images_of_obj: images });
 		e.preventDefault();
+    console.log(create)
 		await createItem({ variables: { ...create } }).then(() => navigate('/'));
 	};
 	console.log(create);
