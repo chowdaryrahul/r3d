@@ -2,6 +2,9 @@
 # a custom Docker Image with this Dockerfile
 FROM node:16
 
+# Install graphics magick
+RUN apt-get update && apt-get install -y graphicsmagick
+
 # A directory within the virtualized Docker environment
 # Becomes more relevant when using Docker Compose later
 WORKDIR /app_server
