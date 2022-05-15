@@ -34,12 +34,10 @@ const Item = mongoose.model(
     user_id: {
       type: String,
       required: false,
-      unique: true,
     },
     user_name: {
       type: String,
       required: false,
-      unique: true,
     },
     category: {
       type: String,
