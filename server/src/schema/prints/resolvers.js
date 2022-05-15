@@ -168,7 +168,7 @@ const resolvers = {
     },
     fetchMultipleItemByUserId: async (_, args) => {
       console.log(args)
-          const item = await Item.find({ user_id: args.userId });
+          const item = await Item.find({ user_id: args.user_id });
           console.log(item)
       return item;
     },
@@ -208,16 +208,16 @@ const resolvers = {
       const createdItem = await newItem.save();
       console.log(createdItem, "fgwegwe")
 
-      if (createdItem) {
-        const { user_name } = createdItem;
-        console.log(user_name);
-        const addNotification = new Notification({ user_name });
-        addNotification.save();
-        pubsub.publish("TRIGGER_NEW_POST", {
-          newPostNotify: addNotification.user_name,
-        });
+      // if (createdItem) {
+      //   const { user_name } = createdItem;
+      //   console.log(user_name);
+      //   const addNotification = new Notification({ user_name });
+      //   addNotification.save();
+      //   pubsub.publish("TRIGGER_NEW_POST", {
+      //     newPostNotify: addNotification.user_name,
+      //   });
         return createdItem;
-      }
+      // }
     },
 
     likeItem: async (_, args) => {
