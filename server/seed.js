@@ -76,12 +76,10 @@ const Item = mongoose.model(
       {
         user_id: {
           type: String,
-          unique: false,
           required: false,
         },
         user_name: {
           type: String,
-          unique: false,
           required: false,
         },
         liked: {
@@ -97,10 +95,12 @@ const Item = mongoose.model(
     },
     user_id: {
       type: String,
+      unique: false,
       required: false,
     },
     user_name: {
       type: String,
+      unique: false,
       required: false,
     },
     category: {
