@@ -130,6 +130,17 @@ const Item = mongoose.model(
   })
 );
 
+const Notification = mongoose.model(
+  "Notification",
+
+  new Schema({
+    user_name: {
+      type: String,
+      required: true,
+    },
+  })
+);
+
 const resolvers = {
   Query: {
     notifications: async (_, args) => {
