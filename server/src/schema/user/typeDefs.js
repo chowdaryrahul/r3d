@@ -5,10 +5,10 @@ const typeDefs = gql`
   type User {
     _id: String
     user_name: String!
-    password: String!
     email: String!
-    firstname: String!
-    lastname: String!
+    password: String
+    firstname: String
+    lastname: String
     about_me: String
     cart_items: [ItemIds]
     active_order_ids: [String]
@@ -69,10 +69,7 @@ const typeDefs = gql`
       quantity: Int
     ): User
 
-    afterPlaceOrder(
-      _id: String
-      orderId: String
-    ): User
+    afterPlaceOrder(_id: String, orderId: String): User
   }
 `;
 

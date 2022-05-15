@@ -8,12 +8,12 @@ const User = mongoose.model(
     _id: String,
     user_name: {
       type: String,
-      required: true,
+      required: false,
     },
 
     password: {
       type: String,
-      required: true,
+      required: false,
     },
 
     email: {
@@ -23,12 +23,12 @@ const User = mongoose.model(
 
     firstname: {
       type: String,
-      required: true,
+      required: false,
     },
 
     lastname: {
       type: String,
-      required: true,
+      required: false,
     },
     about_me: {
       type: String,
