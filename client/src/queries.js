@@ -373,6 +373,46 @@ const FETCH_ITEM = gql`
   }
 `;
 
+const DELETE_ITEM = gql`
+  query ($_id: ID) {
+    deleteItem(_id: $_id) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
+
 const FETCH_USER = gql`
   query ($_id: String) {
     fetchUser(_id: $_id) {
@@ -903,6 +943,7 @@ const UPDATE_USER = gql`
 
 let exported = {
   FETCH_ITEMS,
+  DELETE_ITEM,
   CREATE_ITEM,
   GET_ORDER,
   GET_ORDERS,

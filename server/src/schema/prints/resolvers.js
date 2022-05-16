@@ -138,6 +138,10 @@ const resolvers = {
       const item = await Item.findById({ _id: args._id });
       return item;
     },
+    deleteItem: async (_, args) => {
+      const item = await Item.findByIdAndDelete({ _id: args._id });
+      return item;
+    },
     fetchMultipleItemById: async (_, args) => {
       let itemArr = [];
       let itemArrData = await Promise.all(
@@ -182,7 +186,7 @@ const resolvers = {
 
   Mutation: {
     createItem: async (_, args) => {
-      console.log(args, "arguements")
+      console.log(args, "arguements");
       let printerSettings = {
         printer: args.printer,
         printer_brand: args.printer_brand,
