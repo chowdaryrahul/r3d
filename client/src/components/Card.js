@@ -14,7 +14,7 @@ const Card = (props) => {
 				{cardsItemsData.map((items) => (
 					<div key={items._id} className="rounded-lg bg-white bg-transparent">
 						<Link to={`/itemview/${items._id}`}>
-							<li className=" h-96">
+							<li className=" h-50 py-4 gap-y-2.5">
 								<span
 									className="
                   rounded-lg
@@ -33,7 +33,7 @@ const Card = (props) => {
 								<br />
 							</li>
 						</Link>
-						<div className="space-x-4  lg:flex lg:space-x-28 ">
+						<div className="space-x-4  px-12 pb-4 lg:flex lg:space-x-28 ">
 							<div>
 								{items.likeDetails.map((likes, idx) => {
 									if (isValidUser && likes.user_id === user.uid) {
