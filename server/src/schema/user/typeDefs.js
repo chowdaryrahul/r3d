@@ -70,6 +70,13 @@ const typeDefs = gql`
     ): User
 
     afterPlaceOrder(_id: String, orderId: String): User
+
+    updateUser(
+      _id: String
+      firstname: String
+      lastname: String
+      about_me: String
+    ): User
   }
 `;
 
