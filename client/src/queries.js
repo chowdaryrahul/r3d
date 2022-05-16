@@ -751,22 +751,157 @@ const UPDATE_ORDER_ID_IN_USER = gql`
     }
   }
 `;
-const NOTIFICATION = gql`
-  subscription Subscription {
-    newPostNotify
+
+const FETCH_ITEMS_BY_USERID = gql`
+  query ($user_id: String) {
+    fetchItemByUserId(user_id: $user_id) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
   }
 `;
-const ALL_NOTIFICATIONS = gql`
-  query Notifications {
-    notifications {
+
+const FETCH_LIKES_BY_USERID = gql`
+  query ($user_id: String) {
+    fetchLikesByUserId(user_id: $user_id) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
       user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
+
+const FETCH_CMT_BY_USERID = gql`
+  query ($user_id: String) {
+    fetchCmtByUserId(user_id: $user_id) {
+      _id
+      title
+      likeDetails {
+        user_id
+        user_name
+        liked
+      }
+      totalLikes
+      user_id
+      user_name
+      category
+      tags
+      description
+      upload_date
+      license
+      price
+      print_settings {
+        printer
+        printer_brand
+        rafts
+        supports
+        resolution
+        infill
+        filament_brand
+        filament_color
+        filament_material
+      }
+      comments {
+        user_id
+        user_name
+        comt_text
+      }
+      multiple_images_of_obj
+    }
+  }
+`;
+
+const UPDATE_USER = gql`
+  mutation (
+    $_id: String
+    $firstname: String
+    $lastname: String
+    $about_me: String
+  ) {
+    updateUser(
+      _id: $_id
+      firstname: $firstname
+      lastname: $lastname
+      about_me: $about_me
+    ) {
+      _id
+      user_name
+      email
+      password
+      firstname
+      lastname
+      about_me
+      cart_items {
+        item_id
+        quantity
+      }
+      active_order_ids
     }
   }
 `;
 
 let exported = {
-  ALL_NOTIFICATIONS,
-  NOTIFICATION,
   FETCH_ITEMS,
   CREATE_ITEM,
   GET_ORDER,
@@ -785,6 +920,10 @@ let exported = {
   GET_USER_ORDER,
   FETCH_MULTIPLE_ITEM_BY_ID,
   UPDATE_ORDER_ID_IN_USER,
+  FETCH_ITEMS_BY_USERID,
+  FETCH_LIKES_BY_USERID,
+  FETCH_CMT_BY_USERID,
+  UPDATE_USER,
 };
 
 export default exported;

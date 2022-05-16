@@ -23,15 +23,11 @@ const MyOrders = (props) => {
   });
   let order_id_arr = [];
   if (dataOrder && dataOrder.getuserOrder) {
-    console.log("FETCHING ORDER");
-    console.log(dataOrder);
     dataOrder.getuserOrder.map(
       (orders) => (order_id_arr = [...order_id_arr, orders.item_ids])
     );
     order_id_arr = order_id_arr.flat();
     order_id_arr = [...new Set(order_id_arr)];
-
-    console.log("all item ids: ", order_id_arr);
   }
 
   let { data: dataItems } = useQuery(queries.FETCH_MULTIPLE_ITEM_BY_ID, {
@@ -43,7 +39,7 @@ const MyOrders = (props) => {
     let b = [];
     if (dataItems !== undefined) {
       for (let idx = 0; idx < dataItems.fetchMultipleItemById.length; idx++) {
-        if (dataItems.fetchMultipleItemById[idx]._id == itemid) {
+        if (dataItems.fetchMultipleItemById[idx]._id === itemid) {
           b.push(
             <div>
               <div className=" bg-white border-black-600 border-2 p-2 bg-transparent flex ">

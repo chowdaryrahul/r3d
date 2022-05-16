@@ -2,12 +2,11 @@ import queries from '../queries.js';
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthContext } from '../firebase/Auth';
-import { useMutation, useQuery } from '@apollo/client';
-import CardOrder from '../components/CardOrder';
-import Orders from './Orders.js';
+import { useQuery } from "@apollo/client";
+import CardOrder from "../components/CardOrder";
 import { Link } from 'react-router-dom';
 import actions from '../actions.js';
-import { CreditCardIcon, LogoutIcon, ShoppingCartIcon } from '@heroicons/react/outline';
+import { LogoutIcon } from "@heroicons/react/outline";
 
 const Cart = () => {
 	const dispatch = useDispatch();

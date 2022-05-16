@@ -30,50 +30,52 @@ const Dashboard = (props) => {
 			setitemData(res.data.fetchItems);
 		});
 
-	let cardData = null;
-	if (itemData.length !== 0) {
-		cardData = (
-			<Card
-				itemsDataInCard={itemData.slice(
-					pagenumber * itemperpage,
-					pagenumber * itemperpage + itemperpage
-				)}
-			/>
-		);
-	} else if ((itemData.length = 0)) {
-		<Page404 />;
-	}
-	return (
-		<div className="flex-auto flex-col md:flex-row h-screen w-screen  font-sans overflow-scroll">
-			<div className="min-h-full">
-				<header className="bg-gradient-to-r from-white-500 to-indigo-200">
-					<div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-						<h1 className="mt-1 text-4xl text-black-900 font-bold text-center ">Dashboard</h1>
-					</div>
-				</header>
-				<main>
-					<div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-						<div className="px-4 py-6 sm:px-0">{cardData}</div>
-						<ReactPaginate
-							className="pagination justify-content-center"
-							previousLabel={'Previous'}
-							nextLabel={'Next'}
-							pageCount={pagecount}
-							onPageChange={({ selected }) => {
-								setPageNumber(selected);
-							}}
-							renderOnZeroPageCount={null}
-							containerClassName={'paginationBttns'}
-							previousLinkClassName={'previousBttn'}
-							nextLinkClassName={'nextBttn'}
-							disabledClassName={'paginationDisabled'}
-							activeClassName={'paginationActive'}
-						/>
-					</div>
-				</main>
-			</div>
-		</div>
-	);
+  let cardData = null;
+  if (itemData.length !== 0) {
+    cardData = (
+      <Card
+        itemsDataInCard={itemData.slice(
+          pagenumber * itemperpage,
+          pagenumber * itemperpage + itemperpage
+        )}
+      />
+    );
+  } else if ((itemData.length = 0)) {
+    <Page404 />;
+  }
+  return (
+    <div className="flex-auto flex-col md:flex-row h-full w-screen">
+      <div className="min-h-full">
+        <header className="bg-gradient-to-r from-white-500 to-indigo-200">
+          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 className="mt-1 text-4xl text-black-900 font-bold text-center ">
+              Dashboard
+            </h1>
+          </div>
+        </header>
+        <main>
+          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <div className="px-4 py-6 sm:px-0">{cardData}</div>
+            <ReactPaginate
+              class="pagination justify-content-center"
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              pageCount={pagecount}
+              onPageChange={({ selected }) => {
+                setPageNumber(selected);
+              }}
+              renderOnZeroPageCount={null}
+              containerClassName={"paginationBttns"}
+              previousLinkClassName={"previousBttn"}
+              nextLinkClassName={"nextBttn"}
+              disabledClassName={"paginationDisabled"}
+              activeClassName={"paginationActive"}
+            />
+          </div>
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default Dashboard;
