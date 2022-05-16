@@ -59,15 +59,19 @@ const Card = (props) => {
             key={items._id}
             className="rounded-lg shadow-lg bg-white border-indigo-600 border-1 p-2 bg-transparent"
           >
-            <li className=" h-96">
-              <p
+            <li className="h-96 py-4 grid place-items-center overflow-scroll">
+              <div
                 className="
                   rounded-lg
                   shadow-lg
                   bg-white
                   max-w-sm
                   border-indigo-600
-                  border-1 "
+                  border-1
+                  py-4
+                  grid
+                  place-items-center
+                  overflow-scroll"
               >
                 <Link to={`/itemview/${items._id}`}>
                   <img
@@ -76,19 +80,22 @@ const Card = (props) => {
                     className="w-30 h-64 bg-slate-100"
                   />
                 </Link>
-              </p>
+              </div>
               <br />
-              <p className="font-medium text-1xl text-black-500 hover:text-blue-400 text-center font-sans">
-                {items.title}
-              </p>
-              <div>
+              <br />
+              <div className="py-4 pb-2">
+                <p className="font-medium text-1xl text-black-500 hover:text-blue-400 text-center font-sans">
+                  {items.title}
+                </p>
+                <div>
+                  <p className="font-medium text-1xl text-black-500 hover:text-blue-400 text-center h-fit">
+                    Description:{items.description}
+                  </p>
+                </div>
                 <p className="font-medium text-1xl text-black-500 hover:text-blue-400 text-center h-fit">
-                  Description:{items.description}
+                  Price: {items.price}
                 </p>
               </div>
-              <p className="font-medium text-1xl text-black-500 hover:text-blue-400 text-center h-fit">
-                Price: {items.price}
-              </p>
               <div className="font-medium text-1xl text-black-500 text-center h-fit">
                 <span>
                   <button
