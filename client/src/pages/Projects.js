@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useQuery } from "@apollo/client";
 import queries from "../queries.js";
 import React, { useContext } from "react";

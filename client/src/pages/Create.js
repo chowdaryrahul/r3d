@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import UploadDialog from "../components/UploadDialog";
-import { useNavigate, useParams } from "react-router-dom";
-import { gql, useMutation } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 import { AuthContext } from "../firebase/Auth";
 import queries from "../queries";
 
 const Create = () => {
-  const { user, userUpdate, isValidUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   console.log(user);
   const [createItem, { data, loading, error }] = useMutation(
     queries.CREATE_ITEM
@@ -37,11 +37,13 @@ const Create = () => {
     const images = JSON.parse(localStorage.getItem("images"));
     console.log(images);
     e.preventDefault();
-    let updatedCreate = create
-    updatedCreate["multiple_images_of_obj"] = images   
-    updatedCreate["uploadDate"] = new Date() 
-		e.preventDefault();
-		await createItem({ variables: { ...updatedCreate } }).then(() => navigate('/'));
+    let updatedCreate = create;
+    updatedCreate["multiple_images_of_obj"] = images;
+    updatedCreate["uploadDate"] = new Date();
+    e.preventDefault();
+    await createItem({ variables: { ...updatedCreate } }).then(() =>
+      navigate("/")
+    );
   };
   console.log(create);
 
@@ -79,24 +81,6 @@ const Create = () => {
                       id="title"
                       autoComplete="given-name"
                       className="mt-1 focus:ring-indigo-500 py-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
-                    />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="user_name"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      UserName
-                    </label>
-                    <input
-                      type="text"
-                      name="user_name"
-                      value={create.user_name}
-                      id="username"
-                      autoComplete="family-name"
-                      readOnly={true}
-                      className="mt-1 focus:ring-indigo-500 py-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm rounded-md"
                     />
                   </div>
 
@@ -159,6 +143,44 @@ const Create = () => {
                     </select>
                   </div>
                   <div className="col-span-6 sm:col-span-3">
+                    <label
+                      htmlFor="upload_date"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Upload Date
+                    </label>
+                    <input
+                      type="date"
+                      name="upload_date"
+                      value={create.upload_date}
+                      onChange={(e) =>
+                        setCreate({ ...create, upload_date: e.target.value })
+                      }
+                      id="upload_date"
+                      className="mt-1 focus:ring-indigo-500 py-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
+                  </div>
+                  <div className="col-span-6 sm:col-span-3">
+                    <label
+                      htmlFor="category"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Category
+                    </label>
+                    <select
+                      id="category"
+                      name="category"
+                      onChange={(e) =>
+                        setCreate({ ...create, category: e.target.value })
+                      }
+                      className="mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    >
+                      <option value={"houses"}>Houses</option>
+                      <option value={"groceries"}>Groceries</option>
+                      <option value={"items"}>Items</option>
+                    </select>
+                  </div>
+                  <div className="col-span-6 sm:col-span-3">
                     {/* <label
                       htmlFor="upload_date"
                       className="block text-sm font-medium text-gray-700"
@@ -190,25 +212,6 @@ const Create = () => {
                       value={create.license}
                       onChange={(e) =>
                         setCreate({ ...create, license: e.target.value })
-                      }
-                      className="mt-1 focus:ring-indigo-500 py-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                    <label
-                      htmlFor="price"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Price($)
-                    </label>
-                    <input
-                      type="number"
-                      name="price"
-                      id="price"
-                      value={create.price}
-                      onChange={(e) =>
-                        setCreate({ ...create, price: Number(e.target.value) })
                       }
                       className="mt-1 focus:ring-indigo-500 py-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
