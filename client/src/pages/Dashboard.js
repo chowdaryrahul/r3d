@@ -24,12 +24,12 @@ const Dashboard = (props) => {
   const [itemData, setitemData] = useState([]);
   const [pagenumber, setPageNumber] = useState(0);
 
-  const itemperpage = 20;
-  const pagecount = Math.ceil(itemData.length / itemperpage);
+	const itemperpage = 20;
+	const pagecount = Math.ceil(itemData.length / itemperpage);
 
-  let { loading, error, data } = useQuery(queries.FETCH_ITEMS, {
-    fetchPolicy: "cache-and-network",
-  });
+	let { loading, error, data } = useQuery(queries.FETCH_ITEMS, {
+		fetchPolicy: 'cache-and-network',
+	});
 
   let cardData = null;
 
@@ -56,6 +56,13 @@ const Dashboard = (props) => {
     .then((res) => {
       setitemData(res.data.fetchItems);
     });
+	props.client
+		.query({
+			query: queries.FETCH_ITEMS,
+		})
+		.then((res) => {
+			setitemData(res.data.fetchItems);
+		});
 
   if (itemData.length !== 0) {
     cardData = (
