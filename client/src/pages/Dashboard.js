@@ -1,34 +1,34 @@
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { useQuery } from "@apollo/client";
-import queries from "../queries.js";
-import React, { useContext } from "react";
-import { AuthContext } from "../firebase/Auth";
-import Card from "../components/Card.js";
-import Page404 from "./Page404.js";
-import ReactPaginate from "react-paginate";
-import "../App.css";
-import { get } from "lodash";
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useQuery } from '@apollo/client';
+import queries from '../queries.js';
+import React, { useContext } from 'react';
+import { AuthContext } from '../firebase/Auth';
+import Card from '../components/Card.js';
+import Page404 from './Page404.js';
+import ReactPaginate from 'react-paginate';
+import '../App.css';
+import { get } from 'lodash';
 
 const Dashboard = (props) => {
-  const dispatch = useDispatch();
-  const [itemData, setitemData] = useState([]);
-  const [pagenumber, setPageNumber] = useState(0);
+	const dispatch = useDispatch();
+	const [itemData, setitemData] = useState([]);
+	const [pagenumber, setPageNumber] = useState(0);
 
-  const itemperpage = 20;
-  const pagecount = Math.ceil(itemData.length / itemperpage);
+	const itemperpage = 20;
+	const pagecount = Math.ceil(itemData.length / itemperpage);
 
-  let { loading, error, data } = useQuery(queries.FETCH_ITEMS, {
-    fetchPolicy: "cache-and-network",
-  });
+	let { loading, error, data } = useQuery(queries.FETCH_ITEMS, {
+		fetchPolicy: 'cache-and-network',
+	});
 
-  props.client
-    .query({
-      query: queries.FETCH_ITEMS,
-    })
-    .then((res) => {
-      setitemData(res.data.fetchItems);
-    });
+	props.client
+		.query({
+			query: queries.FETCH_ITEMS,
+		})
+		.then((res) => {
+			setitemData(res.data.fetchItems);
+		});
 
   let cardData = null;
   if (itemData.length !== 0) {
