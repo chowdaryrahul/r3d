@@ -7,17 +7,26 @@ import { useQuery } from "@apollo/client";
 import queries from "../queries.js";
 
 export default function Notifications() {
+  const [notifications, setNotifications] = useState([]);
+  const { data, loading, error, refetch } = useQuery(queries.ALL_NOTIFICATIONS);
 
-    const [notifications, setNotifications] = useState([])
-    const {data, loading, error, refetch} = useQuery(queries.ALL_NOTIFICATIONS);
+  console.log(notifications);
+  // useEffect(async()=>{
+  //    await refetch();
+  //    if (data) {
+  //      setNotifications(data.notifications);
+  //    }
+  // },[1])
 
-           console.log(notifications)
-    useEffect(async()=>{
-       await refetch()
-       if(data){
-       setNotifications(data.notifications)
-       }
-    },[1])
+  useEffect(() => {
+    async function fetchData() {
+      await refetch();
+      if (data) {
+        setNotifications(data.notifications);
+      }
+    }
+    fetchData();
+  }, [1]);
 
   return (
     <Popover className="relative">
@@ -50,8 +59,11 @@ export default function Notifications() {
                 <div className="relative grid gap-8 bg-white p-7 lg:grid-cols-1">
                   {data &&
                     data.notifications &&
-                    data.notifications.map((item) => (
-                      <div className="bg-blue-100 rounded-lg py-2 px-2 mb-4 text-base text-blue-700 mb-1">
+                    data.notifications.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-blue-100 rounded-lg py-2 px-2 mb-4 text-base text-blue-700 mb-1"
+                      >
                         <span
                           className="font-bold text-blue-800"
                           style={{ paddingRight: "5px" }}
