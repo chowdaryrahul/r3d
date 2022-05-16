@@ -44,7 +44,7 @@ const Dashboard = (props) => {
     <Page404 />;
   }
   return (
-    <div className="flex-auto flex-col md:flex-row h-screen w-screen  font-sans overflow-scroll">
+    <div className="flex-auto flex-col md:flex-row h-full w-screen">
       <div className="min-h-full">
         <header className="bg-gradient-to-r from-white-500 to-indigo-200">
           <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
