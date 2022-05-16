@@ -55,6 +55,13 @@ const uploadImage = async (ref, file) => {
   return uploadTask;
 };
 
+const downloadSTL = async (ref, file) => {
+  // 'file' comes from the Blob or File API
+  uploadTask = uploadBytesResumable(ref, file);
+  registerStateChangeEvents(uploadTask);
+  return uploadTask;
+};
+
 // Register three observers:
 // 1. 'state_changed' observer, called any time the state changes
 // 2. Error observer, called on failure

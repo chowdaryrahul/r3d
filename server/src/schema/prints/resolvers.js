@@ -38,16 +38,17 @@ const Item = mongoose.model(
     },
     user_id: {
       type: String,
+      unique: false,
       required: false,
     },
     user_name: {
       type: String,
+      unique: false,
       required: false,
     },
     category: {
       type: String,
       required: false,
-
     },
     tags: {
       type: String,
@@ -166,6 +167,36 @@ const resolvers = {
           itemArr.push(item);
         })
       );
+      return itemArr;
+    },
+    fetchItemByUserId: async (_, args) => {
+      const item = await Item.find({ user_id: args.user_id });
+      return item;
+    },
+    fetchLikesByUserId: async (_, args) => {
+      const item = await Item.find({});
+      let itemArr = [];
+      item.map((i) => {
+        i.likeDetails.length > 0 &&
+          i.likeDetails.map((likeDeets) => {
+            if (likeDeets.user_id === args.user_id) {
+              itemArr.push(i);
+            }
+          });
+      });
+      return itemArr;
+    },
+    fetchCmtByUserId: async (_, args) => {
+      const item = await Item.find({});
+      let itemArr = [];
+      item.map((i) => {
+        i.comments.length > 0 &&
+          i.comments.map((cmtDeets) => {
+            if (cmtDeets.user_id === args.user_id) {
+              itemArr.push(i);
+            }
+          });
+      });
       return itemArr;
     },
   },

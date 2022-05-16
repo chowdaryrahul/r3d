@@ -1,16 +1,14 @@
 import React, { useContext, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import queries from "../queries.js";
 import { AuthContext } from "../firebase/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../actions.js";
-import { Link } from "react-router-dom";
+
 import { LogoutIcon } from "@heroicons/react/outline";
 import validator from "validator";
 
 const Orders = (props) => {
-  let flag = false;
-
   const dispatch = useDispatch();
   const { isValidUser, user } = useContext(AuthContext);
   const allCartItems = useSelector((state) => state.cartItems);
@@ -58,34 +56,38 @@ const Orders = (props) => {
   myFutureDate.setDate(myFutureDate.getDate() + 8);
 
   const validEmailRegex = RegExp(
+    // eslint-disable-next-line
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
   const validphone = RegExp(
+    // eslint-disable-next-line
     /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
   );
 
   let errorMap = {
-    fn: "",
-    ln: "",
-    em: "",
-    apt: "",
-    st: "",
-    city: "",
-    state: "",
-    country: "select",
-    zip: "",
-    chName: "",
-    cardNo: "",
-    expMo: "",
-    expYr: "",
-    cardCvv: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    Apartment: "",
+    Street: "",
+    City: "",
+    State: "",
+    Country: "select",
+    Zipcode: "",
+    cardholderName: "",
+    cardnumber: "",
+    expmonth: "",
+    expyear: "",
+    cvv: "",
   };
 
   const validateForm = (e) => {
-    console.log(e);
     let valid = true;
-    Object.values(e).forEach((val) => val.length > 0 && (valid = false));
-    console.log("valid val : ", valid);
+    Object.keys(e).forEach((key) => {
+      if (document.getElementById(key).value.length === 0) valid = false;
+      if (e[key] !== "" || e[key] === "select") valid = false;
+    });
+
     return valid;
   };
 
@@ -93,23 +95,21 @@ const Orders = (props) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    console.log("event name is: ", name);
-    console.log("event value is: ", value);
-
     switch (name) {
       case "firstName":
         setErrors({
-          fn:
+          ...errors,
+          firstName:
             value.length < 2
               ? "Full Name must be at least 2 characters long!"
               : "",
         });
-        console.log("changed name", errors.fn);
 
         break;
       case "lastName":
         setErrors({
-          ln:
+          ...errors,
+          lastName:
             value.length < 2
               ? "Last Name must be at least 2 characters long!"
               : "",
@@ -118,12 +118,14 @@ const Orders = (props) => {
         break;
       case "email":
         setErrors({
-          em: validEmailRegex.test(value) ? "" : "Email is not valid!",
+          ...errors,
+          email: validEmailRegex.test(value) ? "" : "Email is not valid!",
         });
 
         break;
       case "phone":
         setErrors({
+          ...errors,
           phone: validphone.test(value)
             ? ""
             : "Please enter valid Phone number!",
@@ -132,45 +134,56 @@ const Orders = (props) => {
         break;
       case "Apartment":
         setErrors({
-          apt: value.length == 0 ? "Apartment field cannot be blank" : "",
+          ...errors,
+          Apartment:
+            value.length === 0 ? "Apartment field cannot be blank" : "",
         });
         break;
       case "Street":
         setErrors({
-          st: value.length < 2 ? "Street field cannot be blank" : "",
+          ...errors,
+          Street: value.length < 2 ? "Street field cannot be blank" : "",
         });
         break;
       case "City":
         setErrors({
-          city:
+          ...errors,
+          City:
             value.length < 2 ? "City must be at least 2 characters long!" : "",
         });
         break;
       case "State":
         setErrors({
-          state:
+          ...errors,
+          State:
             value.length < 2 ? "State must be at least 2 characters long!" : "",
         });
         break;
       case "Country":
-        setErrors({ country: value == "select" ? "Select a Country" : "" });
+        setErrors({
+          ...errors,
+          Country: value === "select" ? "Select a Country" : "",
+        });
         break;
       case "Zipcode":
         setErrors({
-          zip:
+          ...errors,
+          Zipcode:
             value.length < 2 ? "Zipcode must be at least 2 digits long!" : "",
         });
 
         break;
       case "cardholderName":
         setErrors({
-          chName:
+          ...errors,
+          cardholderName:
             value.length < 2 ? "Name must be at least 2 characters long!" : "",
         });
         break;
       case "cardnumber":
         setErrors({
-          cardNo:
+          ...errors,
+          cardnumber:
             validator.isCreditCard(value) === false
               ? "Invalid Credit Card Number"
               : "",
@@ -178,7 +191,8 @@ const Orders = (props) => {
         break;
       case "expmonth":
         setErrors({
-          expMo: value.length > 2 ? "Please enter valid month" : "",
+          ...errors,
+          expmonth: value.length > 2 ? "Please enter valid month" : "",
         });
         break;
       case "expyear":
@@ -194,7 +208,8 @@ const Orders = (props) => {
         );
         const event = new Date();
         setErrors({
-          expYr:
+          ...errors,
+          expyear:
             new Date() >
             event.setFullYear(
               parseInt(value),
@@ -207,7 +222,8 @@ const Orders = (props) => {
         break;
       case "cvv":
         setErrors({
-          cardCvv:
+          ...errors,
+          cvv:
             value.length > 3 || value.length < 3
               ? "Please enter valid CVV"
               : "",
@@ -250,10 +266,9 @@ const Orders = (props) => {
                                   document.getElementById("cvv").value,
                                   10
                                 ),
-                                card_no: parseInt(
+                                card_no:
                                   document.getElementById("cardnumber").value,
-                                  10
-                                ),
+
                                 phone: document.getElementById("phone").value,
 
                                 firstname:
@@ -313,7 +328,7 @@ const Orders = (props) => {
                               {/* {errors &&
                                   errors.fn &&
                                   errors.fn.length > 0 && ( */}
-                              <span className="error">{errors.fn}</span>
+                              <span className="error">{errors.firstName}</span>
                               {/* )} */}
                             </div>
                             <div className="w-full lg:w-1/2 ">
@@ -331,9 +346,8 @@ const Orders = (props) => {
                                 placeholder="Last Name"
                                 className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors && errors.ln && errors.ln.length > 0 && (
-                                <span className="error">{errors.ln}</span>
-                              )}
+
+                              <span className="error">{errors.lastName}</span>
                             </div>
                           </div>
                           <div className="mt-4">
@@ -352,9 +366,8 @@ const Orders = (props) => {
                                 placeholder="Email"
                                 className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors && errors.em && errors.em.length > 0 && (
-                                <span className="error">{errors.em}</span>
-                              )}
+
+                              <span className="error">{errors.email}</span>
                             </div>
                             <div className="w-80  ">
                               <label
@@ -371,11 +384,8 @@ const Orders = (props) => {
                                 placeholder="phone"
                                 className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors &&
-                                errors.phone &&
-                                errors.phone.length > 0 && (
-                                  <span className="error">{errors.phone}</span>
-                                )}
+
+                              <span className="error">{errors.phone}</span>
                             </div>
                           </div>
                           <br />
@@ -395,11 +405,8 @@ const Orders = (props) => {
                                 placeholder="Apartment"
                                 className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors &&
-                                errors.apt &&
-                                errors.apt.length > 0 && (
-                                  <span className="error">{errors.apt}</span>
-                                )}
+
+                              <span className="error">{errors.Apartment}</span>
                             </div>
                             <div className="w-80">
                               <label
@@ -416,9 +423,8 @@ const Orders = (props) => {
                                 placeholder="Street"
                                 className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors && errors.st && errors.st.length > 0 && (
-                                <span className="error">{errors.st}</span>
-                              )}
+
+                              <span className="error">{errors.Street}</span>
                             </div>
                           </div>
                           <br />
@@ -438,11 +444,8 @@ const Orders = (props) => {
                                 placeholder="City"
                                 className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors &&
-                                errors.city &&
-                                errors.city.length > 0 && (
-                                  <span className="error">{errors.city}</span>
-                                )}
+
+                              <span className="error">{errors.City}</span>
                             </div>
                             <div className="w-full lg:w-1/2">
                               <label
@@ -459,11 +462,8 @@ const Orders = (props) => {
                                 placeholder="State"
                                 className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors &&
-                                errors.state &&
-                                errors.state.length > 0 && (
-                                  <span className="error">{errors.state}</span>
-                                )}
+
+                              <span className="error">{errors.State}</span>
                             </div>
                             <div className="w-full lg:w-1/2">
                               <label
@@ -841,6 +841,7 @@ const Orders = (props) => {
                                 <option value="Zambia">Zambia</option>
                                 <option value="Zimbabwe">Zimbabwe</option>
                               </select>
+                              <span className="error">{errors.Country}</span>
                             </div>
                             <div className="w-full lg:w-1/2 ">
                               <label
@@ -857,11 +858,8 @@ const Orders = (props) => {
                                 placeholder="Post Code"
                                 className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors &&
-                                errors.zip &&
-                                errors.zip.length > 0 && (
-                                  <span className="error">{errors.zip}</span>
-                                )}
+
+                              <span className="error">{errors.Zipcode}</span>
                             </div>
                           </div>
 
@@ -886,11 +884,10 @@ const Orders = (props) => {
                                 placeholder="Cardholder's Name"
                                 className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors &&
-                                errors.chName &&
-                                errors.chName.length > 0 && (
-                                  <span className="error">{errors.chName}</span>
-                                )}
+
+                              <span className="error">
+                                {errors.cardholderName}
+                              </span>
                             </div>
                             <div className="w-full lg:w-1/2">
                               <label
@@ -908,11 +905,8 @@ const Orders = (props) => {
                                 autoComplete="on"
                                 className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors &&
-                                errors.cardNo &&
-                                errors.cardNo.length > 0 && (
-                                  <span className="error">{errors.cardNo}</span>
-                                )}
+
+                              <span className="error">{errors.cardnumber}</span>
                             </div>
                             <div className="w-full lg:w-1/2">
                               <label
@@ -932,11 +926,9 @@ const Orders = (props) => {
                                 placeholder="MM"
                                 className="w-1/2 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors &&
-                                errors.expMo &&
-                                errors.expMo.length > 0 && (
-                                  <span className="error">{errors.expMo}</span>
-                                )}
+
+                              <span className="error">{errors.expmonth}</span>
+
                               <input
                                 id="expyear"
                                 name="expyear"
@@ -948,11 +940,8 @@ const Orders = (props) => {
                                 placeholder="YYYY"
                                 className="w-1/2 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors &&
-                                errors.expYr &&
-                                errors.expYr.length > 0 && (
-                                  <span className="error">{errors.expYr}</span>
-                                )}
+
+                              <span className="error">{errors.expyear}</span>
                             </div>
                             <div className="w-full lg:w-1/2">
                               <label
@@ -970,13 +959,8 @@ const Orders = (props) => {
                                 placeholder="123"
                                 className="w-1/2 px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
                               />
-                              {errors &&
-                                errors.cardCvv &&
-                                errors.cardCvv.length > 0 && (
-                                  <span className="error">
-                                    {errors.cardCvv}
-                                  </span>
-                                )}
+
+                              <span className="error">{errors.cvv}</span>
                             </div>
                           </div>
 
@@ -987,7 +971,6 @@ const Orders = (props) => {
                               className="block mb-3 text-sm font-semibold text-gray-500"
                             >
                               {" "}
-                              Notes (Optional)
                             </label>
                             <input
                               onChange={handleChange}

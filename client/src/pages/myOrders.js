@@ -23,15 +23,11 @@ const MyOrders = (props) => {
   });
   let order_id_arr = [];
   if (dataOrder && dataOrder.getuserOrder) {
-    console.log("FETCHING ORDER");
-    console.log(dataOrder);
     dataOrder.getuserOrder.map(
       (orders) => (order_id_arr = [...order_id_arr, orders.item_ids])
     );
     order_id_arr = order_id_arr.flat();
     order_id_arr = [...new Set(order_id_arr)];
-
-    console.log("all item ids: ", order_id_arr);
   }
 
   let { data: dataItems } = useQuery(queries.FETCH_MULTIPLE_ITEM_BY_ID, {
@@ -43,7 +39,7 @@ const MyOrders = (props) => {
     let b = [];
     if (dataItems !== undefined) {
       for (let idx = 0; idx < dataItems.fetchMultipleItemById.length; idx++) {
-        if (dataItems.fetchMultipleItemById[idx]._id == itemid) {
+        if (dataItems.fetchMultipleItemById[idx]._id === itemid) {
           b.push(
             <div>
               <div className=" bg-white border-black-600 border-2 p-2 bg-transparent flex ">
@@ -88,45 +84,49 @@ const MyOrders = (props) => {
   orderData = dataOrder && dataOrder.getuserOrder && (
     <div className="flex flex-nowrap lg:48 overflow-x-auto whitespace-wrap justify-content-center scroll-auto">
       <br />
-      <ol className=" ">
-        {dataOrder.getuserOrder.map((orders, idx) => (
-          <div
-            key={idx}
-            className=" bg-white border-black-600 border-2 p-2 bg-transparent  overflow-x-scroll scroll-auto"
-          >
-            <container>
-              <li className=" h-96">
-                <div className="font-medium text-base text-black-500  text-left font-sans">
-                  <p>Estimated Delivery: {orders.estimated_delivery}</p>
-                  <p>Shipping Address:</p>
-                  <div>
-                    {orders.address.apartment},{orders.address.street},{" "}
-                    {orders.address.city},{orders.address.state},{" "}
-                    {orders.address.country} - {orders.address.zipcode}
-                  </div>
-                  <p>Purchased items:</p>
+      {dataOrder.getuserOrder.length > 0 ? (
+        <ol className=" ">
+          {dataOrder.getuserOrder.map((orders, idx) => (
+            <div
+              key={idx}
+              className=" bg-white border-black-600 border-2 p-2 bg-transparent  overflow-x-scroll scroll-auto"
+            >
+              <container>
+                <li className=" h-96">
+                  <div className="font-medium text-base text-black-500  text-left font-sans">
+                    <p>Estimated Delivery: {orders.estimated_delivery}</p>
+                    <p>Shipping Address:</p>
+                    <div>
+                      {orders.address.apartment},{orders.address.street},{" "}
+                      {orders.address.city},{orders.address.state},{" "}
+                      {orders.address.country} - {orders.address.zipcode}
+                    </div>
+                    <p>Purchased items:</p>
 
-                  <div className="flex flex-nowrap  overflow-x-auto ">
-                    {orders.item_ids.map((itemid, jdx) => {
-                      return generateItems(itemid);
-                    })}
-                  </div>
-                  <div>
-                    <p>Price details:</p>
-                    <div className=" text-base text-black-500">
-                      Total Cost: {orders.price_details.total_price}
-                      <br />
-                      shipping Cost: {orders.price_details.shipping_cost}
-                      <br />
-                      Taxes: {orders.price_details.tax}
+                    <div className="flex flex-nowrap  overflow-x-auto ">
+                      {orders.item_ids.map((itemid, jdx) => {
+                        return generateItems(itemid);
+                      })}
+                    </div>
+                    <div>
+                      <p>Price details:</p>
+                      <div className=" text-base text-black-500">
+                        Total Cost: {orders.price_details.total_price}
+                        <br />
+                        shipping Cost: {orders.price_details.shipping_cost}
+                        <br />
+                        Taxes: {orders.price_details.tax}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
-            </container>
-          </div>
-        ))}
-      </ol>
+                </li>
+              </container>
+            </div>
+          ))}
+        </ol>
+      ) : (
+        "No Orders to display"
+      )}
     </div>
   );
 

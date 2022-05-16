@@ -138,12 +138,26 @@ const resolvers = {
       let updatedOrderArr = [args.orderId];
 
       userDetails.active_order_ids.map((actOrdId) => {
-        updatedOrderArr.push(actOrdId)
-        
-      })
+        updatedOrderArr.push(actOrdId);
+      });
       const addItemQuantity = await User.updateMany(
         { _id: args._id },
         { $set: { active_order_ids: updatedOrderArr, cart_items: [] } }
+      );
+      return await User.findById({ _id: args._id });
+    },
+
+    updateUser: async (_, args) => {
+      // user_name: args.user_name,
+      const userUpdated = await User.updateMany(
+        { _id: args._id },
+        {
+          $set: {
+            firstname: args.firstname,
+            lastname: args.lastname,
+            about_me: args.about_me,
+          },
+        }
       );
       return await User.findById({ _id: args._id });
     },

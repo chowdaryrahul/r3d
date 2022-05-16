@@ -48,6 +48,9 @@ const typeDefs = gql`
     fetchItem(_id: ID): Item
     fetchMultipleItemById(_ids: [ID]): [Item]
     notifications:[Notification]
+    fetchItemByUserId(user_id: String): [Item]
+    fetchLikesByUserId(user_id: String): [Item]
+    fetchCmtByUserId(user_id: String): [Item]
   }
 
   type Mutation {

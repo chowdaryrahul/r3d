@@ -50,11 +50,11 @@ const Order = mongoose.model(
       },
       city: {
         type: String,
-        reqired: false,
+        required: false,
       },
       state: {
         type: String,
-        reqired: false,
+        required: false,
       },
       country: {
         type: String,
@@ -89,11 +89,11 @@ const Order = mongoose.model(
     },
     phone: {
       type: String,
-      reqired: false,
+      required: false,
     },
     notes: {
       type: String,
-      reqired: false,
+      required: false,
     },
   })
 );

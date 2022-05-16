@@ -133,6 +133,29 @@ export default function NavBar() {
                       Cart
                     </button>
                   </Link>
+                  <Link to={`/contactus`}>
+                    <button
+                      type="button"
+                      className="text-white fill-indigo-500 hover:fill-indigo-300 focus:ring-4 focus:outline-none focus:ring-blue-300 
+                    font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2  dark:focus:ring-blue-800"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="indigo-100"
+                        viewBox="0 0 24 24"
+                        stroke="black"
+                        stroke-width="1"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                        />
+                      </svg>
+                      Contact Us
+                    </button>
+                  </Link>
                   {/* Profile dropdown */}
                   <Menu as="div" className="ml-3 relative">
                     <div>
@@ -190,7 +213,7 @@ export default function NavBar() {
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
-                              Settings
+                              Update Profile
                             </NavLink>
                           )}
                         </Menu.Item>

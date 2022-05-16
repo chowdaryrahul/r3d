@@ -11,3 +11,35 @@
   color: red;
   font-size: 12px;
 }
+
+.paginationBttns {
+  width: 100%;
+  height: 20px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationBttns a {
+  padding: 8px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid black;
+  color: black;
+  cursor: pointer;
+}
+
+.paginationBttns a:hover {
+  color: white;
+  background-color: #5154f8;
+}
+
+.paginationActive a {
+  color: white;
+  background-color: #5154f8;
+}
+
+.paginationDisabled a {
+  color: grey;
+  background-color: grey;
+}
