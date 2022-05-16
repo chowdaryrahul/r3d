@@ -31,7 +31,7 @@ const Create = () => {
     filament_brand: "",
     filament_color: "",
     filament_material: "",
-    images: [],
+    multiple_images_of_obj: [],
   });
   const handleSubmit = async (e) => {
     const images = JSON.parse(localStorage.getItem("images"));
@@ -40,7 +40,29 @@ const Create = () => {
     let updatedCreate = create;
     updatedCreate["multiple_images_of_obj"] = images;
     updatedCreate["uploadDate"] = new Date();
-    e.preventDefault();
+    if(updatedCreate.title.length == 0) {
+      alert("Name cannot be empty")
+      return;
+    } else if(updatedCreate.tags.length == 0) {
+      alert("Tags cannot be empty")
+      return;
+    } else if(updatedCreate.description.length == 0) {
+      alert("Description cannot be empty")
+      return;
+    } else if(updatedCreate.category.length == 0) {
+      alert("Category cannot be empty")
+      return;
+    } else if(updatedCreate.license.length == 0) {
+      alert("License cannot be empty")
+      return;
+    } else if(updatedCreate.multiple_images_of_obj.length == 0) {
+      alert("Atleast one image is required")
+      return;
+    } else if(updatedCreate.price.length == 0) {
+      alert("Price cannot be empty")
+      return;
+    }
+     e.preventDefault();
     await createItem({ variables: { ...updatedCreate } }).then(() =>
       navigate("/")
     );
@@ -65,12 +87,16 @@ const Create = () => {
               <div className="px-4 py-5 bg-white sm:p-6">
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
+
                     <label
                       htmlFor="title"
                       className="block text-medium font-medium text-gray-700"
                     >
+                                        <span  style={{color:"red"}}> *</span>
+
                       Title
                     </label>
+
                     <input
                       type="text"
                       name="title"
@@ -89,6 +115,7 @@ const Create = () => {
                       htmlFor="tags"
                       className="block text-sm font-medium text-gray-700"
                     >
+                    <span  style={{color:"red"}}> *</span>
                       Tags(#)
                     </label>
                     <input
@@ -108,6 +135,7 @@ const Create = () => {
                       htmlFor="description"
                       className="block text-sm font-medium text-gray-700"
                     >
+                      <span  style={{color:"red"}}> *</span>
                       Description
                     </label>
                     <textarea
@@ -127,6 +155,7 @@ const Create = () => {
                       htmlFor="category"
                       className="block text-sm font-medium text-gray-700"
                     >
+                      <span  style={{color:"red"}}> *</span>
                       Category
                     </label>
                     <select
@@ -142,44 +171,24 @@ const Create = () => {
                       <option value={"items"}>Items</option>
                     </select>
                   </div>
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="upload_date"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Upload Date
-                    </label>
-                    <input
-                      type="date"
-                      name="upload_date"
-                      value={create.upload_date}
-                      onChange={(e) =>
-                        setCreate({ ...create, upload_date: e.target.value })
-                      }
-                      id="upload_date"
-                      className="mt-1 focus:ring-indigo-500 py-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="category"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Category
-                    </label>
-                    <select
-                      id="category"
-                      name="category"
-                      onChange={(e) =>
-                        setCreate({ ...create, category: e.target.value })
-                      }
-                      className="mt-1 block w-full py-4 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    >
-                      <option value={"houses"}>Houses</option>
-                      <option value={"groceries"}>Groceries</option>
-                      <option value={"items"}>Items</option>
-                    </select>
-                  </div>
+                  <div className="col-span-6 sm:col-span-6 lg:col-span-2">
+                      <label
+                        htmlFor="price"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                       <span  style={{color:"red"}}> *</span>
+                        Price
+                      </label>
+                      <input
+                        type="number"
+                        name="price"
+                        id="price"
+                        value={create.price}
+                        onChange={(e)=>setCreate({...create, price:Number(e.target.value)})}
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
                   <div className="col-span-6 sm:col-span-3">
                     {/* <label
                       htmlFor="upload_date"
@@ -203,6 +212,7 @@ const Create = () => {
                       htmlFor="license"
                       className="block text-sm font-medium text-gray-700"
                     >
+                                             <span  style={{color:"red"}}> *</span>
                       License
                     </label>
                     <input
@@ -295,10 +305,10 @@ const Create = () => {
                       htmlFor="resolution"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Resolution
+                      Resolution(In Pixels)
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="resolution"
                       id="resolution"
                       value={create.resolution}
