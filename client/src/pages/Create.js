@@ -1,46 +1,49 @@
-import React, { useState, useContext } from 'react';
-import UploadDialog from '../components/UploadDialog';
-import { useNavigate, useParams } from 'react-router-dom';
-import { gql, useMutation } from '@apollo/client';
-import { AuthContext } from '../firebase/Auth';
-import queries from '../queries';
+import React, { useState, useContext } from "react";
+import UploadDialog from "../components/UploadDialog";
+import { useNavigate, useParams } from "react-router-dom";
+import { gql, useMutation } from "@apollo/client";
+import { AuthContext } from "../firebase/Auth";
+import queries from "../queries";
 
 const Create = () => {
-	const { user, userUpdate, isValidUser } = useContext(AuthContext);
-	console.log(user);
-	const [createItem, { data, loading, error }] = useMutation(queries.CREATE_ITEM);
-	const navigate = useNavigate();
-	const [create, setCreate] = useState({
-		title: '',
-		user_id: `${user.uid}`,
-		user_name: `${user.displayName}`,
-		category: '',
-		tags: '',
-		description: '',
-		upload_date: '',
-		license: '',
-		price: 0,
-		printer: '',
-		printer_brand: '',
-		rafts: '',
-		supports: '',
-		resolution: '',
-		infill: '',
-		filament_brand: '',
-		filament_color: '',
-		filament_material: '',
-		images: [],
-	});
-	const handleSubmit = async (e) => {
-		const images = JSON.parse(localStorage.getItem('images'));
-		console.log(images);
-		setCreate({ ...create, images: images });
-		e.preventDefault();
-		await createItem({ variables: { ...create } }).then(() => navigate('/'));
-	};
-	console.log(create);
+  const { user, userUpdate, isValidUser } = useContext(AuthContext);
+  console.log(user);
+  const [createItem, { data, loading, error }] = useMutation(
+    queries.CREATE_ITEM
+  );
+  const navigate = useNavigate();
+  const [create, setCreate] = useState({
+    title: "",
+    user_id: `${user.uid}`,
+    user_name: `${user.displayName}`,
+    category: "",
+    tags: "",
+    description: "",
+    uploadDate: new Date(),
+    license: "",
+    price: 0,
+    printer: "",
+    printer_brand: "",
+    rafts: "",
+    supports: "",
+    resolution: "",
+    infill: "",
+    filament_brand: "",
+    filament_color: "",
+    filament_material: "",
+    images: [],
+  });
+  const handleSubmit = async (e) => {
+    const images = JSON.parse(localStorage.getItem("images"));
+    console.log(images);
+    setCreate({ ...create, uploadDate: new Date() });
+    setCreate({ ...create, images: images });
+    e.preventDefault();
+    await createItem({ variables: { ...create } }).then(() => navigate("/"));
+  };
+  console.log(create);
 
-	return (
+  return (
     <div className="flex-auto flex-col md:flex-row w-screen h-full min-h-screen">
       <div className="min-h-full">
         <header className="bg-white shadow">
@@ -154,7 +157,7 @@ const Create = () => {
                     </select>
                   </div>
                   <div className="col-span-6 sm:col-span-3">
-                    <label
+                    {/* <label
                       htmlFor="upload_date"
                       className="block text-sm font-medium text-gray-700"
                     >
@@ -169,7 +172,7 @@ const Create = () => {
                       }
                       id="upload_date"
                       className="mt-1 focus:ring-indigo-500 py-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
+                    /> */}
                   </div>
                   <div className="col-span-6">
                     <label
