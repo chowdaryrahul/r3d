@@ -39,7 +39,6 @@ export default function UploadDialog() {
 
   const uploadFilesHandler = async () => {
     images.forEach((image) => {
-      console.log(image);
       const imgRef = ref(firebaseStorage, `${user.uid}/${image.name}`);
 
       uploadImage(imgRef, image.file).then((snapshot) => {
@@ -50,8 +49,8 @@ export default function UploadDialog() {
       });
     });
   };
-  console.log(uploadedFiles);
 
+  localStorage.setItem("images",JSON.stringify(uploadedFiles))
   const clearFilesHandler = () => {
     setImages([]);
   };
@@ -66,7 +65,6 @@ export default function UploadDialog() {
 
   useEffect(() => {
     console.log("Current Images");
-    console.log(images);
   });
 
   return (

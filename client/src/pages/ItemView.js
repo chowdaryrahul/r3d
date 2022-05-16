@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
 import queries from "../queries.js";
@@ -11,8 +11,17 @@ import { AuthContext } from "../firebase/Auth";
 import Page404 from "./Page404.js";
 import AddToCart from "../components/AddToCart.js";
 
+import * as THREE from "three";
+// import { STLLoader } from "three-stl-loader";
+const STLLoader = require("three-stl-loader")(THREE);
+
 const ItemView = (props) => {
   const { isValidUser, user } = useContext(AuthContext);
+  const refContainer = useRef();
+  const [renderer, setRenderer] = useState();
+  let stl = null;
+  let dataURL = null;
+
   let { _id } = useParams();
   let { loading, error, data } = useQuery(queries.FETCH_ITEM, {
     fetchPolicy: "cache-and-network",
@@ -21,24 +30,122 @@ const ItemView = (props) => {
 
   let itemData = null;
   let likedIdx = false;
+
+  const isStl = (fname) => {
+    const ext = fname.slice(((fname.lastIndexOf(".") - 1) >>> 0) + 2);
+    if (ext.includes("stl")) {
+      stl = fname;
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  // const getSTLBytes = async () => {
+  //   const link = data.fetchItem.multiple_images_of_obj[0];
+  //   console.log(link);
+  //   const httpsReference = ref(firebaseStorage, link);
+  //   await getBytes(httpsReference).then((data) => {
+  //     console.log(data);
+  //     setStl(data);
+  //   });
+  // };
+
+  useEffect(() => {
+    const { current: container } = refContainer;
+    console.log(stl);
+    if (container && !renderer && stl) {
+      console.log("rendering STL");
+      // const sceneWidth = container.clientWidth;
+      // const sceneHeight = container.clientHeight || 600;
+      const sceneWidth = 400;
+      const sceneHeight = 400;
+
+      // === THREE.JS CODE START ===
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+      });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(sceneWidth, sceneHeight);
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      container.appendChild(renderer.domElement);
+
+      setRenderer(renderer);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        1,
+        10000
+      );
+      camera.position.z = 70;
+      camera.position.y = 0;
+
+      const ambientLight = new THREE.AmbientLight(0xcccccc, 1);
+
+      scene.add(camera);
+      scene.add(ambientLight);
+
+      const loader = new STLLoader();
+
+      const material = new THREE.MeshPhongMaterial({
+        color: 0xaaaaaa,
+        specular: 0x111111,
+        shininess: 200,
+        // vertexColors: true,
+      });
+
+      loader.load(stl, function (geometry) {
+        let meshMaterial = material;
+
+        const mesh = new THREE.Mesh(geometry, meshMaterial);
+        mesh.rotation.set(0, 0, 0);
+        mesh.scale.set(2, 2, 2);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+
+        scene.add(mesh);
+
+        dataURL = renderer.domElement.toDataURL();
+
+        const animate = () => {
+          requestAnimationFrame(animate);
+          mesh.rotation.x += 0.01;
+          mesh.rotation.y += 0.01;
+          renderer.render(scene, camera);
+        };
+
+        animate();
+      });
+    }
+  }, [renderer, stl]);
+
   itemData = data && data.fetchItem && (
     <div className=" gap-1 border">
       <header className="fmt-1 text-4xl text-black-900 text-left">
         {data.fetchItem.title}
       </header>
-
       <br />
       <div className="  overflow-scroll">
         <div className="grid grid-cols-2 gap-4">
           <Carousel className="border p-3  ">
-            {data.fetchItem.multiple_images_of_obj.map((imgs, idx) => (
-              <div
-                key={idx}
-                className="  flex flex-nowrap lg:48 overflow-x-auto whitespace-wrap justify-content-center scroll-auto p-4 h-60 w-100 "
-              >
-                <img src={imgs} alt="presentation" />
-              </div>
-            ))}
+            {data.fetchItem.multiple_images_of_obj.map((image, idx) =>
+              isStl(image) ? (
+                <div>
+                  <div ref={refContainer}>STL File</div>
+                  <img src={image} alt="3D STL " />
+                </div>
+              ) : (
+                <div
+                  key={idx}
+                  className="flex flex-nowrap lg:48 overflow-x-auto whitespace-wrap justify-content-center scroll-auto p-4 h-60 w-100 "
+                >
+                  <img src={image} alt="3d photos" />
+                </div>
+              )
+            )}
           </Carousel>
           <div>
             <p className="fmt-1 text-2xl text-black-900 text-center border">
