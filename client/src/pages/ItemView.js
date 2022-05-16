@@ -36,7 +36,7 @@ const ItemView = (props) => {
                 key={idx}
                 className="  flex flex-nowrap lg:48 overflow-x-auto whitespace-wrap justify-content-center scroll-auto p-4 h-60 w-100 "
               >
-                <img src={imgs} />
+                <img src={imgs} alt="presentation" />
               </div>
             ))}
           </Carousel>
@@ -83,27 +83,25 @@ const ItemView = (props) => {
               {data.fetchItem.print_settings.filament_material}
             </p>
           </div>
-
-          
         </div>
         <div>
-            <p className="font-bold text-xl mb-2 text-gray-700 text-base ">
-              {data.fetchItem.likeDetails.map((likes, idx) => {
-                if (isValidUser && likes.user_id === user.uid) {
-                  likedIdx = true;
-                }
-              })}
-            </p>
-            {likedIdx === false ? (
-              <Like likeFlag="toLike" itemDataToLike={data.fetchItem} />
-            ) : (
-              <Like likeFlag="toUnlike" itemDataToLike={data.fetchItem} />
-            )}
-            <br />
-            <AddToCart itemToAddInCart={data.fetchItem._id} />
-            <br />
-            <Comments itemDataForComm={data.fetchItem} />
-          </div>
+          <p className="font-bold text-xl mb-2 text-gray-700 text-base ">
+            {data.fetchItem.likeDetails.map((likes, idx) => {
+              if (isValidUser && likes.user_id === user.uid) {
+                likedIdx = true;
+              }
+            })}
+          </p>
+          {likedIdx === false ? (
+            <Like likeFlag="toLike" itemDataToLike={data.fetchItem} />
+          ) : (
+            <Like likeFlag="toUnlike" itemDataToLike={data.fetchItem} />
+          )}
+          <br />
+          <AddToCart itemToAddInCart={data.fetchItem._id} />
+          <br />
+          <Comments itemDataForComm={data.fetchItem} />
+        </div>
       </div>
     </div>
   );

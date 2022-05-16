@@ -28,6 +28,7 @@ const Card = (props) => {
                   <img
                     src={items.multiple_images_of_obj[0]}
                     className="h-96 bg-slate-100  "
+                    alt="presentation"
                   />
                 </span>
                 <br />
@@ -48,11 +49,11 @@ const Card = (props) => {
                 {(likedIdx = false)}
               </div>
               <div>
-                <p className="mt-1 text-m text-gray-700 hover:text-blue-400 text-center font-sans">
+                <p className="mt-1 text-m text-black-700 hover:text-blue-400 text-center font-sans">
                   {items.title}
                 </p>
 
-                <p className="mt-1 text-sm text-gray-500 hover:text-blue-400 text-center h-fit">
+                <p className="mt-1 text-sm text-black-600 hover:text-blue-400 text-center h-fit">
                   {items.price}$
                 </p>
               </div>

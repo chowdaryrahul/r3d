@@ -112,6 +112,7 @@ const Settings = (props) => {
         >
           <div>
             <label
+              for="firstName"
               htmlFor="firstName"
               className="block mb-3 text-sm font-semibold text-gray-500 required"
             >
@@ -126,6 +127,7 @@ const Settings = (props) => {
               className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
             />
             <label
+              for="lastName"
               htmlFor="lastName"
               className="block mb-3 text-sm font-semibold text-gray-500 required"
             >
@@ -140,6 +142,7 @@ const Settings = (props) => {
               className="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600"
             />
             <label
+              for="aboutme"
               htmlFor="about me"
               className="block mb-3 text-sm font-semibold text-gray-500 required"
             >

@@ -40,6 +40,6 @@
 }
 
 .paginationDisabled a {
-  color: grey;
-  background-color: grey;
+  color: #acacac;
+  background-color: #414141;
 }
