@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
 import queries from "../queries.js";
 import { useParams } from "react-router-dom";
@@ -12,13 +11,15 @@ import Page404 from "./Page404.js";
 import AddToCart from "../components/AddToCart.js";
 
 import * as THREE from "three";
-// import { STLLoader } from "three-stl-loader";
+import { OrbitControls } from "@three-ts/orbit-controls";
+
 const STLLoader = require("three-stl-loader")(THREE);
 
 const ItemView = (props) => {
   const { isValidUser, user } = useContext(AuthContext);
   const refContainer = useRef();
   const [renderer, setRenderer] = useState();
+  // const [stl, setStl] = useState(null);
   let stl = null;
   let dataURL = null;
 
@@ -33,8 +34,9 @@ const ItemView = (props) => {
 
   const isStl = (fname) => {
     const ext = fname.slice(((fname.lastIndexOf(".") - 1) >>> 0) + 2);
-    if (ext.includes("stl")) {
+    if (ext.includes("stl") && !stl) {
       stl = fname;
+      // setStl(fname);
       return true;
     } else {
       return false;
@@ -53,18 +55,20 @@ const ItemView = (props) => {
 
   useEffect(() => {
     const { current: container } = refContainer;
+
+    console.log("use effect called");
     console.log(stl);
-    if (container && !renderer && stl) {
+    console.log(container, renderer, stl);
+    if (container && !renderer) {
       console.log("rendering STL");
       // const sceneWidth = container.clientWidth;
       // const sceneHeight = container.clientHeight || 600;
       const sceneWidth = 400;
       const sceneHeight = 400;
 
-      // === THREE.JS CODE START ===
       const renderer = new THREE.WebGLRenderer({
         antialias: true,
-        alpha: true,
+        // alpha: true,
       });
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(sceneWidth, sceneHeight);
@@ -73,54 +77,80 @@ const ItemView = (props) => {
 
       setRenderer(renderer);
 
-      const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(
-        75,
+        70,
         window.innerWidth / window.innerHeight,
         1,
-        10000
+        1000
       );
       camera.position.z = 70;
       camera.position.y = 0;
 
-      const ambientLight = new THREE.AmbientLight(0xcccccc, 1);
+      const controls = new OrbitControls(camera, renderer.domElement);
+      // How far you can orbit vertically, upper and lower limits.
+      controls.minPolarAngle = 0;
+      controls.maxPolarAngle = Math.PI;
 
+      controls.enablePan = true; // Set to false to disable panning (ie vertical and horizontal translations)
+
+      controls.enableDamping = true; // Set to false to disable damping (ie inertia)
+      controls.dampingFactor = 0.25;
+
+      // How far you can dolly in and out ( PerspectiveCamera only )
+      controls.minDistance = 0;
+      controls.maxDistance = Infinity;
+
+      controls.rotateSpeed = 0.05;
+
+      controls.enableZoom = true;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.75;
+
+      const scene = new THREE.Scene();
+      scene.add(new THREE.HemisphereLight(0xffffff, 1.5));
       scene.add(camera);
-      scene.add(ambientLight);
 
       const loader = new STLLoader();
 
       const material = new THREE.MeshPhongMaterial({
-        color: 0xaaaaaa,
-        specular: 0x111111,
-        shininess: 200,
+        color: 0xff5533,
+        specular: 100,
+        shininess: 100,
         // vertexColors: true,
       });
 
       loader.load(stl, function (geometry) {
-        let meshMaterial = material;
-
-        const mesh = new THREE.Mesh(geometry, meshMaterial);
-        mesh.rotation.set(0, 0, 0);
-        mesh.scale.set(2, 2, 2);
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
+        const mesh = new THREE.Mesh(geometry, material);
 
         scene.add(mesh);
 
+        let middle = new THREE.Vector3();
+        geometry.computeBoundingBox();
+        geometry.boundingBox.getCenter(middle);
+
+        mesh.geometry.applyMatrix(
+          new THREE.Matrix4().makeTranslation(-middle.x, -middle.y, -middle.z)
+        );
+
+        // var largestDimension = Math.max(
+        //   geometry.boundingBox.max.x,
+        //   geometry.boundingBox.max.y,
+        //   geometry.boundingBox.max.z
+        // );
+        // camera.position.z = largestDimension * 1.5;
+
         dataURL = renderer.domElement.toDataURL();
 
-        const animate = () => {
+        var animate = function () {
           requestAnimationFrame(animate);
-          mesh.rotation.x += 0.01;
-          mesh.rotation.y += 0.01;
+          controls.update();
           renderer.render(scene, camera);
         };
 
         animate();
       });
     }
-  }, [renderer, stl]);
+  }, [renderer]);
 
   itemData = data && data.fetchItem && (
     <div className=" gap-1 border">
@@ -133,7 +163,7 @@ const ItemView = (props) => {
           <Carousel className="border p-3  ">
             {data.fetchItem.multiple_images_of_obj.map((image, idx) =>
               isStl(image) ? (
-                <div>
+                <div key={idx}>
                   <div ref={refContainer}>STL File</div>
                   <img src={image} alt="3D STL " />
                 </div>
@@ -219,6 +249,7 @@ const ItemView = (props) => {
 
   return (
     <div className="grid grid-col-2">
+      {/* <div ref={refContainer}>STL File</div> */}
       <div>{itemData}</div>
     </div>
   );
