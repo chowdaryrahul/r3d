@@ -99,7 +99,7 @@ const Settings = (props) => {
   };
 
   return (
-    <div className="text-3xl  text-center h-96 ">
+    <div className="text-3xl  text-center h-250 ">
       <br />
       <header className="text-black-700 ">Update Your Profile</header>
       <div>
@@ -185,8 +185,15 @@ const Settings = (props) => {
             />
           </div>
           <button type="submit">Submit</button>
-        </form>
-        <input
+          <br></br>
+          <label
+              htmlFor="firstName"
+              for="firstName"
+              className="block mb-3 text-sm font-semibold text-gray-500 required"
+            >
+              First Name
+            </label>
+          <input
 						className="App-input"
 						type="file"
 						accept="image/png, image/gif, image/jpeg"
@@ -195,7 +202,8 @@ const Settings = (props) => {
 					/>
 					<br />
 					<button onClick={uploadFile}>Upload</button>
-					<p>{loading && 'Uploading...'}</p>
+        </form>
+       
       </div>
     </div>
   );

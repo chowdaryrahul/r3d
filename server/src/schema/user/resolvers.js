@@ -43,7 +43,7 @@ const User = mongoose.model(
       type: String,
       required: false,
     },
-    Upload: {
+    profile_pic: {
       type: String,
       required: false,
     },
