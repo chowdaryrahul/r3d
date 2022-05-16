@@ -1,0 +1,27 @@
+.message-area{
+    width: 80%;
+    margin: 1em;
+}
+.outer-div{
+        /* top: 100%; */
+        bottom: 0%;
+        /* float: none; */
+        margin-top: 100%;
+        position: fixed;
+        margin-bottom: 0%;
+        width: -webkit-fill-available;
+}
+.input-div{
+    width: 90%;
+    margin-inline: auto;
+    display:flex;
+}
+.input-div button{
+    font-size: x-large;
+    padding: 10px;
+    background: black;
+    color: wheat;
+    border-radius: 50%;
+    height: -webkit-fill-available;
+    margin: auto;
+}
