@@ -21,7 +21,6 @@ const Projects = (props) => {
   let userUid = "";
   if (isValidUser) {
     userUid = user.uid;
-    console.log("user id: ", userUid);
   }
 
   let { loading, error, data } = useQuery(queries.FETCH_ITEMS_BY_USERID, {
@@ -29,7 +28,6 @@ const Projects = (props) => {
     variables: { user_id: userUid },
   });
 
-  console.log("props is: ", props);
   props.client
     .query({
       query: queries.FETCH_ITEMS_BY_USERID,
