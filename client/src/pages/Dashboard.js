@@ -53,13 +53,6 @@ const Dashboard = (props) => {
     .then((res) => {
       setitemData(res.data.fetchItems);
     });
-	props.client
-		.query({
-			query: queries.FETCH_ITEMS,
-		})
-		.then((res) => {
-			setitemData(res.data.fetchItems);
-		});
 
   if (itemData.length !== 0) {
     cardData = (
