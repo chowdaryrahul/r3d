@@ -7,11 +7,19 @@ import Card from "../components/Card.js";
 import Page404 from "./Page404.js";
 import ReactPaginate from "react-paginate";
 import "../App.css";
+import { useSubscription } from "@apollo/client";
 
 const Dashboard = (props) => {
-	const dispatch = useDispatch();
-	const [itemData, setitemData] = useState([]);
-	const [pagenumber, setPageNumber] = useState(0);
+  const dispatch = useDispatch();
+  const [notify, setNotify] = useState('')
+  const {
+    data: updateData,
+    error: updateError,
+    loading: updateLoader,
+  } = useSubscription(queries.NOTIFICATION);
+  console.log(updateData)
+  const [itemData, setitemData] = useState([]);
+  const [pagenumber, setPageNumber] = useState(0);
 
 	const itemperpage = 20;
 	const pagecount = Math.ceil(itemData.length / itemperpage);
@@ -20,6 +28,31 @@ const Dashboard = (props) => {
 		fetchPolicy: 'cache-and-network',
 	});
 
+  let cardData = null;
+
+  console.log("data: ", notify);
+ 
+  cardData = data && data.fetchItems && (
+    <Card itemsDataInCard={data.fetchItems} />
+  );
+  React.useEffect(()=>{
+    if(updateData){
+    console.log(updateData)
+    setNotify(updateData.newPostNotify)
+    }
+    const timeout = setTimeout(() => {
+        setNotify('')
+
+    }, 3000);
+    return () => clearTimeout(timeout);
+  },[updateData])
+  props.client
+    .query({
+      query: queries.FETCH_ITEMS,
+    })
+    .then((res) => {
+      setitemData(res.data.fetchItems);
+    });
 	props.client
 		.query({
 			query: queries.FETCH_ITEMS,
@@ -28,7 +61,6 @@ const Dashboard = (props) => {
 			setitemData(res.data.fetchItems);
 		});
 
-  let cardData = null;
   if (itemData.length !== 0) {
     cardData = (
       <Card
@@ -46,7 +78,18 @@ const Dashboard = (props) => {
       <div className="min-h-full">
         <header className="bg-white shadow">
           <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl flex flex-inline justify-center font-bold text-gray-900">
+          {(updateData && notify) && (
+            <div
+              className="bg-blue-100 rounded-lg py-5 px-6 mb-4 text-base text-blue-700 mb-3"
+              role="alert"
+            >
+              <span className="font-bold text-blue-800">
+                {notify}
+              </span>
+               just added a Post
+            </div>
+          )}
+            <h1 className="mt-1 text-4xl text-black-900 font-bold text-center ">
               Dashboard
             </h1>
           </div>
@@ -70,10 +113,11 @@ const Dashboard = (props) => {
               activeClassName={"paginationActive"}
             />
           </div>
-        </main>
-      </div>
+          {/* /End replace */}
+      </main>
     </div>
-  );
+  </div>
+);
 };
 
 export default Dashboard;
