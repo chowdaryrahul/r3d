@@ -61,14 +61,17 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home />}>
               <Route path="/" element={<Dashboard client={client} />} />
-              <Route path="/projects" element={<Projects />} />
+              <Route path="/projects" element={<PrivateOutlet />}>
+                <Route path="" element={<Projects />} />
+              </Route>
               <Route path="/cart" element={<Cart />} />
               <Route path="/contactus" element={<ContactUs />} />
-              <Route path="/myorders" element={<MyOrders />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/settings" element={<PrivateOutlet />}>
+                <Route path="" element={<Settings />} />
+              </Route>
               <Route path="/itemview/:_id" element={<ItemView />} />
-              <Route path="/orders" element={<PrivateOutlet />}>
-                <Route path="" element={<Orders />} />
+              <Route path="/myorders" element={<PrivateOutlet />}>
+                <Route path="" element={<MyOrders />} />
               </Route>
               <Route path="/profile" element={<PrivateOutlet />}>
                 <Route path="" element={<ProfilePage />} />

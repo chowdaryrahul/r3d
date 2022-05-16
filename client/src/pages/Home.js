@@ -13,7 +13,7 @@ const Home = () => {
 
   
   return (
-    <div className="mx-auto bg-white shadow-md overflow-hidden ">
+    <div className="mx-auto bg-white shadow-md overflow-scroll ">
       <NavBar />
       <div>
         <Outlet>{/** Content outlet */}</Outlet>

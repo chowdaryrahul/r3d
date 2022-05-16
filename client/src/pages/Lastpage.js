@@ -33,10 +33,10 @@ const Lastpage = () => {
         <Link to={`/`}>
           <button
             type="button"
-            class="border p-2 rounded bg-blue-300 hover:bg-blue-500"
+            className="border p-2 rounded bg-blue-300 hover:bg-blue-500"
           >
             <svg
-              class="motion-safe:animate-spin h-5 w-5 mr-3 ..."
+              className="motion-safe:animate-spin h-5 w-5 mr-3 ..."
               viewBox="0 0 24 24"
             ></svg>
             Back to Explore
