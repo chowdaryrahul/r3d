@@ -48,6 +48,10 @@ export const AuthProvider = ({ children }) => {
           _id: currentUser.uid,
           userName: currentUser.displayName,
           email: currentUser.email,
+          name:"harshit",
+          lastName: "kargeti",
+          aboutme:"gwegwe",
+          profile_pic:""
         },
       });
     }

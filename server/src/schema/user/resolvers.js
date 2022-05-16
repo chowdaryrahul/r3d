@@ -1,4 +1,13 @@
 import mongoose from "mongoose";
+import { GraphQLUpload } from "graphql-upload";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import gm from "gm";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+let graphicMagick = gm.subClass({ imageMagick: true });
+
 const Schema = mongoose.Schema;
 
 const User = mongoose.model(
@@ -34,6 +43,10 @@ const User = mongoose.model(
       type: String,
       required: false,
     },
+    Upload: {
+      type: String,
+      required: false,
+    },
     cart_items: [
       {
         item_id: {
@@ -51,6 +64,8 @@ const User = mongoose.model(
 );
 
 const resolvers = {
+  Upload: GraphQLUpload,
+
   Query: {
     getUsers: async (_, args) => {
       const users = await User.find({});
@@ -64,6 +79,7 @@ const resolvers = {
   },
 
   Mutation: {
+
     createUser: async (_, args) => {
       let saveUser = {
         _id: args._id,
@@ -73,6 +89,7 @@ const resolvers = {
         firstname: args.firstname,
         lastname: args.lastname,
         about_me: args.about_me,
+        profile_pic: "",
         cart_items: [],
         active_order_ids: [],
       };
@@ -160,6 +177,53 @@ const resolvers = {
         }
       );
       return await User.findById({ _id: args._id });
+    },
+
+    detailsUpload: async function (_, args) {
+      const { createReadStream, filename, encoding, mimetype } = await args.file;
+      console.log(args)
+      const stream = createReadStream();
+
+      fs.mkdirSync(path.join(__dirname, "files"), { recursive: true });
+
+      const output = fs.createWriteStream(
+        path.join(__dirname, "files", `${Math.random(6)}_${filename}`)
+      );
+      console.log(output);
+      const filePath = String(output.path).replace(/\\/g, "/");
+      console.log(filePath);
+      stream.pipe(output);
+      var userUpdated;
+      await new Promise(function (resolve, reject) {
+        output.on("close", () => {
+          console.log("File uploaded", filePath);
+          const pathArray = filePath.split('/');
+           console.log("Pathh=>",pathArray);
+          // const pathArray = patharray.split('/');
+          userUpdated = User.updateMany(
+            { _id: args._id },
+            {
+              $set: {
+                profile_pic: pathArray[pathArray.length - 1],
+              },
+            }
+          );
+          resolve();
+        });
+
+        output.on("error", (err) => {
+          reject(err);
+          throw new ApolloError(err)
+        });
+      });
+      graphicMagick(filePath)
+        .resize(300, 300)
+        .write(filePath, function (err) {
+          if (err) console.log(err);
+        });
+       if(userUpdated){
+        return await User.findById({ _id: args._id });
+      }
     },
   },
 };

@@ -6,16 +6,43 @@ import queries from "../queries.js";
 const Settings = (props) => {
   const { isValidUser, user } = useContext(AuthContext);
   const [updateUser] = useMutation(queries.UPDATE_USER);
+  const [file, setFile] = useState(null);
+  const [msg, setMsg] = useState("");
+  const [uploadRequest, { loadingg, errore }] = useMutation(
+    queries.SINGLE_UPLOAD_MUTATION
+  );
 
   let userUid = "";
   if (isValidUser) {
     userUid = user.uid;
   }
 
+  const uploadFile = async () => {
+    setMsg("");
+    if (!file) return;
+    let fileSend = file
+    try {
+      const res = await uploadRequest({
+        variables: { file: fileSend, id:userUid },
+        refetchQueries: [{ query: queries.FETCH_USER }],
+      });
+      if (res.data) {
+        setMsg("File upload!");
+        setFile(null);
+        setTimeout(() => setMsg(""), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+ 
+
   let { loading, error, data } = useQuery(queries.FETCH_USER, {
     fetchPolicy: "cache-and-network",
     variables: { _id: userUid },
   });
+  console.log(data)
 
   let errorMap = {
     firstName: "",
@@ -159,6 +186,16 @@ const Settings = (props) => {
           </div>
           <button type="submit">Submit</button>
         </form>
+        <input
+						className="App-input"
+						type="file"
+						accept="image/png, image/gif, image/jpeg"
+						onChange={(e) => {setFile(e.target.files[0])
+            console.log(file)}}
+					/>
+					<br />
+					<button onClick={uploadFile}>Upload</button>
+					<p>{loading && 'Uploading...'}</p>
       </div>
     </div>
   );

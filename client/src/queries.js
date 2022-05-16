@@ -383,6 +383,7 @@ const FETCH_USER = gql`
       firstname
       lastname
       about_me
+      profile_pic
       cart_items {
         item_id
         quantity
@@ -915,10 +916,26 @@ const UPDATE_USER = gql`
   }
 `;
 
+const SINGLE_UPLOAD_MUTATION = gql`
+	mutation SingleUpload($file: Upload!, $id: String) {
+		detailsUpload(file: $file, _id: $id) {
+			profile_pic
+		}
+	}
+`;
+
+const GET_PHOTOS_QUERY = gql`
+	query GetDetails {
+		url
+	}
+`;
+
 
 let exported = {
   NOTIFICATION,
   ALL_NOTIFICATIONS,
+  SINGLE_UPLOAD_MUTATION,
+  GET_PHOTOS_QUERY,
   FETCH_ITEMS,
   CREATE_ITEM,
   GET_ORDER,
