@@ -113,6 +113,7 @@ const Settings = (props) => {
           <div>
             <label
               htmlFor="firstName"
+              for="firstName"
               className="block mb-3 text-sm font-semibold text-gray-500 required"
             >
               First Name
@@ -127,6 +128,7 @@ const Settings = (props) => {
             />
             <label
               htmlFor="lastName"
+              for="lastName"
               className="block mb-3 text-sm font-semibold text-gray-500 required"
             >
               Last Name
@@ -141,6 +143,7 @@ const Settings = (props) => {
             />
             <label
               htmlFor="about me"
+              for="aboutme"
               className="block mb-3 text-sm font-semibold text-gray-500 required"
             >
               About Me
