@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
-const Schema = mongoose.Schema,
-  ObjectId = Schema.ObjectId;
-import mongoosastic from "mongoosastic";
 import { PubSub } from "graphql-subscriptions";
 
-const pubsub = new PubSub();
+const Schema = mongoose.Schema,
+  ObjectId = Schema.ObjectId;
 
+const pubsub = new PubSub();
 
 const Item = mongoose.model(
   "Item",
@@ -131,7 +130,7 @@ const Item = mongoose.model(
         required: false,
       },
     ],
-  }).plugin(mongoosastic)
+  })
 );
 const Notification = mongoose.model(
   "Notification",
@@ -141,7 +140,7 @@ const Notification = mongoose.model(
       type: String,
       required: true,
     },
-  }).plugin(mongoosastic)
+  })
 );
 
 const resolvers = {
