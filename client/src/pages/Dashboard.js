@@ -40,7 +40,7 @@ const Dashboard = (props) => {
         )}
       />
     );
-  } else if ((itemData.length = 0)) {
+  } else if ((itemData.length == 0)) {
     <Page404 />;
   }
   return (

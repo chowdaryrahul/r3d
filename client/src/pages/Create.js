@@ -32,11 +32,10 @@ const Create = () => {
 	});
 	const handleSubmit = async (e) => {
 		const images = JSON.parse(localStorage.getItem('images'));
-		console.log(images);
-		setCreate({ ...create, multiple_images_of_obj: images });
+    let updatedCreate = create
+    updatedCreate["multiple_images_of_obj"] = images   
 		e.preventDefault();
-    console.log(create)
-		await createItem({ variables: { ...create } }).then(() => navigate('/'));
+		await createItem({ variables: { ...updatedCreate } }).then(() => navigate('/'));
 	};
 	console.log(create);
 
