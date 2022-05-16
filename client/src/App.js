@@ -69,6 +69,9 @@ function App() {
               <Route path="/settings" element={<PrivateOutlet />}>
                 <Route path="" element={<Settings />} />
               </Route>
+              <Route path="/orders" element={<PrivateOutlet />}>
+                <Route path="" element={<Orders />} />
+              </Route>
               <Route path="/itemview/:_id" element={<ItemView />} />
               <Route path="/myorders" element={<PrivateOutlet />}>
                 <Route path="" element={<MyOrders />} />
