@@ -62,7 +62,7 @@ function App() {
             <Route exact path="/" element={<Home />}>
               <Route path="/" element={<Dashboard client={client} />} />
               <Route path="/projects" element={<PrivateOutlet />}>
-                <Route path="" element={<Projects />} />
+                <Route path="" element={<Projects client={client} />} />
               </Route>
               <Route path="/cart" element={<Cart />} />
               <Route path="/contactus" element={<ContactUs />} />
