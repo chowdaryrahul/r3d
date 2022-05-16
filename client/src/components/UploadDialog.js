@@ -43,6 +43,7 @@ export default function UploadDialog() {
 
       uploadImage(imgRef, image.file).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((downloadURL) => {
+          alert("files uploaded successfully")
           console.log("File available at", downloadURL);
           setUploadedFiles((prevState) => [...prevState, downloadURL]);
         });
