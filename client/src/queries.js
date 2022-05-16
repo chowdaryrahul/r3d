@@ -915,9 +915,39 @@ const UPDATE_USER = gql`
   }
 `;
 
+const ADD_MESSAGE = gql`
+mutation Mutation($user_name: String, $message: String, $date:String) {
+  addChat(user_name: $user_name, message: $message, date:$date) {
+    message
+  }
+}
+`;
+const GET_MESSAGE = gql`
+subscription Subscription {
+  addedChat {
+    _id
+    user_name
+    message
+    date
+  }
+}
+`;
+const ALL_MESSAGES = gql`
+query AllChats {
+  allChats {
+    user_name
+    message
+    date
+  }
+}
+`;
+
 
 let exported = {
   NOTIFICATION,
+  ADD_MESSAGE,
+  GET_MESSAGE,
+  ALL_MESSAGES,
   ALL_NOTIFICATIONS,
   FETCH_ITEMS,
   CREATE_ITEM,
