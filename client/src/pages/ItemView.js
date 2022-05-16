@@ -11,9 +11,6 @@ import { AuthContext } from "../firebase/Auth";
 import Page404 from "./Page404.js";
 import AddToCart from "../components/AddToCart.js";
 
-import { firebaseStorage } from "../firebase/Firebase";
-import { ref, getBytes } from "firebase/storage";
-
 import * as THREE from "three";
 // import { STLLoader } from "three-stl-loader";
 const STLLoader = require("three-stl-loader")(THREE);
@@ -22,8 +19,8 @@ const ItemView = (props) => {
   const { isValidUser, user } = useContext(AuthContext);
   const refContainer = useRef();
   const [renderer, setRenderer] = useState();
-  // const [stl, setStl] = useState(null);
   let stl = null;
+  let dataURL = null;
 
   let { _id } = useParams();
   let { loading, error, data } = useQuery(queries.FETCH_ITEM, {
@@ -56,20 +53,13 @@ const ItemView = (props) => {
 
   useEffect(() => {
     const { current: container } = refContainer;
-    console.log("rendering");
-    console.log(renderer);
-    if (container && !renderer) {
+    console.log(stl);
+    if (container && !renderer && stl) {
+      console.log("rendering STL");
       // const sceneWidth = container.clientWidth;
       // const sceneHeight = container.clientHeight || 600;
       const sceneWidth = 400;
       const sceneHeight = 400;
-
-      // let bytes = null;
-      console.log("stl");
-      console.log(stl);
-
-      // getSTLBytes(data);
-      // console.log(stl);
 
       // === THREE.JS CODE START ===
       const renderer = new THREE.WebGLRenderer({
@@ -100,18 +90,12 @@ const ItemView = (props) => {
 
       const loader = new STLLoader();
 
-      // console.log(bytes);
-      // const geometry = loader.parse(bytes);
-      // console.log(geometry);
-
       const material = new THREE.MeshPhongMaterial({
         color: 0xaaaaaa,
         specular: 0x111111,
         shininess: 200,
         // vertexColors: true,
       });
-
-      console.log(stl);
 
       loader.load(stl, function (geometry) {
         let meshMaterial = material;
@@ -125,7 +109,6 @@ const ItemView = (props) => {
         scene.add(mesh);
 
         dataURL = renderer.domElement.toDataURL();
-        console.log(dataURL);
 
         const animate = () => {
           requestAnimationFrame(animate);
@@ -144,7 +127,6 @@ const ItemView = (props) => {
       <header className="fmt-1 text-4xl text-black-900 text-left">
         {data.fetchItem.title}
       </header>
-
       <br />
       <div className="  overflow-scroll">
         <div className="grid grid-cols-2 gap-4">
