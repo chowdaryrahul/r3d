@@ -1,20 +1,20 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../firebase/Auth";
-import { Link } from "react-router-dom";
-import Like from "../components/Like.js";
+import React, { useContext } from 'react';
+import { AuthContext } from '../firebase/Auth';
+import { Link } from 'react-router-dom';
+import Like from '../components/Like.js';
 
 const Card = (props) => {
-  const { isValidUser, user } = useContext(AuthContext);
-  let cardsItemsData = props.itemsDataInCard;
+	const { isValidUser, user } = useContext(AuthContext);
+	let cardsItemsData = props.itemsDataInCard;
 
-  let likedIdx = false;
-  return (
+	let likedIdx = false;
+	return (
     <div className="flex items-stretch ">
-      <ul className="grid border-transparent sm:block md:grid md:block grid-cols-4 grid-rows-4 gap-4 items-center  flex items-stretch ">
+      <ul className="grid border-transparent sm:block md:grid md:block grid-cols-4 grid-rows-4 gap-y-2.5 gap-4 items-center  flex items-stretch ">
         {cardsItemsData.map((items) => (
           <div key={items._id} className="rounded-lg bg-white bg-transparent">
             <Link to={`/itemview/${items._id}`}>
-              <li className=" h-96">
+              <li className=" h-50 gap-y-2.5">
                 <span
                   className="
                   rounded-lg
@@ -27,13 +27,13 @@ const Card = (props) => {
                 >
                   <img
                     src={items.multiple_images_of_obj[0]}
-                    className="h-96 bg-slate-100  "
+                    className="h-80 rounded drop-shadow-3xl	 shadow-lg hover:shadow-indigo-500/40 bg-slate-100  "
                   />
                 </span>
                 <br />
               </li>
             </Link>
-            <div className="space-x-0 lg:flex lg:space-x-28 ">
+            <div className="space-x-4  px-2 pb-4 lg:flex lg:space-x-28 ">
               <div>
                 {items.likeDetails.map((likes, idx) => {
                   if (isValidUser && likes.user_id === user.uid) {
