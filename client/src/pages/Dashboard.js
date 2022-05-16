@@ -2,13 +2,11 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import queries from '../queries.js';
-import React, { useContext } from 'react';
-import { AuthContext } from '../firebase/Auth';
-import Card from '../components/Card.js';
-import Page404 from './Page404.js';
-import ReactPaginate from 'react-paginate';
-import '../App.css';
-import { get } from 'lodash';
+import React from "react";
+import Card from "../components/Card.js";
+import Page404 from "./Page404.js";
+import ReactPaginate from "react-paginate";
+import "../App.css";
 
 const Dashboard = (props) => {
 	const dispatch = useDispatch();
@@ -40,15 +38,15 @@ const Dashboard = (props) => {
         )}
       />
     );
-  } else if ((itemData.length = 0)) {
+  } else if ((itemData.length == 0)) {
     <Page404 />;
   }
   return (
     <div className="flex-auto flex-col md:flex-row h-full w-screen">
       <div className="min-h-full">
-        <header className="bg-gradient-to-r from-white-500 to-indigo-200">
+        <header className="bg-white shadow">
           <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="mt-1 text-4xl text-black-900 font-bold text-center ">
+            <h1 className="text-3xl flex flex-inline justify-center font-bold text-gray-900">
               Dashboard
             </h1>
           </div>

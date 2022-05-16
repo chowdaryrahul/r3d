@@ -34,10 +34,10 @@ function DropBox({ onDrop }) {
     isFocused,
     isDragReject,
   } = useDropzone({
-    accept: {
-      "image/*": [".jpeg", ".jpg", ".png"],
-      "application/vnd.ms-pki.stl": [".stl"],
-    },
+    // accept: {
+    //   "image/*": [".jpeg", ".jpg", ".png"],
+    //   "application/vnd.ms-pki.stl": [".stl"],
+    // },
     onDrop,
     validator: fileValidator,
     maxFiles: 5,
