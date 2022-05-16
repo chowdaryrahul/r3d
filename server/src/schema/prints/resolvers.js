@@ -202,7 +202,6 @@ const resolvers = {
 
   Mutation: {
     createItem: async (_, args) => {
-      console.log(args);
       let printerSettings = {
         printer: args.printer,
         printer_brand: args.printer_brand,
