@@ -7,9 +7,9 @@ services:
     expose: 
       - 27017
     env_file: ./.env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
+    # environment:
+      # - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
+      # - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
     ports:
       - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
     volumes: 
