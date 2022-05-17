@@ -18,6 +18,7 @@ import MyOrders from "./pages/myOrders";
 import ProfilePage from "./pages/ProfilePage";
 import Settings from "./pages/Settings";
 import ContactUs from "./pages/ContactUs";
+import Chat from "./pages/Chat";
 import {
   ApolloClient,
   split, HttpLink,  InMemoryCache,
@@ -72,8 +73,10 @@ function App() {
               </Route>
               <Route path="/cart" element={<Cart />} />
               <Route path="/contactus" element={<ContactUs />} />
-              <Route path="/settings" element={<PrivateOutlet />}>
-                <Route path="" element={<Settings />} />
+              <Route path="/myorders" element={<MyOrders />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/chat" element={<PrivateOutlet />}>
+                <Route path="" element={<Chat />} />
               </Route>
               <Route path="/orders" element={<PrivateOutlet />}>
                 <Route path="" element={<Orders />} />

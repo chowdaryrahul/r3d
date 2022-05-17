@@ -46,6 +46,7 @@ export default function NavBar() {
     { name: "Your Profile", href: "/profile" },
     { name: "Your Orders", href: "/myorders" },
     { name: "Settings", href: "/settings" },
+    { name: "Chatting", href: "/chat"}
   ];
 
   if (isValidUser) {
@@ -212,6 +213,19 @@ export default function NavBar() {
                               )}
                             >
                               Update Profile
+                            </NavLink>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item key="Chatting">
+                          {({ active }) => (
+                            <NavLink
+                              to="/chat"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              All Chats
                             </NavLink>
                           )}
                         </Menu.Item>
