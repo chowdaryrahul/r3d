@@ -11,7 +11,6 @@ const Home = () => {
     console.log("WebGL compatibility check -- Un available");
   }
 
-  
   return (
     <div className="mx-auto bg-white shadow-md overflow-scroll ">
       <NavBar />

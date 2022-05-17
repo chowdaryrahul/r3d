@@ -7,7 +7,6 @@ import queries from "../queries";
 
 const Create = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
   const [createItem, { data, loading, error }] = useMutation(
     queries.CREATE_ITEM
   );
@@ -35,39 +34,37 @@ const Create = () => {
   });
   const handleSubmit = async (e) => {
     const images = JSON.parse(localStorage.getItem("images"));
-    console.log(images);
     e.preventDefault();
     let updatedCreate = create;
     updatedCreate["multiple_images_of_obj"] = images;
     updatedCreate["uploadDate"] = new Date();
-    if(updatedCreate.title.length == 0) {
-      alert("Name cannot be empty")
+    if (updatedCreate.title.length == 0) {
+      alert("Name cannot be empty");
       return;
-    } else if(updatedCreate.tags.length == 0) {
-      alert("Tags cannot be empty")
+    } else if (updatedCreate.tags.length == 0) {
+      alert("Tags cannot be empty");
       return;
-    } else if(updatedCreate.description.length == 0) {
-      alert("Description cannot be empty")
+    } else if (updatedCreate.description.length == 0) {
+      alert("Description cannot be empty");
       return;
-    } else if(updatedCreate.category.length == 0) {
-      alert("Category cannot be empty")
+    } else if (updatedCreate.category.length == 0) {
+      alert("Category cannot be empty");
       return;
-    } else if(updatedCreate.license.length == 0) {
-      alert("License cannot be empty")
+    } else if (updatedCreate.license.length == 0) {
+      alert("License cannot be empty");
       return;
-    } else if(updatedCreate.multiple_images_of_obj.length == 0) {
-      alert("Atleast one image is required")
+    } else if (updatedCreate.multiple_images_of_obj.length == 0) {
+      alert("Atleast one image is required");
       return;
-    } else if(updatedCreate.price.length == 0) {
-      alert("Price cannot be empty")
+    } else if (updatedCreate.price.length == 0) {
+      alert("Price cannot be empty");
       return;
     }
-     e.preventDefault();
+    e.preventDefault();
     await createItem({ variables: { ...updatedCreate } }).then(() =>
       navigate("/")
     );
   };
-  console.log(create);
 
   return (
     <div className="flex-auto flex-col md:flex-row w-screen h-full min-h-screen">
