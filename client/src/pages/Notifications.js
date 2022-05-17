@@ -10,7 +10,6 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const { data, loading, error, refetch } = useQuery(queries.ALL_NOTIFICATIONS);
 
-  console.log(notifications);
   // useEffect(async()=>{
   //    await refetch();
   //    if (data) {
