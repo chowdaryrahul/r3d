@@ -62,5 +62,7 @@ project-root>docker-compose up
 
 # Mongo is available at [Mongo](http://localhost:27017/)
 
-
+#Steps for running chat and push notifications-
+ go to apollo playground using server string http://localhost:4000, go to mutation and add subscription for new post and chat along with all their arguments and click on run to start listening
+two different instances should be run for chat and push notifications as per their mutations
 
