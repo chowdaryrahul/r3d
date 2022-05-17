@@ -186,24 +186,29 @@ const Settings = (props) => {
           </div>
           <button type="submit">Submit</button>
           <br></br>
+          <br></br>
+
+          <br></br>
+          <br></br>
+
           <label
-              htmlFor="firstName"
-              for="firstName"
+              htmlFor="profilePic"
               className="block mb-3 text-sm font-semibold text-gray-500 required"
             >
-              First Name
+              Profile Pic Update
             </label>
-          <input
-						className="App-input"
+          
+        </form>
+        <input
+						className="mx-auto px-4 py-2 flex justify-center border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 						type="file"
 						accept="image/png, image/gif, image/jpeg"
 						onChange={(e) => {setFile(e.target.files[0])
             console.log(file)}}
 					/>
 					<br />
-					<button onClick={uploadFile}>Upload</button>
-        </form>
-       
+					<button 						className="mx-auto px-4 py-2 flex justify-center border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+ onClick={uploadFile}>Upload</button>
       </div>
     </div>
   );
