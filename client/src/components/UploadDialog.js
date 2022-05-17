@@ -16,7 +16,6 @@ export default function UploadDialog() {
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.map((file, index) => {
-      console.log(file);
       const reader = new FileReader();
       reader.onload = function (e) {
         setImages((prevState) => [
@@ -43,7 +42,7 @@ export default function UploadDialog() {
 
       uploadImage(imgRef, image.file).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((downloadURL) => {
-          alert("files uploaded successfully")
+          alert("files uploaded successfully");
           console.log("File available at", downloadURL);
           setUploadedFiles((prevState) => [...prevState, downloadURL]);
         });
@@ -51,7 +50,7 @@ export default function UploadDialog() {
     });
   };
 
-  localStorage.setItem("images",JSON.stringify(uploadedFiles))
+  localStorage.setItem("images", JSON.stringify(uploadedFiles));
   const clearFilesHandler = () => {
     setImages([]);
   };
@@ -63,10 +62,6 @@ export default function UploadDialog() {
   function closeModal() {
     setIsOpen(false);
   }
-
-  useEffect(() => {
-    console.log("Current Images");
-  });
 
   return (
     <>

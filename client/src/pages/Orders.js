@@ -196,10 +196,8 @@ const Orders = (props) => {
         });
         break;
       case "expyear":
-        console.log("today", new Date());
         console.log(
           "someday",
-
           new Date().setFullYear(
             parseInt(value),
             parseInt(document.getElementById("expmonth").value),

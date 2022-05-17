@@ -12,7 +12,6 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     const { email, password, first_name, last_name } = e.target.elements;
-    console.log(email.value, password.value, first_name.value, last_name.value);
     try {
       if (
         email.value &&
