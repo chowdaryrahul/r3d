@@ -248,7 +248,7 @@ const Orders = (props) => {
               <div className=" overflow-scroll rounded-lg h-96 border-black-800 border-4 rounded h-max">
                 <div className="container p-12 mx-auto">
                   <div className="flex flex-col w-full px-0 mx-auto md:flex-row">
-                    <div className="flex flex-col md:w-full">
+                    <div className="flex flex-col md:w-full p-2">
                       <h2 className="mb-4 font-bold md:text-xl text-heading ">
                         Shipping Address
                       </h2>
@@ -993,13 +993,9 @@ const Orders = (props) => {
                         </div>
                       </form>
                     </div>
-                    <div className="flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5">
+                    <div className="flex flex-col w-full ml-0 p-2 lg:ml-12 lg:w-2/5">
                       <div className="pt-12 md:pt-0 2xl:ps-4">
                         <h2 className="text-xl font-bold">Order Summary</h2>
-
-                        <div className="flex p-4 mt-4">
-                          <h2 className="text-xl font-bold">{}</h2>
-                        </div>
                         <div className="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
                           Subtotal:{" "}
                           <span className="ml-2">{productTotalprice}</span>
