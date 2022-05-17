@@ -4,7 +4,7 @@ const typeDefs = gql`
   # Your schema will go here
   type User {
     _id: String
-    user_name: String!
+    user_name: String
     email: String!
     password: String
     firstname: String
