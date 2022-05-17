@@ -27,7 +27,6 @@ export const AuthProvider = ({ children }) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
-        console.log(user);
         const uid = user.uid;
         console.log("User is signed in");
         setCurrentUser(user);
@@ -48,6 +47,10 @@ export const AuthProvider = ({ children }) => {
           _id: currentUser.uid,
           userName: currentUser.displayName,
           email: currentUser.email,
+          name:"harshit",
+          lastName: "kargeti",
+          aboutme:"gwegwe",
+          profile_pic:""
         },
       });
     }

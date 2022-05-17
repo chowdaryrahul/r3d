@@ -58,7 +58,7 @@ project-root>docker-compose up
 
 # APP is available at [App](http://localhost:3000/)
 
-# Apollo Server is available at [Apollo](http://localhost:4000/)
+# Apollo Server is available at [Apollo](http://localhost:4000/graphql)
 
 # Mongo is available at [Mongo](http://localhost:27017/)
 

@@ -26,10 +26,15 @@ import {
 } from "@apollo/client";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { WebSocketLink } from '@apollo/client/link/ws';
+import { createUploadLink } from 'apollo-upload-client';
 
-const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql'
+const httpLinkUpload = createUploadLink({
+  uri: 'http://localhost:4000/graphql',
 });
+
+// const httpLink = new HttpLink({
+//   uri: 'http://localhost:4000/graphql'
+// });
 
 const wsLink = new WebSocketLink({
   uri: 'ws://localhost:4000/graphql',
@@ -47,7 +52,8 @@ const splitLink = split(
     );
   },
   wsLink,
-  httpLink,
+  // httpLink,
+  httpLinkUpload
 );
 const client = new ApolloClient({
   link: splitLink,
@@ -63,7 +69,7 @@ function App() {
             <Route exact path="/" element={<Home />}>
               <Route path="/" element={<Dashboard client={client} />} />
               <Route path="/projects" element={<PrivateOutlet />}>
-                <Route path="" element={<Projects />} />
+                <Route path="" element={<Projects client={client} />} />
               </Route>
               <Route path="/cart" element={<Cart />} />
               <Route path="/contactus" element={<ContactUs />} />

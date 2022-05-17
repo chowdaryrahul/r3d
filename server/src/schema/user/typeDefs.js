@@ -2,14 +2,17 @@ import { gql } from "apollo-server-core";
 
 const typeDefs = gql`
   # Your schema will go here
+  scalar Upload
+  
   type User {
     _id: String
-    user_name: String!
+    user_name: String
     email: String!
     password: String
     firstname: String
     lastname: String
     about_me: String
+    profile_pic: String
     cart_items: [ItemIds]
     active_order_ids: [String]
   }
@@ -50,10 +53,13 @@ const typeDefs = gql`
       user_name: String
       password: String
       email: String
+      profile_pic: String
       firstname: String
       lastname: String
       about_me: String
     ): User
+
+    detailsUpload(file: Upload!, _id: String): User
 
     addToCart(
       _id: String

@@ -6,16 +6,43 @@ import queries from "../queries.js";
 const Settings = (props) => {
   const { isValidUser, user } = useContext(AuthContext);
   const [updateUser] = useMutation(queries.UPDATE_USER);
+  const [file, setFile] = useState(null);
+  const [msg, setMsg] = useState("");
+  const [uploadRequest, { loadingg, errore }] = useMutation(
+    queries.SINGLE_UPLOAD_MUTATION
+  );
 
   let userUid = "";
   if (isValidUser) {
     userUid = user.uid;
   }
 
+  const uploadFile = async () => {
+    setMsg("");
+    if (!file) return;
+    let fileSend = file
+    try {
+      const res = await uploadRequest({
+        variables: { file: fileSend, id:userUid },
+        refetchQueries: [{ query: queries.FETCH_USER }],
+      });
+      if (res.data) {
+        setMsg("File upload!");
+        setFile(null);
+        setTimeout(() => setMsg(""), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+ 
+
   let { loading, error, data } = useQuery(queries.FETCH_USER, {
     fetchPolicy: "cache-and-network",
     variables: { _id: userUid },
   });
+  console.log(data)
 
   let errorMap = {
     firstName: "",
@@ -72,7 +99,7 @@ const Settings = (props) => {
   };
 
   return (
-    <div className="text-3xl  text-center h-96 ">
+    <div className="text-3xl  text-center h-250 ">
       <br />
       <header className="text-black-700 ">Update Your Profile</header>
       <div>
@@ -158,7 +185,30 @@ const Settings = (props) => {
             />
           </div>
           <button type="submit">Submit</button>
+          <br></br>
+          <br></br>
+
+          <br></br>
+          <br></br>
+
+          <label
+              htmlFor="profilePic"
+              className="block mb-3 text-sm font-semibold text-gray-500 required"
+            >
+              Profile Pic Update
+            </label>
+          
         </form>
+        <input
+						className="mx-auto px-4 py-2 flex justify-center border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+						type="file"
+						accept="image/png, image/gif, image/jpeg"
+						onChange={(e) => {setFile(e.target.files[0])
+            console.log(file)}}
+					/>
+					<br />
+					<button 						className="mx-auto px-4 py-2 flex justify-center border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+ onClick={uploadFile}>Upload</button>
       </div>
     </div>
   );
