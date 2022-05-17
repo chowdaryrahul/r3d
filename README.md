@@ -63,4 +63,7 @@ project-root>docker-compose up
 # Mongo is available at [Mongo](http://localhost:27017/)
 
 
+#Steps for running push notifications-
+
+#Go to apollo playground using server string http://localhost:4000, go to subscription and click on run for it to start listening
 
