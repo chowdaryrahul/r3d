@@ -91,7 +91,7 @@ const MyOrders = (props) => {
               key={idx}
               className=" bg-white border-black-600 border-2 p-2 bg-transparent  overflow-x-scroll scroll-auto"
             >
-              <li className=" h-96">
+              <li className="h-96" key={idx}>
                 <div className="font-medium text-base text-black-500  text-left font-sans">
                   <p>Estimated Delivery: {orders.estimated_delivery}</p>
                   <p>Shipping Address:</p>

@@ -62,7 +62,8 @@ function DropBox({ onDrop }) {
               <input {...getInputProps()} />
               <p className="mb-3 font-semibold text-gray-900 flex flex-wrap justify-center">
                 <span>Drag and drop your</span>&nbsp;
-                <span>files in box (Max 5) or</span>
+                <span>files in box (Max 5) &</span>&nbsp;
+                <span>Max file size 3 mb</span>
               </p>
               <div className="container mx-auto px-4">
                 <button

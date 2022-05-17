@@ -17,28 +17,25 @@ const Dashboard = (props) => {
     error: updateError,
     loading: updateLoader,
   } = useSubscription(queries.NOTIFICATION);
-  console.log(updateData)
+
   const [itemData, setitemData] = useState([]);
   const [pagenumber, setPageNumber] = useState(0);
 
-	const itemperpage = 20;
-	const pagecount = Math.ceil(itemData.length / itemperpage);
+  const itemperpage = 20;
+  const pagecount = Math.ceil(itemData.length / itemperpage);
 
-	let { loading, error, data } = useQuery(queries.FETCH_ITEMS, {
-		fetchPolicy: 'cache-and-network',
-	});
+  let { loading, error, data } = useQuery(queries.FETCH_ITEMS, {
+    fetchPolicy: "cache-and-network",
+  });
 
   let cardData = null;
-
-  console.log("data: ", notify);
  
   cardData = data && data.fetchItems && (
     <Card itemsDataInCard={data.fetchItems} />
   );
   React.useEffect(()=>{
-    if(updateData){
-    console.log(updateData)
-    setNotify(updateData.newPostNotify)
+    if (updateData) {
+      setNotify(updateData.newPostNotify);
     }
     const timeout = setTimeout(() => {
         setNotify('')

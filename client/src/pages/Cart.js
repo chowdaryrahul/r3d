@@ -87,7 +87,7 @@ const Cart = () => {
             Your Cart
             <span>
               <svg
-                class="h-8 w-8 place-items-center text-gray-500"
+                className="h-8 w-8 place-items-center text-gray-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
