@@ -6,11 +6,18 @@ import mongoose from "mongoose";
 import { SubscriptionServer } from "subscriptions-transport-ws";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { execute, subscribe } from "graphql";
+import { fileURLToPath } from 'url';
+import gm from 'gm';
+import { graphqlUploadExpress, GraphQLUpload } from 'graphql-upload';
+import path from 'path'
 
 
 
 const ApolloServerInit = async function (typeDefs, resolvers) {
   // Required logic for integrating with Express
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  let graphicMagick = gm.subClass({imageMagick: true});
+
   const PORT = process.env.PORT || 4000;
   const app = express();
   const httpServer = http.createServer(app);
@@ -19,10 +26,14 @@ const ApolloServerInit = async function (typeDefs, resolvers) {
   const server = new ApolloServer({
     schema,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    uploads: false
   });
 
   // More required logic for integrating with Express
   await server.start();
+  app.use('/files', express.static(path.join(__dirname,'schemas' ,'files')));
+  app.use('/files', express.static('files'))
+  app.use(graphqlUploadExpress());
   server.applyMiddleware({
     app,
     // By default, apollo-server hosts its GraphQL endpoint at the
